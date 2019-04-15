@@ -6,8 +6,6 @@ DROP TABLE IF EXISTS Soundfront.MusicCart;
 DROP TABLE IF EXISTS Soundfront.Song;
 DROP TABLE IF EXISTS Soundfront.Album;
 DROP TABLE IF EXISTS Soundfront.Social;
-ALTER TABLE Soundfront.[User]
-  DROP CONSTRAINT IF EXISTS [fk_cart_user];
 DROP TABLE IF EXISTS Soundfront.Cart;
 DROP TABLE IF EXISTS Soundfront.[User];
 
@@ -26,7 +24,7 @@ CREATE TABLE Soundfront.[User]
   DisplayName NVARCHAR(50) NOT NULL,
   Email NVARCHAR(50) NOT NULL,
   PasswordHash BINARY NOT NULL,
-  CartID INT NOT NULL, -- FOREIGN KEY 
+  --CartID INT NOT NULL, -- FOREIGN KEY 
   --  REFERENCES Soundfront.Cart(CartID)
 
    UNIQUE(Email)
@@ -42,9 +40,9 @@ CREATE TABLE Soundfront.Cart
 );
 
 -- Add the Foreign Key from User to Cart
-ALTER TABLE Soundfront.[User]
-  ADD CONSTRAINT [fk_cart_user]
-  FOREIGN KEY (CartID) REFERENCES Soundfront.Cart(CartID);
+-- ALTER TABLE Soundfront.[User]
+--   ADD CONSTRAINT [fk_cart_user]
+--   FOREIGN KEY (CartID) REFERENCES Soundfront.Cart(CartID);
   
 CREATE TABLE Soundfront.Social
 (
@@ -52,7 +50,9 @@ CREATE TABLE Soundfront.Social
   FollowerID INT NOT NULL FOREIGN KEY 
     REFERENCES Soundfront.[User](UserID),
   FollowingID INT NOT NULL FOREIGN KEY 
-    REFERENCES Soundfront.[User](UserID)
+    REFERENCES Soundfront.[User](UserID),
+
+  UNIQUE(FollowerID, FollowingID)
 );
 
 CREATE TABLE Soundfront.Album
