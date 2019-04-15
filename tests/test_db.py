@@ -2,11 +2,11 @@ import unittest
 from soundfront import Database
 
 class TestDatabase(unittest.TestCase):
-    def test_connect(self):
+    def setUp(self):
         self.db = Database(database='soundfront_test')
         self.db.connect()
 
-    def tearDown(self):
+    def test_destroy(self):
         self.db.destroy()
 
 

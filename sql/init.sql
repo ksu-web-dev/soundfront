@@ -2,14 +2,17 @@ DROP TABLE IF EXISTS Soundfront.SongTag;
 DROP TABLE IF EXISTS Soundfront.Tag;
 DROP TABLE IF EXISTS Soundfront.SongRating;
 DROP TABLE IF EXISTS Soundfront.AlbumRating;
-DROP TABLE IF EXISTS Soundfront.SongCart;
-DROP TABLE IF EXISTS Soundfront.AlbumCart;
--- DROP TABLE IF EXISTS Soundfront.MusicCart;
+DROP TABLE IF EXISTS Soundfront.MusicCart;
 DROP TABLE IF EXISTS Soundfront.Song;
 DROP TABLE IF EXISTS Soundfront.Album;
 DROP TABLE IF EXISTS Soundfront.Social;
 DROP TABLE IF EXISTS Soundfront.Cart;
 DROP TABLE IF EXISTS Soundfront.[User];
+DROP PROCEDURE IF EXISTS Soundfront.[CreateUser];
+DROP PROCEDURE IF EXISTS Soundfront.[GetUser];
+DROP PROCEDURE IF EXISTS Soundfront.[UpdateUser];
+DROP PROCEDURE IF EXISTS Soundfront.[RemoveUser];
+DROP PROCEDURE IF EXISTS Soundfront.[ListUser];
 
 DROP SCHEMA IF EXISTS Soundfront;
 GO
@@ -25,7 +28,7 @@ CREATE TABLE Soundfront.[User]
   JoinDate DATETIME NOT NULL DEFAULT(SYSDATETIMEOFFSET()),
   DisplayName NVARCHAR(50) NOT NULL,
   Email NVARCHAR(50) NOT NULL,
-  PasswordHash BINARY NOT NULL,
+  PasswordHash BINARY(512) NOT NULL,
   --CartID INT NOT NULL, -- FOREIGN KEY 
   --  REFERENCES Soundfront.Cart(CartID)
 
@@ -83,22 +86,13 @@ CREATE TABLE Soundfront.Song
   Description NVARCHAR(1024) NOT NULL
 );
 
-CREATE TABLE Soundfront.SongCart
+CREATE TABLE Soundfront.MusicCart
 (
-  SongCartID INT NOT NULL IDENTITY(1, 1) PRIMARY KEY,
-  SongID INT NOT NULL FOREIGN KEY 
-    REFERENCES Soundfront.Song(SongID),
-  CartID INT NOT NULL FOREIGN KEY 
-    REFERENCES Soundfront.Cart(CartID)
-);
-
-CREATE TABLE Soundfront.AlbumCart
-(
-  AlbumCartID INT NOT NULL IDENTITY(1, 1) PRIMARY KEY,
+  MusicCartID INT NOT NULL IDENTITY(1, 1) PRIMARY KEY,
   AlbumID INT NOT NULL FOREIGN KEY 
     REFERENCES Soundfront.Album(AlbumID),
-  CartID INT NOT NULL FOREIGN KEY 
-    REFERENCES Soundfront.Cart(CartID)
+  SongID INT NOT NULL FOREIGN KEY 
+    REFERENCES Soundfront.Song(SongID)
 );
 
 CREATE TABLE Soundfront.AlbumRating
