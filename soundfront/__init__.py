@@ -3,8 +3,10 @@ import os
 from flask import Flask
 from .db import Database
 
+
 def create_app():
     app = Flask(__name__)
+
     database = Database()
     database.connect()
 
