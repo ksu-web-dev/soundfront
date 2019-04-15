@@ -1,9 +1,11 @@
 import pyodbc
 import os
+from dotenv import load_dotenv
 
 
 class Database:
     def __init__(self, server=None, database=None, username=None, password=None):
+        load_dotenv()
         self.server = server or os.environ.get('DB_SERVER', default='localhost,1433')
         self.database = database or os.environ.get('DB_DATABASE', default='soundfront')
         self.username = username or os.environ.get('DB_USERNAME', default='sa')
