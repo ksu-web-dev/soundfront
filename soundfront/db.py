@@ -5,7 +5,6 @@ import os
 class Database:
 
     def __init__(self):
-        # ideally, get these params from config
         self.server = os.environ.get('DB_SERVER', default='localhost,1433')
         self.database = os.environ.get('DB_DATABASE', default='TestDB')
         self.username = os.environ.get('DB_USERNAME', default='SA')
