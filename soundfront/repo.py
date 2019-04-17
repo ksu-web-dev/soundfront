@@ -10,7 +10,7 @@ class UserRepo():
                 @DisplayName=?,
                 @Email=?,
                 @EnteredPassword=?
-        """, 1, email, display_name, password)
+        """, 1, display_name, email, password)
         return cursor.fetchone()
 
     def get_user(self, id):
