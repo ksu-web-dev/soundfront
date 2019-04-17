@@ -1,4 +1,3 @@
-
 /* Create a new user.*/
 CREATE OR ALTER PROCEDURE Soundfront.CreateUser
     @Privacy BIT,
@@ -19,6 +18,14 @@ AS
 SELECT U.UserID, U.Privacy, U.LastLoginDate, U.JoinDate, U.DisplayName, U.Email, U.PasswordHash
 FROM Soundfront.[User] U
 WHERE U.UserID = @UserID;
+GO
+
+CREATE OR ALTER PROCEDURE Soundfront.GetUserByEmail
+    @Email NVARCHAR(50)
+AS
+SELECT U.UserID, U.Privacy, U.LastLoginDate, U.JoinDate, U.DisplayName, U.Email, U.PasswordHash
+FROM Soundfront.[User] U
+WHERE U.Email = @Email;
 GO
 
 /* Update a user. */
@@ -54,3 +61,4 @@ CREATE OR ALTER PROCEDURE Soundfront.ListUser
 AS
 SELECT U.UserID, U.Privacy, U.LastLoginDate, U.JoinDate, U.DisplayName, U.Email, U.PasswordHash
 FROM Soundfront.[User] U;
+GO

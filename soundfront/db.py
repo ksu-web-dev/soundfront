@@ -24,8 +24,10 @@ class Database:
 
         if db_exists[0] is None:
             cursor.execute(f'CREATE DATABASE {self.database}')
-            cursor.execute(f'USE {self.database}')
-            self.run_scripts()
+
+        self.conn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+self.server +
+                                   ';DATABASE='+self.database+';UID='+self.username+';PWD=' + self.password, autocommit=True)
+        self.run_scripts()
 
     def run_scripts(self):
         cursor = self.conn.cursor()
@@ -42,6 +44,7 @@ class Database:
     def destroy(self):
         cursor = self.conn.cursor()
         cursor.execute(f'DROP DATABASE {self.database}')
+        self.conn.close()
 
     def get_version(self):
         cursor = self.conn.cursor()
@@ -57,4 +60,3 @@ class Database:
             query_string = textwrap.dedent("""{}""".format(lines))
 
         return query_string
-

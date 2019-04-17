@@ -1,0 +1,63 @@
+*, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.page {
+  width: 870px;
+  margin: auto;
+}
+
+a { 
+  text-decoration: none;
+  color: inherit;
+  opacity: 0.8;
+  transition: all 0.2s ease;
+}
+a:hover {
+  opacity: 1;
+  transition: all 0.2s ease;
+}
+
+label {
+  display: block;
+}
+
+button {
+  display: block;
+  padding: 8px 12px;
+}
+
+#navbar {
+  height: 55px;
+  margin: 0px;
+  background: #9182BA;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-body {
+  width: 870px;
+  display: flex;
+  justify-content: space-between;
+}
+
+
+#logo {
+  font-size: 20px;
+}
+
+.flashes {
+  background: #FFD2D2;
+  border: 1px solid #FF0101;
+  padding: 12px;
+  list-style-type: none;
+  margin-bottom: 32px;
+}
+
+form > input{
+  margin-bottom: 12px;
+}
