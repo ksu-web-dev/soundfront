@@ -1,21 +1,19 @@
 
 /* Create a new user.*/
 CREATE OR ALTER PROCEDURE Soundfront.CreateUser
-    @UserID INT,
     @Privacy BIT,
-    @LastLoginDate DATETIMEOFFSET,
-    @JoinDate DATETIMEOFFSET,
     @DisplayName NVARCHAR(32),
     @Email NVARCHAR(32),
-    @PasswordHash BINARY
+    @EnteredPassword NVARCHAR(50)
 AS 
 
-INSERT Soundfront.[User](Privacy, LastLoginDate, JoinDate, DisplayName, Email, PasswordHash)
-VALUES(@Privacy, @LastLoginDate, @JoinDate, @DisplayName, @Email, HASHBYTES('SHA2_512', @PasswordHash));
+INSERT Soundfront.[User](Privacy, DisplayName, Email, PasswordHash)
+OUTPUT Inserted.UserID, Inserted.DisplayName, Inserted.Email, Inserted.Privacy, Inserted.PasswordHash
+VALUES(@Privacy, @DisplayName, @Email, HASHBYTES('SHA2_512', @EnteredPassword));
 GO
 
-/* Read in a single user. */
-CREATE OR ALTER PROCEDURE Soundfront.ReadUser
+/* Get a single user. */
+CREATE OR ALTER PROCEDURE Soundfront.GetUser
     @UserID INT
 AS
 SELECT U.UserID, U.Privacy, U.LastLoginDate, U.JoinDate, U.DisplayName, U.Email, U.PasswordHash
@@ -33,7 +31,7 @@ CREATE OR ALTER PROCEDURE Soundfront.UpdateUser
 
 AS
 
-UPDATE Soundfront.User
+UPDATE Soundfront.[User]
     SET
        Privacy = @Privacy,
        LastLoginDate =  @LastLoginDate,
@@ -48,4 +46,11 @@ CREATE OR ALTER PROCEDURE Soundfront.RemoveUser
 AS
     DELETE FROM Soundfront.[User] 
     WHERE UserID = @UserID; 
+
 GO
+
+CREATE OR ALTER PROCEDURE Soundfront.ListUser
+    @UserID INT
+AS
+SELECT U.UserID, U.Privacy, U.LastLoginDate, U.JoinDate, U.DisplayName, U.Email, U.PasswordHash
+FROM Soundfront.[User] U;
