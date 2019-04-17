@@ -24,6 +24,7 @@ class Database:
 
         if db_exists[0] is None:
             cursor.execute(f'CREATE DATABASE {self.database}')
+            cursor.execute(f'USE {self.database}')
             self.run_scripts()
 
     def run_scripts(self):
