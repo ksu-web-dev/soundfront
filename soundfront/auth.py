@@ -53,8 +53,17 @@ def login():
             if user is None:
                 error = 'User does not exist with that email'
 
-        # TODO Implement logging in
+        if error is None:
+            session.clear()
+            session['user_id'] =  user.UserID
+            return redirect(url_for('index'))
 
         flash(error)
 
     return render_template('auth/login.html')
+
+
+@bp.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('index'))

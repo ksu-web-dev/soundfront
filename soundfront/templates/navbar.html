@@ -4,7 +4,11 @@
       <span id="logo">SoundFront</span>
     </div>
     <div class="nav-right">
-      <a href="/auth/login">Login</a>
+      {% if session['user_id'] %}
+        <a href="/auth/logout">Logout</a>
+      {% else %}
+        <a href="/auth/login">Login</a>
+      {% endif %}
     </div>
   </div>
 </div>
