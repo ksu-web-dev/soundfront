@@ -1,9 +1,9 @@
 import unittest
 from soundfront.db import Database
-from soundfront.repo import UserRepo
+from soundfront.user import UserRepo
 
 
-class TestRepo(unittest.TestCase):
+class TestUser(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         db = Database(database=f'soundfront_test', setup=True)
@@ -12,17 +12,17 @@ class TestRepo(unittest.TestCase):
         cls.user_repo = UserRepo(db.conn)
 
     def test_create_user(self):
-        user = TestRepo.user_repo.create_user(
+        user = TestUser.user_repo.create_user(
             email='email', display_name='user', password='test')
         self.assertEqual(user.UserID, 1)
 
     def test_get_user(self):
-        created_user = TestRepo.user_repo.create_user(
+        created_user = TestUser.user_repo.create_user(
             email='email2', display_name='user2', password='test')
-        user = TestRepo.user_repo.get_user(created_user.UserID)
+        user = TestUser.user_repo.get_user(created_user.UserID)
         self.assertEqual(user.UserID, created_user.UserID)
 
     def test_get_user_by_email(self):
-        user = TestRepo.user_repo.get_user_by_email('email')
+        user = TestUser.user_repo.get_user_by_email('email')
         assert user is not None
         self.assertEqual(user.Email, 'email')
