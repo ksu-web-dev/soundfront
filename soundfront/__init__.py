@@ -2,7 +2,7 @@ import os
 
 from flask import Flask, render_template
 from .db import Database
-from . import auth
+from .blueprints import auth
 from .user import UserRepo
 
 
@@ -14,7 +14,6 @@ def create_app():
     app.config['db'] = database
     app.config['user'] = UserRepo(database.conn)
     app.config['SECRET_KEY'] = os.environ.get('FLASK_SECRET_KEY')
-
 
     app.register_blueprint(auth.bp)
 
