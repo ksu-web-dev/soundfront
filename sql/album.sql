@@ -1,5 +1,5 @@
 -- Insert
-CREATE OR ALTER PROCEDURE Soundfront.AlbumInsert
+CREATE OR ALTER PROCEDURE Soundfront.CreateInsert
 	@AlbumUserId INT,
 	@AlbumTitle NVARCHAR(50),
 	@AlbumLength INT,
