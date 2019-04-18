@@ -2,10 +2,10 @@
 
 CREATE OR ALTER PROCEDURE Soundfront.CreateTag
     @TagID INT,
-    @[Name] NVARCHAR(50)
+    @Name NVARCHAR(50)
 AS
 INSERT Soundfront.Tag(TagID, [Name])
-VALUES(@TagID, @[Name])
+VALUES(@TagID, @Name)
 GO
 
 /* Add a tag to a song. */
