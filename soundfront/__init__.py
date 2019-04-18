@@ -24,7 +24,6 @@ def create_app():
     def index():
         album_repo = app.config['album']    
         albums = album_repo.list_albums(page=1, page_size=5)
-        print(albums)
         return render_template('index.html', albums=albums)
 
     @app.route('/hello')
