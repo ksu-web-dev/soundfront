@@ -13,6 +13,7 @@ DROP PROCEDURE IF EXISTS Soundfront.[GetUser];
 DROP PROCEDURE IF EXISTS Soundfront.[UpdateUser];
 DROP PROCEDURE IF EXISTS Soundfront.[RemoveUser];
 DROP PROCEDURE IF EXISTS Soundfront.[ListUser];
+DROP PROCEDURE IF EXISTS Soundfront.[GetUserByEmail];
 
 DROP SCHEMA IF EXISTS Soundfront;
 GO

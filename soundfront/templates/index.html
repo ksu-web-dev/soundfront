@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block page %}
+
+	{# albums.AlbumID #}
+
+	{% for album in albums %}
+<div> AlbumID: {{album.AlbumID}} </div>
+<div> Title: {{album.Title}} </div>
+<div> UserID: {{album.UserID}} </div>
+<div> Length: {{album.Length}} </div>
+<div> Price: {{album.Price}} </div>
+<div> UploadDate: {{album.UploadDate}} </div>
+<div> Description: {{album.Description}} </div>
+<br>
+	{% endfor %}
+
+{% endblock %}

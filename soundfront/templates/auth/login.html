@@ -1,0 +1,27 @@
+{% extends "layout.html" %} {% block page %}
+
+<h1>Login</h1>
+
+{% with messages = get_flashed_messages() %} {% if messages %}
+<ul class="flashes">
+  {% for message in messages %}
+  <li>{{ message }}</li>
+  {% endfor %}
+</ul>
+{% endif %} {% endwith %}
+
+<form method="post">
+  <label for="email">Email</label>
+  <input type="text" name="email" id="email" value="{{ request.form.email }}" />
+
+  <label for="password">Password</label>
+  <input type="password" name="password" id="password" />
+
+  <div>
+    <a href="/auth/register">Create an account</a>
+  </div>
+
+  <button type="submit">Submit</button>
+</form>
+
+{% endblock %}

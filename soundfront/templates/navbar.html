@@ -1,0 +1,14 @@
+<div id="navbar">
+  <div class="nav-body">
+    <div class="nav-left">
+      <span id="logo">SoundFront</span>
+    </div>
+    <div class="nav-right">
+      {% if session['user_id'] %}
+        <a href="/auth/logout">Logout</a>
+      {% else %}
+        <a href="/auth/login">Login</a>
+      {% endif %}
+    </div>
+  </div>
+</div>

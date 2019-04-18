@@ -1,15 +1,17 @@
-
 /* Create a new user.*/
 CREATE OR ALTER PROCEDURE Soundfront.CreateUser
     @Privacy BIT,
     @DisplayName NVARCHAR(32),
     @Email NVARCHAR(32),
     @EnteredPassword NVARCHAR(50)
-AS 
+AS
+BEGIN
+    SET NOCOUNT ON 
 
-INSERT Soundfront.[User](Privacy, DisplayName, Email, PasswordHash)
-OUTPUT Inserted.UserID, Inserted.DisplayName, Inserted.Email, Inserted.Privacy, Inserted.PasswordHash
-VALUES(@Privacy, @DisplayName, @Email, HASHBYTES('SHA2_512', @EnteredPassword));
+    INSERT Soundfront.[User](Privacy, DisplayName, Email, PasswordHash)
+    OUTPUT Inserted.UserID, Inserted.DisplayName, Inserted.Email, Inserted.Privacy, Inserted.PasswordHash
+    VALUES(@Privacy, @DisplayName, @Email, HASHBYTES('SHA2_512', @EnteredPassword));
+END
 GO
 
 /* Get a single user. */
@@ -19,6 +21,14 @@ AS
 SELECT U.UserID, U.Privacy, U.LastLoginDate, U.JoinDate, U.DisplayName, U.Email, U.PasswordHash
 FROM Soundfront.[User] U
 WHERE U.UserID = @UserID;
+GO
+
+CREATE OR ALTER PROCEDURE Soundfront.GetUserByEmail
+    @Email NVARCHAR(50)
+AS
+SELECT U.UserID, U.Privacy, U.LastLoginDate, U.JoinDate, U.DisplayName, U.Email, U.PasswordHash
+FROM Soundfront.[User] U
+WHERE U.Email = @Email;
 GO
 
 /* Update a user. */
@@ -54,3 +64,4 @@ CREATE OR ALTER PROCEDURE Soundfront.ListUser
 AS
 SELECT U.UserID, U.Privacy, U.LastLoginDate, U.JoinDate, U.DisplayName, U.Email, U.PasswordHash
 FROM Soundfront.[User] U;
+GO

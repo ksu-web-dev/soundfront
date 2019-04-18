@@ -1,5 +1,5 @@
 -- Insert
-CREATE OR ALTER PROCEDURE Soundfront.CreateInsert
+CREATE OR ALTER PROCEDURE Soundfront.CreateAlbum
 	@AlbumUserId INT,
 	@AlbumTitle NVARCHAR(50),
 	@AlbumLength INT,
@@ -7,10 +7,13 @@ CREATE OR ALTER PROCEDURE Soundfront.CreateInsert
 	@AlbumDescription NVARCHAR(1024)
 
 AS
-
-INSERT Soundfront.Album(UserID, Title, [Length], Price, [Description])
-VALUES
-	(@AlbumUserId, @AlbumTitle, @AlbumLength, @AlbumPrice, @AlbumDescription)
+BEGIN
+	SET NOCOUNT ON
+	INSERT Soundfront.Album(UserID, Title, [Length], Price, [Description])
+	OUTPUT Inserted.AlbumID, Inserted.Title, Inserted.Length, Inserted.Price, Inserted.Description
+	VALUES
+		(@AlbumUserId, @AlbumTitle, @AlbumLength, @AlbumPrice, @AlbumDescription)
+END
 
 GO
 
