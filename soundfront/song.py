@@ -39,4 +39,4 @@ class SongRepo():
     def list_song(self, page, pagesize):
         cursor = self.conn.cursor()
         cursor.execute('EXEC Soundfront.ListSong @Page=?, @PageSize=?', page, pagesize)
-        return cursor.fetchone()
+        return cursor.fetchall()
