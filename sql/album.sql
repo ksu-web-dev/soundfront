@@ -14,7 +14,6 @@ BEGIN
 	VALUES
 		(@AlbumUserId, @AlbumTitle, @AlbumLength, @AlbumPrice, @AlbumDescription)
 END
-
 GO
 
 -- Update
@@ -34,7 +33,6 @@ UPDATE Soundfront.Album
 		Price = @AlbumPrice,
 		[Description] = @AlbumDescription
 WHERE AlbumID = @AlbumAlbumId
-
 GO
 
 -- Read
@@ -45,7 +43,6 @@ AS
 SELECT A.AlbumID, A.UserID, A.Title, A.[Length], A.Price, A.UploadDate, A.[Description]
 FROM Soundfront.Album A
 WHERE A.AlbumID = @AlbumAlbumId
-
 GO
 
 -- Delete
@@ -55,7 +52,6 @@ AS
 
 DELETE FROM Soundfront.Album
 WHERE AlbumID = @AlbumAlbumId
-
 GO
 
 -- List
@@ -68,5 +64,3 @@ SELECT A.AlbumID, A.UserID, A.Title, A.[Length], A.Price, A.UploadDate, A.[Descr
 FROM Soundfront.Album A
 ORDER BY A.UploadDate DESC
 OFFSET ((@Page * @PageSize) - @PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY;
-
-GO
