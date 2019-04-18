@@ -54,6 +54,17 @@ DELETE FROM Soundfront.Album
 WHERE AlbumID = @AlbumAlbumId
 GO
 
+-- List Songs by AlbumID
+CREATE OR ALTER PROCEDURE Soundnfront.GetAlbumSongs
+	@AlbumID INT
+AS
+
+SELECT *
+FROM Soundfront.Songs S
+WHERE S.AlbumID = @AlbumID
+
+GO
+
 -- List
 CREATE OR ALTER PROCEDURE Soundfront.ListAlbums
 	@Page INT,
