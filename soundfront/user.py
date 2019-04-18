@@ -13,6 +13,16 @@ class UserRepo():
         """, 1, display_name, email, password)
         return cursor.fetchone()
 
+    def list_users(self, page, page_size):
+        cursor = self.conn.cursor()
+        cursor.execute('EXEC Soundfront.ListUser @Page=?, @PageSize=?', page, page_size)
+        return cursor.fetchall()
+
+    def user_count(self):
+        cursor = self.conn.cursor()
+        cursor.execute('EXEC Soundfront.UserCount')
+        return cursor.fetchone()[0]
+
     def get_user(self, id):
         cursor = self.conn.cursor()
         cursor.execute('EXEC Soundfront.GetUser @UserID=?', id)
@@ -26,7 +36,3 @@ class UserRepo():
     def remove_user(self, id):
         cursor = self.conn.cursor()
         cursor.execute('EXEC Soundfront.RemoveUser @UserID=?', id)
-
-
-
-
