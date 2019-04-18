@@ -3,7 +3,7 @@ import os
 from flask import Flask, render_template
 from .db import Database
 from . import auth
-from .repo import UserRepo
+from .user import UserRepo
 
 
 def create_app():
