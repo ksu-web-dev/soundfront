@@ -14,6 +14,11 @@ DROP PROCEDURE IF EXISTS Soundfront.[UpdateUser];
 DROP PROCEDURE IF EXISTS Soundfront.[RemoveUser];
 DROP PROCEDURE IF EXISTS Soundfront.[ListUser];
 DROP PROCEDURE IF EXISTS Soundfront.[GetUserByEmail];
+DROP PROCEDURE IF EXISTS Soundfront.[CreateAlbum];
+DROP PROCEDURE IF EXISTS Soundfront.[ReadAlbum];
+DROP PROCEDURE IF EXISTS Soundfront.[ListAlbums];
+DROP PROCEDURE IF EXISTS Soundfront.[DeleteAlbum];
+DROP PROCEDURE IF EXISTS Soundfront.[UpdateAlbum];
 
 DROP SCHEMA IF EXISTS Soundfront;
 GO
