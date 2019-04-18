@@ -2,10 +2,11 @@ import os
 
 from flask import Flask, render_template
 from .db import Database
-from . import auth
 
-from .user import UserRepo
-from .album import AlbumRepo
+from .auth  import bp as auth_bp
+from .index import bp as index_bp
+from .album import bp as album_bp, AlbumRepo
+from .user  import UserRepo
 
 
 def create_app():
@@ -18,13 +19,9 @@ def create_app():
     app.config['album'] = AlbumRepo(database.conn)
     app.config['SECRET_KEY'] = os.environ.get('FLASK_SECRET_KEY')
 
-    app.register_blueprint(auth.bp)
-
-    @app.route('/')
-    def index():
-        album_repo = app.config['album']    
-        albums = album_repo.list_albums(page=1, page_size=5)
-        return render_template('index.html', albums=albums)
+    app.register_blueprint(auth_bp)
+    app.register_blueprint(index_bp)
+    app.register_blueprint(album_bp)
 
     @app.route('/hello')
     def hello():
