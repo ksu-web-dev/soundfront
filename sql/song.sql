@@ -9,6 +9,7 @@ CREATE OR ALTER PROCEDURE Soundfront.InsertSong
 AS
 
 INSERT Soundfront.Song(UserID, AlbumID, Title, [Length], Price, [Description])
+OUTPUT Inserted.SongID
 VALUES (@UserID, @AlbumID, @Title, @Length, @Price, @Description)
 
 GO
@@ -65,5 +66,3 @@ SELECT S.SongID, S.UserID, S.AlbumID, S.Title, S.[Length],
 FROM Soundfront.Song S
 ORDER BY S.UploadDate DESC
 OFFSET ((@Page * @PageSize) - @PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY;
-
-GO

@@ -22,6 +22,12 @@ DROP PROCEDURE IF EXISTS Soundfront.[UpdateAlbum];
 DROP PROCEDURE IF EXISTS Soundfront.[RecentAlbums];
 DROP PROCEDURE IF EXISTS Soundfront.[UserCount];
 DROP PROCEDURE IF EXISTS Soundfront.[GetAlbumSongs];
+DROP PROCEDURE IF EXISTS Soundfront.[CreateSong];
+DROP PROCEDURE IF EXISTS Soundfront.[DeleteSong];
+DROP PROCEDURE IF EXISTS Soundfront.[UpdateSong];
+DROP PROCEDURE IF EXISTS Soundfront.[ReadSong];
+DROP PROCEDURE IF EXISTS Soundfront.[InsertSong];
+DROP PROCEDURE IF EXISTS Soundfront.[ListSong];
 
 DROP SCHEMA IF EXISTS Soundfront;
 GO
@@ -86,13 +92,13 @@ CREATE TABLE Soundfront.Song
   SongID INT NOT NULL IDENTITY(1, 1) PRIMARY KEY,
   UserID INT NOT NULL FOREIGN KEY
     REFERENCES Soundfront.[User](UserID),
-  AlbumID INT NOT NULL FOREIGN KEY
+  AlbumID INT FOREIGN KEY
     REFERENCES Soundfront.Album(AlbumID),
   Title NVARCHAR(50) NOT NULL,
   Length INT NOT NULL,
   UploadDate DATETIME NOT NULL DEFAULT(SYSDATETIMEOFFSET()),
   Price INT NOT NULL,
-  Description NVARCHAR(1024) NOT NULL
+  Description NVARCHAR(1024) 
 );
 
 CREATE TABLE Soundfront.MusicCart

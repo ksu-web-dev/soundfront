@@ -1,0 +1,35 @@
+{% extends "layout.html" %} 
+{% block page %}
+
+<h1>Add a song</h1>
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class="flashes">
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+<form method="post">
+  <label>Title</label>
+  <input type="text" name="title" id="title" value="{{ request.form.title }}"/>
+
+  <label>Album ID (optional)</label>
+  <input type="text" name="album" id="album" value="{{ request.form.album }}"/>
+
+  <label>Length</label>
+  <input type="text" name="length" id="length" value="{{ request.form.length }}"/>
+
+  <label>Price</label>
+  <input type="text" name="price" id="price" value="{{ request.form.price }}"/>
+
+  <label>Description (optional)</label>
+  <input type="text" name="description" id="description" value="{{ request.form.description }}"/>
+
+  <button type="submit">Submit</button>
+</form>
+
+{% endblock %}

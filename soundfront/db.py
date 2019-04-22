@@ -37,7 +37,7 @@ class Database:
 
         ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
-        for script in ['init.sql', 'user.sql', 'album.sql']:
+        for script in ['init.sql', 'user.sql', 'album.sql', 'song.sql']:
             print("Executing: " + script)
             script_path = os.path.join(ROOT_DIR, '../sql', script)
             batches = self.create_query_string(script_path).split("GO")
