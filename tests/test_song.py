@@ -27,3 +27,8 @@ class TestSong(unittest.TestCase):
         )
 
         self.assertEqual(song.SongID, 1)
+
+    def test_list_song(self):
+        songs = TestSong.repo.list_song(1, 10)
+        self.assertEqual(len(songs), 1)
+        self.assertEqual(songs[0].Title, 'some song')
