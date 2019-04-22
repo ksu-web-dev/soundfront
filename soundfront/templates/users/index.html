@@ -11,6 +11,11 @@
     {{ user.DisplayName }}
   </div>
   {% endfor %}
+
+  {% if current_page-1 > 0 %}
+  <a href="/users/{{ current_page - 1}}" class="button">Previous Page</a> |
+  {% endif %}
+  <a href="/users/{{ current_page + 1}}" class="button">Next Page</a>
 </div>
 
 {% endblock %}

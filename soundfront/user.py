@@ -3,11 +3,14 @@ from flask import (Blueprint, flash, g, redirect,
 
 bp = Blueprint('users', __name__, url_prefix='/users')
 
+
 @bp.route('/', methods=['GET'])
-def index():
+@bp.route('/<page>', methods=['GET'])
+def index(page=1):
     repo = current_app.config['user']
-    users = repo.list_users(1, 10)
-    return render_template('users/index.html', users=users)
+    users = repo.list_users(page, 10)
+    user_count = repo.user_count()
+    return render_template('users/index.html', users=users, current_page=int(page), user_count=user_count)
 
 
 class UserRepo():
