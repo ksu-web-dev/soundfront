@@ -31,11 +31,7 @@
 
 .albums {
 	padding-top: 30px;
-	/*display: flex;
-	flex-wrap: wrap;
-	justify-content: space-between;*/
 	display: grid;
-	/*justify-content: space-between;*/
 	grid-template-columns: repeat(5, 1fr);
 	column-gap: 30px;
 	row-gap: 15px;
@@ -50,10 +46,6 @@
 
 .album {
 	width: 150px;
-	/*margin-bottom: 10px;*/
-	/*flex-basis: 100%;*/
-	/*flex: 1;*/
-	/*display: flex;*/
 }
 .album:nth-child(6n) {
 	flex-basis: 100%;
