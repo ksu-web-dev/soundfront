@@ -3,9 +3,11 @@ from flask import (Blueprint, flash, g, redirect,
 
 bp = Blueprint('songs', __name__, url_prefix='/songs')
 
+
 @bp.route('/', methods=['GET'])
 def index():
     return render_template('songs/index.html')
+
 
 @bp.route('/new', methods=['GET', 'POST'])
 def new():
@@ -27,7 +29,7 @@ def new():
 
         if error is None:
             repo = current_app.config['song']
-            user_id = session['user_id'] 
+            user_id = session['user_id']
             repo.insert_song(user_id, album, title, length, price, description)
             return redirect(url_for('songs.index'))
 
@@ -40,7 +42,7 @@ class SongRepo():
     def __init__(self, conn):
         self.conn = conn
 
-    def insert_song(self, userid='', albumid=None, title='', length='', price='', description=''):
+    def insert_song(self, userid='', albumid=None, title='', length=0, price=0, description=''):
         cursor = self.conn.cursor()
         cursor.execute("""
             EXEC Soundfront.InsertSong
@@ -76,5 +78,6 @@ class SongRepo():
 
     def list_song(self, page, pagesize):
         cursor = self.conn.cursor()
-        cursor.execute('EXEC Soundfront.ListSong @Page=?, @PageSize=?', page, pagesize)
+        cursor.execute(
+            'EXEC Soundfront.ListSong @Page=?, @PageSize=?', page, pagesize)
         return cursor.fetchall()
