@@ -60,8 +60,16 @@ AS
 GO
 
 CREATE OR ALTER PROCEDURE Soundfront.ListUser
-    @UserID INT
+	@Page INT,
+	@PageSize INT
 AS
 SELECT U.UserID, U.Privacy, U.LastLoginDate, U.JoinDate, U.DisplayName, U.Email, U.PasswordHash
-FROM Soundfront.[User] U;
+FROM Soundfront.[User] U
+ORDER BY U.JoinDate DESC
+OFFSET ((@Page * @PageSize) - @PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY;
+GO
 
+CREATE OR ALTER PROCEDURE Soundfront.UserCount
+AS
+SELECT COUNT(*)
+FROM Soundfront.[User] U

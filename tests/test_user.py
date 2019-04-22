@@ -22,6 +22,15 @@ class TestUser(unittest.TestCase):
         user = TestUser.user_repo.get_user(created_user.UserID)
         self.assertEqual(user.UserID, created_user.UserID)
 
+    def test_list_users(self):
+        users = TestUser.user_repo.list_users(1, 10)
+
+        self.assertEqual(len(users), 2)
+
+    def test_user_count(self):
+        count = TestUser.user_repo.user_count()
+        self.assertEqual(count, 2)
+
     def test_get_user_by_email(self):
         user = TestUser.user_repo.get_user_by_email('email')
         assert user is not None

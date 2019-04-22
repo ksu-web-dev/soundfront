@@ -14,7 +14,6 @@ BEGIN
 	VALUES
 		(@AlbumUserId, @AlbumTitle, @AlbumLength, @AlbumPrice, @AlbumDescription)
 END
-
 GO
 
 -- Update
@@ -34,7 +33,6 @@ UPDATE Soundfront.Album
 		Price = @AlbumPrice,
 		[Description] = @AlbumDescription
 WHERE AlbumID = @AlbumAlbumId
-
 GO
 
 -- Read
@@ -45,7 +43,6 @@ AS
 SELECT A.AlbumID, A.UserID, A.Title, A.[Length], A.Price, A.UploadDate, A.[Description]
 FROM Soundfront.Album A
 WHERE A.AlbumID = @AlbumAlbumId
-
 GO
 
 -- Get all the Songs from an Album
