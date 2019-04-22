@@ -14,7 +14,7 @@ def album_home():
 @bp.route('/<album_id>', methods=['GET'])
 def album(album_id):
     album_repo = current_app.config['album']
-    album_songs = album_repo.get_album_songs(album_id)
+    album_songs = album_repo.list_songs(album_id)
     print(album_songs)
     return render_template('album_id.html', album_songs=album_songs)
 
