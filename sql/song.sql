@@ -62,7 +62,8 @@ CREATE OR ALTER PROCEDURE Soundfront.ListSong
 AS
 
 SELECT S.SongID, S.UserID, S.AlbumID, S.Title, S.[Length],
-	S.UploadDate, S.Price, S.[Description], U.DisplayName as Artist
+	S.UploadDate, S.Price, S.[Description], U.DisplayName as Artist,
+	A.Title as AlbumTitle
 FROM Soundfront.Song S
 	LEFT JOIN Soundfront.Album A ON A.AlbumID = S.AlbumID
 	INNER JOIN Soundfront.[User] U ON U.UserID = U.UserID
