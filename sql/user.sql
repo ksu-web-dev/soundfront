@@ -64,4 +64,4 @@ CREATE OR ALTER PROCEDURE Soundfront.ListUser
 AS
 SELECT U.UserID, U.Privacy, U.LastLoginDate, U.JoinDate, U.DisplayName, U.Email, U.PasswordHash
 FROM Soundfront.[User] U;
-GO
+

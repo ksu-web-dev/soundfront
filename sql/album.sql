@@ -48,6 +48,19 @@ WHERE A.AlbumID = @AlbumAlbumId
 
 GO
 
+-- Get all the Songs from an Album
+CREATE OR ALTER PROCEDURE Soundfront.GetAlbumSongs
+	@AlbumID INT
+AS
+
+SELECT A.AlbumID, A.Title AS AlbumTitle, S.Title, S.[Length], S.Price, S.UploadDate
+FROM Soundfront.Album A
+	INNER JOIN Soundfront.Song S ON S.AlbumID = A.AlbumID
+WHERE A.AlbumID = @AlbumID
+ORDER BY S.SongID
+
+GO
+
 -- Delete
 CREATE OR ALTER PROCEDURE Soundfront.DeleteAlbum
 	@AlbumAlbumID INT
@@ -70,3 +83,16 @@ ORDER BY A.UploadDate DESC
 OFFSET ((@Page * @PageSize) - @PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY;
 
 GO
+
+CREATE OR ALTER PROCEDURE Soundfront.RecentAlbums
+	@Page INT,
+	@PageSize INT
+AS
+BEGIN
+	SET NOCOUNT ON
+	SELECT A.AlbumID, A.UserID, A.Title, U.DisplayName
+	FROM Soundfront.Album A 
+		INNER JOIN Soundfront.[User] U ON A.UserID = U.UserID
+	ORDER BY A.UploadDate DESC
+	OFFSET ((@Page * @PageSize) - @PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY;
+END
