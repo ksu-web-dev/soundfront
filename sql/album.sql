@@ -55,7 +55,7 @@ WHERE AlbumID = @AlbumAlbumId
 GO
 
 -- List Songs by AlbumID
-CREATE OR ALTER PROCEDURE Soundnfront.GetAlbumSongs
+CREATE OR ALTER PROCEDURE Soundfront.GetAlbumSongs
 	@AlbumID INT
 AS
 
