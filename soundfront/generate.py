@@ -6,6 +6,9 @@ from db import Database
 from user import UserRepo
 from album import AlbumRepo
 
+from faker import Faker
+fake = Faker()
+
 database = Database()
 database.connect()
 
@@ -19,9 +22,10 @@ album_repo.create_album(user_id=user.UserID, album_title='The Less I Know the Be
                         album_length='90', album_price='1', album_description='A Nice Album')
 
 
-# create many users for testing pagination
-# for x in range(0, 300):
-#     random_string = ''.join(random.choices(
-#         string.ascii_uppercase + string.digits, k=12))
-#     user = user_repo.create_user(email=random_string, display_name=random_string, password='pass'
-#                                  )
+# create many faker users
+for x in range(0, 300):
+    user = user_repo.create_user(
+        email=fake.email(),
+        display_name=fake.name(),
+        password='password'
+    )
