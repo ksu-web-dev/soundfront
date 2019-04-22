@@ -73,6 +73,7 @@ form > input {
 
 .table {
   margin-top: 42px;
+  width: 100%;
 }
 
 .header-row {
@@ -85,7 +86,18 @@ form > input {
 }
 
 .row {
-  flex: 1 1 100%;
+  width: 100%;
   padding: 18px 0px;
   color: #7d8998;
+  display: flex;
+  text-align: left;
+}
+
+
+.header-col, .col {
+  width: 145px;
+  text-align: left;
+}
+.header-col:first-of-type, .col:first-of-type {
+  width: 200px;
 }

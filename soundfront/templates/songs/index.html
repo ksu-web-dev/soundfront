@@ -1,22 +1,28 @@
 {% extends "layout.html" %} {% block page %}
 
-<div class="table">
-  <div class="header-row">
-    <div class="header-col">Title</div>
-    <div class="header-col">Artist</div>
-    <div class="header-col">Album</div>
-    <div class="header-col">Length</div>
-    <div class="header-col">Price</div>
-    <div class="header-col"></div>
-  </div>
+<table class="table">
+  <tr class="header-row">
+    <th class="header-col">Title</th>
+    <th class="header-col">Artist</th>
+    <th class="header-col">Album</th>
+    <th class="header-col">Length</th>
+    <th class="header-col">Price</th>
+    <th class="header-col"></th>
+  </tr>
 
   {% for song in songs %}
-  <div class="row">
-    {{ song.Title }}
-  </div>
+  <tr class="row">
+    <th class="col">{{ song.Title }}</th>
+    <th class="col">1</th>
+    <th class="col">1</th>
+    <th class="col">1</th>
+    <th class="col">1</th>
+    <th class="col">1</th>
+  </tr>
   {% endfor %}
 
-  <a href="/songs/new" class="button">Add a song</a>
-</div>
+</table>
+
+<a href="/songs/new" class="button">Add a song</a>
 
 {% endblock %}
