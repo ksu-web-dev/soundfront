@@ -18,7 +18,6 @@ a {
   text-decoration: none;
   color: inherit;
   opacity: 0.8;
-  transition: all 0.2s ease;
 }
 a:hover {
   opacity: 1;
@@ -51,7 +50,13 @@ button {
 }
 
 #logo {
+  opacity: 1;
   font-size: 20px;
+  margin-right: 12px;
+}
+
+.nav-link {
+  margin-left: 24px;
 }
 
 .flashes {
