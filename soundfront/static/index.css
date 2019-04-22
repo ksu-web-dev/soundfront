@@ -1,0 +1,67 @@
+#recently-added {
+	margin-top: 15px;
+}
+
+.top {
+	display: flex;
+	height: 40px;
+	border-bottom-width: 1px;
+	border-bottom-color: #E6EDF4;
+	border-bottom-style: solid;
+	padding-left: 1px;
+	padding-right: 1px;
+}
+
+.top-name {
+	flex: 1;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	font-size: 15px;
+}
+
+.top-view-more {
+	flex: 1;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	font-size: 12px;
+	color: #7D8998;
+}
+
+.albums {
+	padding-top: 30px;
+	/*display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;*/
+	display: grid;
+	/*justify-content: space-between;*/
+	grid-template-columns: repeat(5, 1fr);
+	column-gap: 30px;
+	row-gap: 15px;
+}
+
+.album-link {
+	opacity: 1;
+}
+.album-link:hover {
+	opacity: .85;
+}
+
+.album {
+	width: 150px;
+	/*margin-bottom: 10px;*/
+	/*flex-basis: 100%;*/
+	/*flex: 1;*/
+	/*display: flex;*/
+}
+.album:nth-child(6n) {
+	flex-basis: 100%;
+}
+.album-title {
+	font-size: 15px;
+}
+.album-artist {
+	font-size: 12px;
+	color: #7D8998;
+}

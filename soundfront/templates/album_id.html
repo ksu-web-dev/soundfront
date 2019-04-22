@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block page %}
+
+ <link rel="stylesheet" href="{{ url_for('static', filename='album_id.css') }}">
+
+	<div class="songs">
+		{% for song in album_songs %}
+
+			<div class="song">
+				{{song.SongTitle}} - {{song.AlbumTitle}}
+			</div>
+
+		{% endfor %}
+	</div>
+
+{% endblock %}

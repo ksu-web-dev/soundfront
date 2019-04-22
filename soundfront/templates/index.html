@@ -1,15 +1,36 @@
 {% extends "layout.html" %}
 {% block page %}
 
-	{% for album in albums %}
-		<div> AlbumID: {{album.AlbumID}} </div>
-		<div> Title: {{album.Title}} </div>
-		<div> UserID: {{album.UserID}} </div>
-		<div> Length: {{album.Length}} </div>
-		<div> Price: {{album.Price}} </div>
-		<div> UploadDate: {{album.UploadDate}} </div>
-		<div> Description: {{album.Description}} </div>
-		<br>
-	{% endfor %}
+ <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+
+
+	<div id="recently-added">
+		<div class="top"> 
+			<div class="top-name">Recently Added</div>
+			<div class="top-view-more"><a class="album-link" href="/album">view more</a></div>
+		</div> 
+	
+		<div class="albums">
+		{% for album in albums %}
+			<a class="album-link" href="{{ '/album/%s'%album.AlbumID }}">
+				<div class="album">
+					<div class="album-art">
+						<img src="https://placekitten.com/g/150/150">
+						<!-- <img src="https://picsum.photos/150/150?random"> -->
+					</div>
+					<div class="album-title">{{album.Title}}</div>
+					<div class="album-artist">{{album.DisplayName}}</div>
+					<!-- <div> AlbumID: {{album.AlbumID}} </div>
+					<div> Title: {{album.Title}} </div>
+					<div> UserID: {{album.UserID}} </div>
+					<div> Length: {{album.Length}} </div>
+					<div> Price: {{album.Price}} </div>
+					<div> UploadDate: {{album.UploadDate}} </div>
+					<div> Description: {{album.Description}} </div> -->
+				</div>
+			</a>
+		{% endfor %}
+		</div>
+	</div>
 
 {% endblock %}
