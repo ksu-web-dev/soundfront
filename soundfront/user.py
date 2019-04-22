@@ -1,3 +1,15 @@
+from flask import (Blueprint, flash, g, redirect,
+                   render_template, request, session, url_for, current_app)
+
+bp = Blueprint('users', __name__, url_prefix='/users')
+
+@bp.route('/', methods=['GET'])
+def index():
+    repo = current_app.config['user']
+    users = repo.list_users(1, 10)
+    return render_template('users/index.html', users=users)
+
+
 class UserRepo():
     def __init__(self, conn):
         self.conn = conn
@@ -15,7 +27,8 @@ class UserRepo():
 
     def list_users(self, page, page_size):
         cursor = self.conn.cursor()
-        cursor.execute('EXEC Soundfront.ListUser @Page=?, @PageSize=?', page, page_size)
+        cursor.execute(
+            'EXEC Soundfront.ListUser @Page=?, @PageSize=?', page, page_size)
         return cursor.fetchall()
 
     def user_count(self):
