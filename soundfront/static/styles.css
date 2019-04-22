@@ -1,7 +1,12 @@
-*, html {
+*,
+html {
   margin: 0;
   padding: 0;
   font-family: 'Open Sans', sans-serif;
+}
+
+body {
+  color: #1e1e21;
 }
 
 .page {
@@ -9,11 +14,10 @@
   margin: auto;
 }
 
-a { 
+a {
   text-decoration: none;
   color: inherit;
   opacity: 0.8;
-  transition: all 0.2s ease;
 }
 a:hover {
   opacity: 1;
@@ -32,7 +36,7 @@ button {
 #navbar {
   height: 55px;
   margin: 0px;
-  background: #9182BA;
+  background: #9182ba;
   color: white;
   display: flex;
   justify-content: center;
@@ -45,19 +49,43 @@ button {
   justify-content: space-between;
 }
 
-
 #logo {
+  opacity: 1;
   font-size: 20px;
+  margin-right: 12px;
+}
+
+.nav-link {
+  margin-left: 24px;
 }
 
 .flashes {
-  background: #FFD2D2;
-  border: 1px solid #FF0101;
+  background: #ffd2d2;
+  border: 1px solid #ff0101;
   padding: 12px;
   list-style-type: none;
   margin-bottom: 32px;
 }
 
-form > input{
+form > input {
   margin-bottom: 12px;
+}
+
+.table {
+  margin-top: 42px;
+}
+
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e6edf4;
+  margin-bottom: 15px;
+}
+
+.row {
+  flex: 1 1 100%;
+  padding: 18px 0px;
+  color: #7d8998;
 }

@@ -21,6 +21,7 @@ DROP PROCEDURE IF EXISTS Soundfront.[DeleteAlbum];
 DROP PROCEDURE IF EXISTS Soundfront.[UpdateAlbum];
 DROP PROCEDURE IF EXISTS Soundfront.[RecentAlbums];
 DROP PROCEDURE IF EXISTS Soundfront.[UserCount];
+DROP PROCEDURE IF EXISTS Soundfront.[GetAlbumSongs];
 
 DROP SCHEMA IF EXISTS Soundfront;
 GO

@@ -1,0 +1,16 @@
+{% extends "layout.html" %} {% block page %}
+
+<div class="table">
+  <div class="header-row">
+    <div class="header-col">Name</div>
+    <div class="header-col"></div>
+  </div>
+
+  {% for user in users %}
+  <div class="row">
+    {{ user.DisplayName }}
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}
