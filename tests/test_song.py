@@ -32,3 +32,4 @@ class TestSong(unittest.TestCase):
         songs = TestSong.repo.list_song(1, 10)
         self.assertEqual(len(songs), 1)
         self.assertEqual(songs[0].Title, 'some song')
+        self.assertEqual(songs[0].Artist, 'user')
