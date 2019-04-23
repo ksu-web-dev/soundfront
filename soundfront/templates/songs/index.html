@@ -1,10 +1,14 @@
 {% from "pagination.html" import pagination_bar, add_button %}
 {% extends "layout.html" %} {% block page %}
 
-<div class="breadcrumbs">
-  <a href="/" class="crumb">SoundFront</a>
-  <div class="crumb-separator">›</div>
-  <a href="/songs" class="crumb">Songs</a>
+<div class="header">
+  <div class="breadcrumbs">
+    <a href="/" class="crumb">SoundFront</a>
+    <div class="crumb-separator">›</div>
+    <a href="/songs" class="crumb">Songs</a>
+  </div>
+
+	<a href="new" class="button">+ Add song</a>
 </div>
 
 {% with songs=songs %}
@@ -12,6 +16,5 @@
 {% endwith %}
 
 {{ pagination_bar(pagination_data.href, pagination_data.page) }}
-{{ add_button(pagination_data.href, pagination_data.add_button_text) }}
 
 {% endblock %}

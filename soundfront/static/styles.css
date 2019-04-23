@@ -28,9 +28,12 @@ label {
   display: block;
 }
 
-button {
-  display: block;
+a.button {
+  display: inline-block;
   padding: 8px 12px;
+  border: 1px solid #E6EDF4;
+  border-radius: 2px;
+  font-size: 14px;
 }
 
 .pagination-bar {
@@ -116,6 +119,8 @@ form > input {
 
 .col {
   width: 100%;
+  font-size: 14px;
+  padding: 0px 8px;
 }
 
 .item-row {
@@ -127,11 +132,18 @@ h2 {
 }
 
 .breadcrumbs {
-  margin-top: 42px;
-  font-size: 14px;
+  font-size: 16px;
   display: flex;
 }
 
 .crumb-separator {
   margin: 0px 12px;
+}
+
+.header {
+  margin-top: 32px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
