@@ -12,27 +12,21 @@
 
   {% for song in songs %}
   <tr class="row">
-    <th class="col">{{ song.Title }}</th>
+    <th class="col">
+      <a href="/songs/{{ song.SongID }}">{{ song.Title }}</a>
+    </th>
     <th class="col">{{ song.Artist }} </th>
     <th class="col">{{ song.AlbumTitle or '-' }}</th>
     <th class="col">{{ song.Length }}</th>
     <th class="col">{{ song.Price }}</th>
-    <th class="col"></th>
+    <th class="col">
+      <a href="/songs/{{ song.SongID }}/review" class="button">Review</a>
+    </th>
   </tr>
   {% endfor %}
 </table>
 
-<div class="pagination-bar">
-  {% if page-1 > 0 %}
-    <a href="/songs?page={{ page - 1 }}" class="button">
-      <div class="pagination-button">Previous</div>
-    </a>
-  {% endif %} 
-
-  <a href="/songs?page={{ page + 1 }}" class="button">
-    <div class="pagination-button">Next</div>
-  </a>
-</div>
+<div class="pagination-bar"/>
 
 <a href="/songs/new" class="button">Add a song</a>
 

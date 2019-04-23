@@ -114,9 +114,6 @@ form > input {
   width: 145px;
   text-align: left;
 }
-.header-col:first-of-type, .col:first-of-type {
-  width: 200px;
-}
 
 .col {
   font-size: 13px;
@@ -125,4 +122,9 @@ form > input {
 h2 {
   margin-bottom: 24px;
   margin-top: 42px;
+}
+
+
+.rating-table > .row > .col:nth-child(1) {
+  width: 20px;
 }
