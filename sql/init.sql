@@ -8,6 +8,9 @@ DROP TABLE IF EXISTS Soundfront.Album;
 DROP TABLE IF EXISTS Soundfront.Social;
 DROP TABLE IF EXISTS Soundfront.Cart;
 DROP TABLE IF EXISTS Soundfront.[User];
+DROP TABLE IF EXISTS Soundfront.SongCart;
+DROP TABLE IF EXISTS Soundfront.AlbumCart;
+
 DROP PROCEDURE IF EXISTS Soundfront.[CreateUser];
 DROP PROCEDURE IF EXISTS Soundfront.[GetUser];
 DROP PROCEDURE IF EXISTS Soundfront.[UpdateUser];
@@ -28,6 +31,14 @@ DROP PROCEDURE IF EXISTS Soundfront.[UpdateSong];
 DROP PROCEDURE IF EXISTS Soundfront.[ReadSong];
 DROP PROCEDURE IF EXISTS Soundfront.[InsertSong];
 DROP PROCEDURE IF EXISTS Soundfront.[ListSong];
+DROP PROCEDURE IF EXISTS Soundfront.[CreateTag]
+DROP PROCEDURE IF EXISTS Soundfront.[AddSongTag]
+DROP PROCEDURE IF EXISTS Soundfront.[RemoveSongTag]
+DROP PROCEDURE IF EXISTS Soundfront.[ListTags]
+DROP PROCEDURE IF EXISTS Soundfront.[GetTagsBySongID]
+DROP PROCEDURE IF EXISTS Soundfront.[ListSongsByUser];
+DROP PROCEDURE IF EXISTS Soundfront.[ListAlbumsByUser];
+
 
 DROP SCHEMA IF EXISTS Soundfront;
 GO
@@ -101,14 +112,32 @@ CREATE TABLE Soundfront.Song
   Description NVARCHAR(1024) 
 );
 
-CREATE TABLE Soundfront.MusicCart
+CREATE TABLE Soundfront.SongCart
 (
-  MusicCartID INT NOT NULL IDENTITY(1, 1) PRIMARY KEY,
+  SongCartID INT NOT NULL IDENTITY(1, 1) PRIMARY KEY,
+  SongID INT NOT NULL FOREIGN KEY 
+    REFERENCES Soundfront.Song(SongID),
+  CartID INT NOT NULL FOREIGN KEY 
+    REFERENCES Soundfront.Cart(CartID)
+);
+
+CREATE TABLE Soundfront.AlbumCart
+(
+  AlbumCartID INT NOT NULL IDENTITY(1, 1) PRIMARY KEY,
   AlbumID INT NOT NULL FOREIGN KEY 
     REFERENCES Soundfront.Album(AlbumID),
-  SongID INT NOT NULL FOREIGN KEY 
-    REFERENCES Soundfront.Song(SongID)
+  CartID INT NOT NULL FOREIGN KEY 
+    REFERENCES Soundfront.Cart(CartID)
 );
+
+--CREATE TABLE Soundfront.MusicCart
+--(
+--  MusicCartID INT NOT NULL IDENTITY(1, 1) PRIMARY KEY,
+-- AlbumID INT NOT NULL FOREIGN KEY 
+--   REFERENCES Soundfront.Album(AlbumID),
+--  SongID INT NOT NULL FOREIGN KEY 
+--    REFERENCES Soundfront.Song(SongID)
+--);
 
 CREATE TABLE Soundfront.AlbumRating
 (

@@ -69,3 +69,18 @@ FROM Soundfront.Song S
 	INNER JOIN Soundfront.[User] U ON U.UserID = S.UserID
 ORDER BY S.UploadDate DESC
 OFFSET ((@Page * @PageSize) - @PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY;
+GO
+
+-- List songs by user
+CREATE OR ALTER PROCEDURE Soundfront.ListSongsByUser
+	@UserID INT
+AS
+
+SELECT S.SongID, S.UserID, S.AlbumID, S.Title, S.[Length],
+	S.UploadDate, S.Price, S.[Description], U.DisplayName as Artist,
+	A.Title as AlbumTitle
+FROM Soundfront.Song S
+	LEFT JOIN Soundfront.Album A ON A.AlbumID = S.AlbumID
+	INNER JOIN Soundfront.[User] U ON U.UserID = S.UserID
+WHERE S.UserID = @UserID
+ORDER BY S.UploadDate DESC;

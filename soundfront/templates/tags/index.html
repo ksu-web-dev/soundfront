@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block page %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+
+	<div class="tags">
+		{% for tag in tags %}
+			<a class="tags-link" href="{{ '/tags/%s'%tag.TagID }}">
+				<div class="tag">
+					<div class="tag-name">{{tag.Name}}</div>
+				</div>
+			</a>
+		{% endfor %}
+	</div>
+
+
+	{% if page-1 > 0 %}
+	  <a href="/tags?page={{ page - 1 }}" class="button">Previous Page</a> | 
+	{% endif %} 
+
+	<a href="/tags?page={{ page + 1 }}" class="button">Next Page</a>
+
+{% endblock %}

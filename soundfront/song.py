@@ -5,10 +5,8 @@ bp = Blueprint('songs', __name__, url_prefix='/songs')
 
 
 @bp.route('/', methods=['GET'])
-def index():
-    page = request.args.get('page')
-    if page is None: page = 1
-
+@bp.route('/<page>', methods=['GET'])
+def index(page=1):
     repo = current_app.config['song']
     songs = repo.list_song(page, 10)
     return render_template('songs/index.html', songs=songs, page=int(page))

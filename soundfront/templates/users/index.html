@@ -8,7 +8,9 @@
 
   {% for user in users %}
   <div class="row">
-    {{ user.DisplayName }}
+    <a href="/users/{{ user.UserID }}">
+      {{ user.DisplayName }}
+    </a>
   </div>
   {% endfor %}
 
