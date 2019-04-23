@@ -2,6 +2,7 @@
 {% block page %}
 
  <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+ <link rel="stylesheet" href="{{ url_for('static', filename='album.css') }}">
 
 
 	<div id="recently-added">
@@ -12,7 +13,7 @@
 	
 		<div class="albums">
 		{% for album in albums %}
-			<a class="album-link" href="{{ '/album/%s'%album.AlbumID }}">
+			<a class="album-link" href="{{ '/albums/%s'%album.AlbumID }}">
 				<div class="album">
 					<div class="album-art">
 						<img src="https://placekitten.com/g/150/150">
