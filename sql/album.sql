@@ -93,3 +93,13 @@ BEGIN
 	ORDER BY A.UploadDate DESC
 	OFFSET ((@Page * @PageSize) - @PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY;
 END
+GO
+
+CREATE OR ALTER PROCEDURE Soundfront.ListAlbumsByUser
+	@UserID INT
+AS
+
+SELECT A.AlbumID, A.UserID, A.Title, A.[Length], A.Price, A.UploadDate, A.[Description]
+FROM Soundfront.Album A
+WHERE A.UserID = @UserID
+ORDER BY A.UploadDate DESC;

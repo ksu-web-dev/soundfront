@@ -35,3 +35,9 @@ class TestUser(unittest.TestCase):
         user = TestUser.user_repo.get_user_by_email('email')
         assert user is not None
         self.assertEqual(user.Email, 'email')
+
+    def test_list_songs(self):
+        user = TestUser.user_repo.get_user_by_email('email')
+        songs = TestUser.user_repo.list_songs(user.UserID)
+        self.assertEqual(len(songs), 1)
+
