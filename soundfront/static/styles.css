@@ -16,8 +16,7 @@ body {
 
 a {
   text-decoration: none;
-  color: #5D309A
-;
+  color: #5d309a;
   opacity: 0.8;
 }
 a:hover {
@@ -32,7 +31,7 @@ label {
 a.button {
   display: inline-block;
   padding: 8px 12px;
-  border: 1px solid #E6EDF4;
+  border: 1px solid #e6edf4;
   border-radius: 2px;
   font-size: 14px;
 }
@@ -40,15 +39,17 @@ a.button {
 .pagination-bar {
   width: 150px;
   margin: auto;
+  margin-top: 45px;
   margin-bottom: 2px;
   display: flex;
   justify-content: center;
+  margin-bottom: 200px;
 }
 .pagination-button {
   height: 30px;
   line-height: 30px;
   width: 70px;
-  border: 1px solid #E6EDF4;
+  border: 1px solid #e6edf4;
   border-radius: 2px;
   text-align: center;
   color: black;
@@ -103,29 +104,34 @@ form > input {
 }
 
 .table {
-  margin-top: 42px;
+  margin-top: 24px;
   width: 100%;
 }
 
 .header-row {
   font-size: 15px;
   padding-bottom: 15px;
-  border-bottom: 1px solid #e6edf4;
-  margin-bottom: 15px;
 }
 
 .row {
   width: 100%;
-  padding: 18px 0px;
+  padding: 8px 0px;
   color: #7d8998;
   display: flex;
   text-align: left;
+  border-bottom: 1px solid #e6edf4;
 }
 
 .col {
-  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
   font-size: 14px;
   padding: 0px 8px;
+}
+
+.col:last-of-type {
+  justify-content: flex-end;
 }
 
 .item-row {
@@ -152,4 +158,24 @@ h2 {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.table-song .col:first-of-type {
+  flex: 0 0 450px;
+}
+
+.table-song .col:nth-child(2) {
+  flex: 0 0 200px;
+}
+
+.table-song .col:nth-child(3) {
+  flex: 0 0 150px;
+}
+
+.table-song .col:nth-child(4) {
+  flex: 0 0 100px;
+}
+
+.table-song .col:nth-child(5) {
+  flex: 0 0 100px;
 }
