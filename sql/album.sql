@@ -10,7 +10,7 @@ AS
 BEGIN
 	SET NOCOUNT ON
 	INSERT Soundfront.Album(UserID, Title, [Length], Price, [Description])
-	OUTPUT Inserted.AlbumID, Inserted.Title, Inserted.Length, Inserted.Price, Inserted.Description
+	OUTPUT Inserted.AlbumID, Inserted.Title, Inserted.Length, Inserted.Price, Inserted.Description, Inserted.UserID
 	VALUES
 		(@AlbumUserId, @AlbumTitle, @AlbumLength, @AlbumPrice, @AlbumDescription)
 END

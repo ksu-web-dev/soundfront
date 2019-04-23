@@ -66,6 +66,6 @@ SELECT S.SongID, S.UserID, S.AlbumID, S.Title, S.[Length],
 	A.Title as AlbumTitle
 FROM Soundfront.Song S
 	LEFT JOIN Soundfront.Album A ON A.AlbumID = S.AlbumID
-	INNER JOIN Soundfront.[User] U ON U.UserID = U.UserID
+	INNER JOIN Soundfront.[User] U ON U.UserID = S.UserID
 ORDER BY S.UploadDate DESC
 OFFSET ((@Page * @PageSize) - @PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY;

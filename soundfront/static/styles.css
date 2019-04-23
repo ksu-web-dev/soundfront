@@ -101,3 +101,7 @@ form > input {
 .header-col:first-of-type, .col:first-of-type {
   width: 200px;
 }
+
+.col {
+  font-size: 13px;
+}
