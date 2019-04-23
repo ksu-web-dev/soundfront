@@ -8,10 +8,15 @@ bp = Blueprint('albums', __name__, url_prefix='/albums')
 def index():
     page = request.args.get('page')
     if page is None: page = 1
+
+    pagination_data = {}
+    pagination_data['page'] = int(page)
+    pagination_data['href'] = '/albums'
+    pagination_data['add_button_text'] = 'Add an Album'
     
     album_repo = current_app.config['album']
     albums = album_repo.recent_albums(page=page, page_size=15)
-    return render_template('albums/index.html', albums=albums, page=int(page))
+    return render_template('albums/index.html', albums=albums, pagination_data=pagination_data)
 
 @bp.route('/<album_id>', methods=['GET'])
 def album(album_id):

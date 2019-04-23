@@ -1,0 +1,19 @@
+{% macro pagination_bar(page, href) -%}
+<div class="pagination-bar">
+	{% if page-1 > 0 %}
+	<a href="{{href}}?page={{ page - 1 }}">
+	 	<div class="pagination-button">Previous</div>
+	</a>
+	{% endif %} 
+
+	<a href="{{href}}?page={{ page + 1 }}">
+		<div class="pagination-button">Next</div>
+	</a>
+</div>
+{%- endmacro %}
+
+{% macro add_button(href, add_button_text) -%}
+<div class="pagination-bar">
+	<a href="{{href}}/new" class="pagination-button add-button">{{add_button_text}}</a>
+</div>
+{%- endmacro %}

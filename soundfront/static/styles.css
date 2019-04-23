@@ -36,7 +36,9 @@ button {
 .pagination-bar {
   width: 150px;
   margin: auto;
+  margin-bottom: 2px;
   display: flex;
+  justify-content: center;
 }
 .pagination-button {
   height: 30px;
@@ -47,6 +49,10 @@ button {
   text-align: center;
   color: black;
   font-size: 12px;
+}
+
+.add-button {
+  min-width: 100px;
 }
 
 #navbar {
@@ -116,6 +122,9 @@ form > input {
 }
 .header-col:first-of-type, .col:first-of-type {
   width: 200px;
+}
+.last-col {
+  text-align: right;
 }
 
 .col {

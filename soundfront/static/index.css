@@ -28,32 +28,3 @@
 	font-size: 12px;
 	color: #7D8998;
 }
-
-.albums {
-	padding-top: 30px;
-	display: grid;
-	grid-template-columns: repeat(5, 1fr);
-	column-gap: 30px;
-	row-gap: 15px;
-}
-
-.album-link {
-	opacity: 1;
-}
-.album-link:hover {
-	opacity: .85;
-}
-
-.album {
-	width: 150px;
-}
-.album:nth-child(6n) {
-	flex-basis: 100%;
-}
-.album-title {
-	font-size: 15px;
-}
-.album-artist {
-	font-size: 12px;
-	color: #7D8998;
-}
