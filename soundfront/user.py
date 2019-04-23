@@ -10,10 +10,14 @@ def index():
     if page is None:
         page = 1
 
+    pagination_data = {}
+    pagination_data['page'] = int(page)
+    pagination_data['href'] = '/albums'
+
     repo = current_app.config['user']
     users = repo.list_users(page, 10)
     user_count = repo.user_count()
-    return render_template('users/index.html', users=users, current_page=int(page), user_count=user_count)
+    return render_template('users/index.html', users=users, current_page=int(page), user_count=user_count, pagination_data=pagination_data)
 
 
 @bp.route('/<user_id>', methods=['GET'])

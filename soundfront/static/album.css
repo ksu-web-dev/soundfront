@@ -1,0 +1,34 @@
+.albums {
+	padding-top: 30px;
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	column-gap: 30px;
+	row-gap: 15px;
+}
+
+.album-link {
+	opacity: 1;
+}
+.album-link:hover {
+	opacity: .85;
+}
+
+.album {
+	width: 150px;
+	height: 200px;
+}
+.album:nth-child(6n) {
+	flex-basis: 100%;
+}
+.album-art {
+
+}
+.album-title {
+	margin-top: 5px;
+	font-size: 14px;
+}
+.album-artist {
+	margin-top: 3px;
+	font-size: 11px;
+	color: #7D8998;
+}

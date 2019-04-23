@@ -1,35 +1,33 @@
+{% from "pagination.html" import pagination_bar, add_button %}
 {% extends "layout.html" %}
 {% block page %}
 
 <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='album.css') }}">
 
-	<div class="albums">
-		{% for album in albums %}
-			<a class="album-link" href="{{ '/albums/%s'%album.AlbumID }}">
-				<div class="album">
-					<div class="album-art">
-						<img src="https://placekitten.com/g/200/200">
-					</div>
-					<div class="album-title">{{album.Title}}</div>
-					<div class="album-artist">{{album.DisplayName}}</div>
+<table class="table">
+  <tr class="header-row">
+    <th class="header-col">Albums</th>
+  </tr>
+</table>
+
+<div class="albums">
+	{% for album in albums %}
+		<a class="album-link" href="{{ '/albums/%s'%album.AlbumID }}">
+			<div class="album">
+				<div class="album-art">
+					<img src="https://placekitten.com/g/200/200">
 				</div>
-			</a>
-		{% endfor %}
-	</div>
-
-
-	<div class="pagination-bar">
-		{% if page-1 > 0 %}
-		<a href="/albums?page={{ page - 1 }}">
-		 	<div class="pagination-button">Previous</div>
+				<div class="album-title">{{album.Title}}</div>
+				<div class="album-artist">{{album.DisplayName}}</div>
+			</div>
 		</a>
-		{% endif %} 
+	{% endfor %}
+</div>
 
-		<a href="/albums?page={{ page + 1 }}">
-			<div class="pagination-button">Next</div>
-		</a>
-	</div>
+<div style="margin-top: 10px"></div>
 
-	<a href="/albums/new" class="button">Add an album</a>
+{{ pagination_bar(pagination_data.href, pagination_data.page) }}
+{{ add_button(pagination_data.href, pagination_data.add_button_text) }}
 
 {% endblock %}

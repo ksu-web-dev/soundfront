@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block page %}
 
- <link rel="stylesheet" href="{{ url_for('static', filename='album_id.css') }}">
+ <link rel="stylesheet" href="{{ url_for('static', filename='album.css') }}">
 
 {% with songs=album_songs %}
   {% include "songs/table.html" %}

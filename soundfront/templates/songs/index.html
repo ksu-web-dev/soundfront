@@ -1,3 +1,4 @@
+{% from "pagination.html" import pagination_bar, add_button %}
 {% extends "layout.html" %} {% block page %}
 
 <div class="breadcrumbs">
@@ -10,18 +11,7 @@
   {% include "songs/table.html" %}
 {% endwith %}
 
-<div class="pagination-bar">
-  {% if page-1 > 0 %}
-    <a href="/songs/?page={{ page - 1 }}" class="button">
-      <div class="pagination-button">Previous</div>
-    </a>
-  {% endif %} 
-
-  <a href="/songs/?page={{ page + 1 }}" class="button">
-    <div class="pagination-button">Next</div>
-  </a>
-</div>
-
-<a href="/songs/new" class="button">Add a song</a>
+{{ pagination_bar(pagination_data.href, pagination_data.page) }}
+{{ add_button(pagination_data.href, pagination_data.add_button_text) }}
 
 {% endblock %}
