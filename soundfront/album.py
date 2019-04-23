@@ -1,10 +1,11 @@
-from flask import (Blueprint, render_template, current_app, request)
+from flask import (Blueprint, flash, g, redirect,
+                   render_template, request, session, url_for, current_app)
 
-bp = Blueprint('album', __name__, url_prefix='/albums')
+bp = Blueprint('albums', __name__, url_prefix='/albums')
 
 
 @bp.route('/', methods=['GET'])
-def album_home():
+def index():
     page = request.args.get('page')
     if page is None: page = 1
     
@@ -17,7 +18,34 @@ def album(album_id):
     album_repo = current_app.config['album']
     album_songs = album_repo.list_songs(album_id)
     # TODO: Add check for when the album_id is not found.
-    return render_template('album_id.html', album_songs=album_songs)
+    return render_template('albums/album.html', album_songs=album_songs)
+
+@bp.route('/new', methods=['GET', 'POST'])
+def new():
+    if request.method == 'POST':
+        user_id = session['user_id']
+        title = request.form['title']
+        length = request.form['length']
+        price = request.form['price']
+        description = request.form['description']
+
+        error = None
+
+        if not title:
+            error = 'Title is required'
+        elif not price:
+            error = 'Price is required'
+        elif not user_id:
+            return redirect(url_for('auth.login'))
+
+        if error is None:
+            album_repo = current_app.config['album']
+            album_repo.create_album(user_id, title, length, price, description)
+            return redirect(url_for('albums.index')) 
+
+        flash(error)
+
+    return render_template('albums/new.html')
 
 class AlbumRepo():
     def __init__(self, conn):

@@ -5,7 +5,7 @@ from .db import Database
 
 from .auth  import bp as auth_bp
 from .index import bp as index_bp
-from .album import bp as album_bp, AlbumRepo
+from .album import AlbumRepo, bp as albums_bp
 from .user  import UserRepo, bp as users_bp
 from .song  import SongRepo, bp as songs_bp
 
@@ -23,7 +23,7 @@ def create_app():
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(index_bp)
-    app.register_blueprint(album_bp)
+    app.register_blueprint(albums_bp)
     app.register_blueprint(users_bp)
     app.register_blueprint(songs_bp)
 
