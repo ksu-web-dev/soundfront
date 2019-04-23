@@ -17,7 +17,7 @@ def index():
     
     tag_repo = current_app.config['tag']
     tags = tag_repo.list_tags(page=page, page_size=20)
-    return render_template('tags/index.html', tags=tags, page=int(page))
+    return render_template('tags/index.html', tags=tags, page=int(page), pagination_data=pagination_data)
     
 @bp.route('/<tag_id>', methods=['GET'])
 def album(tag_id):
