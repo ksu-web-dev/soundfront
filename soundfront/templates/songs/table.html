@@ -1,15 +1,15 @@
 <table class="table">
-  <tr class="header-row">
-    <th class="header-col">Title</th>
-    <th class="header-col">Artist</th>
-    <th class="header-col">Album</th>
-    <th class="header-col">Length</th>
-    <th class="header-col">Price</th>
-    <th class="header-col"></th>
+  <tr class="header-row row">
+    <th class="header-col col">Title</th>
+    <th class="header-col col">Artist</th>
+    <th class="header-col col">Album</th>
+    <th class="header-col col">Length</th>
+    <th class="header-col col">Price</th>
+    <th class="header-col col"></th>
   </tr>
 
   {% for song in songs %}
-  <tr class="row">
+  <tr class="row item-row">
     <th class="col">
       <a href="/songs/{{ song.SongID }}">{{ song.Title }}</a>
     </th>

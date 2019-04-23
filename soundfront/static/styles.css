@@ -10,7 +10,7 @@ body {
 }
 
 .page {
-  width: 870px;
+  width: 1200px;
   margin: auto;
 }
 
@@ -60,7 +60,8 @@ button {
 }
 
 .nav-body {
-  width: 870px;
+  width: 1200px;
+  padding: 42px 12px;
   display: flex;
   justify-content: space-between;
 }
@@ -93,8 +94,6 @@ form > input {
 }
 
 .header-row {
-  display: flex;
-  justify-content: space-between;
   font-size: 15px;
   padding-bottom: 15px;
   border-bottom: 1px solid #e6edf4;
@@ -109,14 +108,15 @@ form > input {
   text-align: left;
 }
 
-
 .header-col, .col {
-  width: 145px;
   text-align: left;
 }
 
 .col {
-  font-size: 13px;
+  width: 100%;
+}
+
+.item-row {
 }
 
 h2 {
@@ -124,7 +124,12 @@ h2 {
   margin-top: 42px;
 }
 
+.breadcrumbs {
+  margin-top: 42px;
+  font-size: 14px;
+  display: flex;
+}
 
-.rating-table > .row > .col:nth-child(1) {
-  width: 20px;
+.crumb-separator {
+  margin: 0px 12px;
 }

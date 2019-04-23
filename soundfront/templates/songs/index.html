@@ -1,5 +1,11 @@
 {% extends "layout.html" %} {% block page %}
 
+<div class="breadcrumbs">
+  <a href="/" class="crumb">SoundFront</a>
+  <div class="crumb-separator">›</div>
+  <a href="/songs" class="crumb">Songs</a>
+</div>
+
 {% with songs=songs %}
   {% include "songs/table.html" %}
 {% endwith %}

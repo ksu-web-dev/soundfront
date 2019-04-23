@@ -45,7 +45,7 @@
 }
 
 .album {
-	width: 150px;
+	width: 200px;
 }
 .album:nth-child(6n) {
 	flex-basis: 100%;
