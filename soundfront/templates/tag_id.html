@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block page %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+
+	<div class="tag_songs">
+		{% for song in tags_songs %}
+			<a class="songs-link" href="{{ '/songs/%s'%song.SongID }}">
+				<div class="song">
+					<div class="song-name">{{song.Title}}</div>
+				</div>
+			</a>
+		{% endfor %}
+	</div>
+
+
+	{% if page-1 > 0 %}
+	  <a href="/tags?page={{ page - 1 }}" class="button">Previous Page</a> | 
+	{% endif %} 
+
+	<a href="/tags?page={{ page + 1 }}" class="button">Next Page</a>
+
+{% endblock %}

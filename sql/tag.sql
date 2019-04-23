@@ -48,3 +48,19 @@ SELECT T.TagID, T.[Name]
 FROM Soundfront.SongTag ST
 	INNER JOIN Soundfront.Tag T ON T.TagID = ST.TagID
 WHERE ST.SongID = @SongID
+
+GO
+
+CREATE OR ALTER PROCEDURE Soundfront.ListSongsByTag
+    @TagID INT,
+    @Page INT,
+    @PageSize INT
+AS
+
+SELECT S.SongID, S.UserID, S.AlbumID, S.Title, S.[Length],
+	S.UploadDate, S.Price, S.[Description]
+FROM Soundfront.Tag
+    INNER JOIN Soundfront.SongTag ST ON ST.TagID = @TagID
+    INNER JOIN Soundfront.Song S ON S.SongID = ST.SongID
+ORDER BY S.SongID
+OFFSET ((@Page * @PageSize) - @PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY;

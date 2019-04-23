@@ -55,8 +55,10 @@ for album in albums:
         )
 
 #creating tags for testing
+taglist = []
 for x in range(0,100):
     tagName = fake.sentence(nb_words=3)
+    taglist.append(tagName)
     
     tag_repo.create_tag(
         name=tagName

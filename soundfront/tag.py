@@ -12,6 +12,16 @@ def index():
     tag_repo = current_app.config['tag']
     tags = tag_repo.list_tags(page=page, page_size=20)
     return render_template('tags/index.html', tags=tags, page=int(page))
+    
+@bp.route('/<tag_id>', methods=['GET'])
+def album(tag_id):
+    page = request.args.get('page')
+    if page is None: page = 1
+
+    tag_repo = current_app.config['tag']
+    tag_songs = tag_repo.list_songs_by_tag(tag_id, page=page, page_size=20)
+    # TODO: Add check for when the tag_id is not found.
+    return render_template('tag_id.html', tag_songs=tag_songs, page=int(page))
 
 class TagRepo():
     def __init__(self, conn):
@@ -54,4 +64,14 @@ class TagRepo():
             EXEC Soundfront.GetTagsBySongID
             @SongID=?
             """, song_id)
+        return cursor.fetchall()
+        
+    def list_songs_by_tag(self, tag_id, page, page_size):
+        cursor = self.conn.cursor()
+        cursor.execute("""
+            EXEC Soundfront.ListSongsByTag
+            @TagID=?,
+            @Page=?,
+            @PageSize=?
+            """, tag_id, page, page_size)
         return cursor.fetchall()
