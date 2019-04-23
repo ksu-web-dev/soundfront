@@ -18,18 +18,6 @@ user_repo = UserRepo(database.conn)
 album_repo = AlbumRepo(database.conn)
 song_repo = SongRepo(database.conn)
 
-# create a user, and an ablum for that user
-user = user_repo.create_user(
-    email='mlink@ksu.edu' + str(random.random()), display_name='Matt', password='pass')
-album_repo.create_album(user_id=user.UserID, album_title='The Less I Know the Better',
-                        album_length='90', album_price='1', album_description='A Nice Album')
-album_repo.create_album(user_id=user.UserID, album_title='Bottle',
-                        album_length='120', album_price='1', album_description='Another Nice Album')
-album_repo.create_album(user_id=user.UserID, album_title='Untitled',
-                        album_length='190', album_price='1', album_description='A Very Nice Album')
-
-
-
 # create many faker users
 users = []
 for x in range(0, 300):
