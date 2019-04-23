@@ -33,6 +33,22 @@ button {
   padding: 8px 12px;
 }
 
+.pagination-bar {
+  width: 150px;
+  margin: auto;
+  display: flex;
+}
+.pagination-button {
+  height: 30px;
+  line-height: 30px;
+  width: 70px;
+  border: 1px solid #E6EDF4;
+  border-radius: 2px;
+  text-align: center;
+  color: black;
+  font-size: 12px;
+}
+
 #navbar {
   height: 55px;
   margin: 0px;

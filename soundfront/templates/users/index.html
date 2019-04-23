@@ -14,10 +14,16 @@
   </div>
   {% endfor %}
 
-  {% if current_page-1 > 0 %}
-  <a href="/users?page={{ current_page - 1}}" class="button">Previous Page</a> |
-  {% endif %}
-  <a href="/users?page={{ current_page + 1}}" class="button">Next Page</a>
+  <div class="pagination-bar">
+    {% if current_page-1 > 0 %}
+    <a href="/users?page={{ current_page - 1}}" class="button">
+      <div class="pagination-button">Previous</div>
+    </a>
+    {% endif %}
+    <a href="/users?page={{ current_page + 1}}" class="button">
+      <div class="pagination-button">Next</div>
+    </a>
+  </div>
 </div>
 
 {% endblock %}

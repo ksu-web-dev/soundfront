@@ -13,11 +13,16 @@
 		{% endfor %}
 	</div>
 
+	<div class="pagination-bar">
+		{% if page-1 > 0 %}
+		  <a href="/tags?page={{ page - 1 }}" class="button">
+		  	<div class="pagination-button">Previous</div>
+		  </a>
+		{% endif %} 
 
-	{% if page-1 > 0 %}
-	  <a href="/tags?page={{ page - 1 }}" class="button">Previous Page</a> | 
-	{% endif %} 
-
-	<a href="/tags?page={{ page + 1 }}" class="button">Next Page</a>
+		<a href="/tags?page={{ page + 1 }}" class="button">
+			<div class="pagination-button">Next</div>
+		</a>
+	</div>
 
 {% endblock %}

@@ -5,7 +5,7 @@
 
 	<div class="albums">
 		{% for album in albums %}
-			<a class="album-link" href="{{ '/album/%s'%album.AlbumID }}">
+			<a class="album-link" href="{{ '/albums/%s'%album.AlbumID }}">
 				<div class="album">
 					<div class="album-art">
 						<img src="https://placekitten.com/g/150/150">
@@ -18,10 +18,18 @@
 	</div>
 
 
-	{% if page-1 > 0 %}
-	  <a href="/albums?page={{ page - 1 }}" class="button">Previous Page</a> | 
-	{% endif %} 
+	<div class="pagination-bar">
+		{% if page-1 > 0 %}
+		<a href="/albums?page={{ page - 1 }}">
+		 	<div class="pagination-button">Previous</div>
+		</a>
+		{% endif %} 
 
-	<a href="/albums?page={{ page + 1 }}" class="button">Next Page</a>
+		<a href="/albums?page={{ page + 1 }}">
+			<div class="pagination-button">Next</div>
+		</a>
+	</div>
+
+	<a href="/albums/new" class="button">Add an album</a>
 
 {% endblock %}
