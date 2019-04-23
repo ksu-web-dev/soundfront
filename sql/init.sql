@@ -31,6 +31,11 @@ DROP PROCEDURE IF EXISTS Soundfront.[UpdateSong];
 DROP PROCEDURE IF EXISTS Soundfront.[ReadSong];
 DROP PROCEDURE IF EXISTS Soundfront.[InsertSong];
 DROP PROCEDURE IF EXISTS Soundfront.[ListSong];
+DROP PROCEDURE IF EXISTS Soundfront.[CreateTag]
+DROP PROCEDURE IF EXISTS Soundfront.[AddSongTag]
+DROP PROCEDURE IF EXISTS Soundfront.[RemoveSongTag]
+DROP PROCEDURE IF EXISTS Soundfront.[ListTags]
+DROP PROCEDURE IF EXISTS Soundfront.[GetTagsBySongID]
 
 DROP SCHEMA IF EXISTS Soundfront;
 GO

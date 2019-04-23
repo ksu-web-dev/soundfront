@@ -1,88 +1,57 @@
 from flask import (Blueprint, flash, g, redirect,
                    render_template, request, session, url_for, current_app)
 
-bp = Blueprint('tags', __name__, url_prefix='/tags')
+bp = Blueprint('tag', __name__, url_prefix='/tags')
 
 
 @bp.route('/', methods=['GET'])
-@bp.route('/<page>', methods=['GET'])
-def index(page=1):
-    repo = current_app.config['tags']
-    tags = repo.list_song(page, 20)
-    return render_template('songs/index.html', songs=songs, page=int(page))
-
-
-@bp.route('/new', methods=['GET', 'POST'])
-def new():
-    if request.method == 'POST':
-        title = request.form['title']
-        album = request.form['album'] or None
-        price = request.form['price']
-        length = request.form['length']
-        description = request.form['description']
-
-        error = None
-
-        if not title:
-            error = 'Title is required.'
-        elif not price:
-            error = 'Price is required.'
-        elif not session['user_id']:
-            return redirect(url_for('auth.login'))
-
-        if error is None:
-            repo = current_app.config['song']
-            user_id = session['user_id']
-            repo.insert_song(user_id, album, title, length, price, description)
-            return redirect(url_for('songs.index'))
-
-        flash(error)
-
-    return render_template('songs/new.html')
-
+def index():
+    page = request.args.get('page')
+    if page is None: page = 1
+    
+    tag_repo = current_app.config['tag']
+    tags = tag_repo.list_tags(page=page, page_size=20)
+    return render_template('tags/index.html', tags=tags, page=int(page))
 
 class TagRepo():
     def __init__(self, conn):
         self.conn = conn
 
-	def create_tag(self, name=''):
-		cursor = self.conn.cursor()
-        cursor.execute("""
-            EXEC Soundfront.CreateTag
-                @Name=?
-            """, name)
+    def create_tag(self, name=''):
+        cursor = self.conn.cursor()
+        cursor.execute('EXEC Soundfront.CreateTag @Name=?', name)
         return cursor.fetchone()
 		
-	def add_song_tag(self, tagid='', songid=''):
-		cursor = self.conn.cursor()
+    def add_song_tag(self, tag_id='', song_id=''):
+        cursor = self.conn.cursor()
         cursor.execute("""
             EXEC Soundfront.AddSongTag
-                @TagID=?,
-				@SongID=?
-            """, tagid, songid)
+            @TagID=?,
+            @SongID=?
+            """, tag_id, song_id)
         return cursor.fetchone()
 		
-	def remove_song_tag(self, songtagid=''):
-		cursor = self.conn.cursor()
+    def remove_song_tag(self, song_tag_id=''):
+        cursor = self.conn.cursor()
         cursor.execute("""
             EXEC Soundfront.RemoveSongTag
-                @SongTagID=?
-            """, songtagid)
+            @SongTagID=?
+            """, song_tag_id)
         return cursor.fetchone()
 		
-	def list_tags(self, page, pagesize):
-		cursor = self.conn.cursor()
+    def list_tags(self, page, page_size):
+        cursor = self.conn.cursor()
         cursor.execute("""
             EXEC Soundfront.ListTags
-                @Page=?,
-				@PageSize=?
-            """, page, pagesize)
-        return cursor.fetchone()
-		
-	def get_tags_by_songid(self, songid):
-		cursor = self.conn.cursor()
+            @Page=?,
+            @PageSize=?
+            """, page, page_size)
+        return cursor.fetchall()
+            
+    def get_tags_by_songid(self, song_id):
+        cursor = self.conn.cursor()
         cursor.execute("""
             EXEC Soundfront.GetTagsBySongID
-                @SongID=?
-            """, songid)
-        return cursor.fetchone()
+            @SongID=?
+            """, song_id)
+        return cursor.fetchall()

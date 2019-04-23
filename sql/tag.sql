@@ -4,7 +4,9 @@ CREATE OR ALTER PROCEDURE Soundfront.CreateTag
     @Name NVARCHAR(50)
 AS
 INSERT Soundfront.Tag([Name])
+OUTPUT Inserted.[Name]
 VALUES(@Name)
+
 GO
 
 /* Add a tag to a song. */
@@ -33,7 +35,7 @@ AS
 
 SELECT T.TagID, T.[Name]
 FROM Soundfront.Tag T
-ORDER BY T.Tag DESC
+ORDER BY T.TagID DESC
 OFFSET ((@Page * @PageSize) - @PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY;
 
 GO
@@ -46,5 +48,3 @@ SELECT T.TagID, T.[Name]
 FROM Soundfront.SongTag ST
 	INNER JOIN Soundfront.Tag T ON T.TagID = ST.TagID
 WHERE ST.SongID = @SongID
-
-GO

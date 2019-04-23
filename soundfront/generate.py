@@ -7,6 +7,7 @@ from db import Database
 from user import UserRepo
 from album import AlbumRepo
 from song import SongRepo
+from tag import TagRepo
 
 from faker import Faker
 fake = Faker()
@@ -17,6 +18,7 @@ database.connect()
 user_repo = UserRepo(database.conn)
 album_repo = AlbumRepo(database.conn)
 song_repo = SongRepo(database.conn)
+tag_repo = TagRepo(database.conn)
 
 # create many faker users
 users = []
@@ -28,7 +30,6 @@ for x in range(0, 300):
     )
 
     users.append(user)
-
 
 # create some albums
 albums = []
@@ -52,3 +53,11 @@ for album in albums:
             length=random.randint(120,240),
             price=9.99
         )
+
+#creating tags for testing
+for x in range(0,100):
+    tagName = fake.sentence(nb_words=3)
+    
+    tag_repo.create_tag(
+        name=tagName
+    )
