@@ -3,11 +3,11 @@ import os
 from flask import Flask, render_template
 from .db import Database
 
-from .auth  import bp as auth_bp
+from .auth import bp as auth_bp
 from .index import bp as index_bp
 from .album import bp as album_bp, AlbumRepo
-from .user  import UserRepo, bp as users_bp
-from .song  import SongRepo, bp as songs_bp
+from .user import UserRepo, bp as users_bp
+from .song import SongRepo, bp as songs_bp
 
 
 def create_app():

@@ -28,6 +28,7 @@ DROP PROCEDURE IF EXISTS Soundfront.[UpdateSong];
 DROP PROCEDURE IF EXISTS Soundfront.[ReadSong];
 DROP PROCEDURE IF EXISTS Soundfront.[InsertSong];
 DROP PROCEDURE IF EXISTS Soundfront.[ListSong];
+DROP PROCEDURE IF EXISTS Soundfront.[ListSongsByUser];
 
 DROP SCHEMA IF EXISTS Soundfront;
 GO
@@ -101,7 +102,7 @@ CREATE TABLE Soundfront.Song
   Description NVARCHAR(1024) 
 );
 
-CREATE TABLE Soundfront.MusicCart
+CREATE TABLE Soundfront.SongCart
 (
   MusicCartID INT NOT NULL IDENTITY(1, 1) PRIMARY KEY,
   AlbumID INT NOT NULL FOREIGN KEY 
