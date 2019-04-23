@@ -3,14 +3,9 @@
 
  <link rel="stylesheet" href="{{ url_for('static', filename='album_id.css') }}">
 
-	<div class="songs">
-		{% for song in album_songs %}
+{% with songs=album_songs %}
+  {% include "songs/table.html" %}
+{% endwith %}
 
-			<div class="song">
-				{{song.Title}} - {{song.AlbumTitle}}
-			</div>
-
-		{% endfor %}
-	</div>
 
 {% endblock %}
