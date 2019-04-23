@@ -26,7 +26,17 @@
   {% endfor %}
 </table>
 
-<div class="pagination-bar"/>
+<div class="pagination-bar">
+  {% if page-1 > 0 %}
+    <a href="/songs/?page={{ page - 1 }}" class="button">
+      <div class="pagination-button">Previous</div>
+    </a>
+  {% endif %} 
+
+  <a href="/songs/?page={{ page + 1 }}" class="button">
+    <div class="pagination-button">Next</div>
+  </a>
+</div>
 
 <a href="/songs/new" class="button">Add a song</a>
 
