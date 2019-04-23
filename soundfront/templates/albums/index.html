@@ -2,21 +2,20 @@
 {% extends "layout.html" %}
 {% block page %}
 
-<link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='album.css') }}">
 
-<table class="table">
-  <tr class="header-row">
-    <th class="header-col">Albums</th>
-  </tr>
-</table>
+<div class="breadcrumbs">
+  <a href="/" class="crumb">SoundFront</a>
+  <div class="crumb-separator">›</div>
+  <a href="/albums" class="crumb">Albums</a>
+</div>
 
 <div class="albums">
 	{% for album in albums %}
 		<a class="album-link" href="{{ '/albums/%s'%album.AlbumID }}">
 			<div class="album">
 				<div class="album-art">
-					<img src="https://placekitten.com/g/200/200">
+					<img src="https://placekitten.com/g/150/150">
 				</div>
 				<div class="album-title">{{album.Title}}</div>
 				<div class="album-artist">{{album.DisplayName}}</div>
@@ -28,6 +27,6 @@
 <div style="margin-top: 10px"></div>
 
 {{ pagination_bar(pagination_data.href, pagination_data.page) }}
-{{ add_button(pagination_data.href, pagination_data.add_button_text) }}
+{{ add_button(pagination_data.href, pagination_data.add_button_text) }}	
 
 {% endblock %}

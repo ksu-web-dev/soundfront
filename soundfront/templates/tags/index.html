@@ -4,6 +4,12 @@
 
 <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
 
+	<div class="breadcrumbs">
+	  <a href="/" class="crumb">SoundFront</a>
+	  <div class="crumb-separator">›</div>
+	  <a href="/tags" class="crumb">Tags</a>
+	</div>
+
 	<div class="tags">
 		{% for tag in tags %}
 			<a class="tags-link" href="{{ '/tags/%s'%tag.TagID }}">

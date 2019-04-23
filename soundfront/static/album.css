@@ -1,5 +1,5 @@
 .albums {
-	padding-top: 30px;
+	margin-top: 30px;
 	display: grid;
 	grid-template-columns: repeat(5, 1fr);
 	column-gap: 30px;
@@ -15,6 +15,7 @@
 
 .album {
 	width: 200px;
+	height: 200px; /* Leave height value so that total content area height stays consistent across album pages */
 }
 .album:nth-child(6n) {
 	flex-basis: 100%;
@@ -23,6 +24,7 @@
 
 }
 .album-title {
+	width: inherit;
 	margin-top: 5px;
 	font-size: 14px;
 }

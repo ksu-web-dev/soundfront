@@ -1,6 +1,12 @@
 {% from "pagination.html" import pagination_bar, add_button %}
 {% extends "layout.html" %} {% block page %}
 
+<div class="breadcrumbs">
+  <a href="/" class="crumb">SoundFront</a>
+  <div class="crumb-separator">›</div>
+  <a href="/users" class="crumb">Users</a>
+</div>
+
 <div class="table">
   <div class="header-row">
     <div class="header-col">Name</div>
