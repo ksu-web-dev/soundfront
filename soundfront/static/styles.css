@@ -114,15 +114,6 @@ form > input {
   text-align: left;
 }
 
-.header-col, .col {
-  text-align: left;
-}
-.header-col:first-of-type, .col:first-of-type {
-  width: 200px;
-}
-.last-col {
-  text-align: right;
-}
 .col {
   width: 100%;
 }
