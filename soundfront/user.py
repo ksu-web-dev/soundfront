@@ -10,6 +10,11 @@ def index():
     if page is None:
         page = 1
 
+    pagination_data = {}
+    pagination_data['page'] = int(page)
+    pagination_data['href'] = '/albums'
+    pagination_data['add_button_text'] = 'Add an Album'
+
     repo = current_app.config['user']
     users = repo.list_users(page, 10)
     user_count = repo.user_count()

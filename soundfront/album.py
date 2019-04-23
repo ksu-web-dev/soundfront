@@ -7,7 +7,8 @@ bp = Blueprint('albums', __name__, url_prefix='/albums')
 @bp.route('/', methods=['GET'])
 def index():
     page = request.args.get('page')
-    if page is None: page = 1
+    if page is None: 
+        page = 1
 
     pagination_data = {}
     pagination_data['page'] = int(page)

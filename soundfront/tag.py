@@ -7,7 +7,13 @@ bp = Blueprint('tag', __name__, url_prefix='/tags')
 @bp.route('/', methods=['GET'])
 def index():
     page = request.args.get('page')
-    if page is None: page = 1
+    if page is None: 
+        page = 1
+
+    pagination_data = {}
+    pagination_data['page'] = int(page)
+    pagination_data['href'] = '/tags'
+    pagination_data['add_button_text'] = 'Add a Tag'
     
     tag_repo = current_app.config['tag']
     tags = tag_repo.list_tags(page=page, page_size=20)

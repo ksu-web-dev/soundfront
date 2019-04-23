@@ -69,6 +69,7 @@ CREATE OR ALTER PROCEDURE Soundfront.InsertSongRating
 AS
 
 INSERT Soundfront.SongRating(UserID, SongID, Rating, ReviewText)
+OUTPUT Inserted.SongID
 VALUES (@UserID, @SongID, @Rating, @ReviewText)
 
 GO
@@ -112,12 +113,13 @@ GO
 -- LIST SongRating
 CREATE OR ALTER PROCEDURE Soundfront.ListSongRating
 	@Page INT,
-	@PageSize INT
+	@PageSize INT,
+	@SongID INT
 AS
 
-SELECT S.RatingID, S.UserID, S.SongID, S.Rating, S.ReviewText
+SELECT S.RatingID, S.UserID, S.SongID, S.Rating, S.ReviewText,  U.DisplayName as [User]
 FROM Soundfront.SongRating S
+	INNER JOIN Soundfront.[User] U ON S.UserID = U.UserID
+WHERE S.SongID = @SongID
 ORDER BY S.RatingID
 OFFSET ((@Page * @PageSize) - @PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY;
-
-GO

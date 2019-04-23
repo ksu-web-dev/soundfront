@@ -126,7 +126,6 @@ form > input {
 .last-col {
   text-align: right;
 }
-
 .col {
   font-size: 13px;
 }
@@ -134,4 +133,9 @@ form > input {
 h2 {
   margin-bottom: 24px;
   margin-top: 42px;
+}
+
+
+.rating-table > .row > .col:nth-child(1) {
+  width: 20px;
 }

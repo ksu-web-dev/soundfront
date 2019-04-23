@@ -1,4 +1,4 @@
-{% macro pagination_bar(page, href) -%}
+{% macro pagination_bar(href, page) -%}
 <div class="pagination-bar">
 	{% if page-1 > 0 %}
 	<a href="{{href}}?page={{ page - 1 }}">

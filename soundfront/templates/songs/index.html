@@ -1,39 +1,11 @@
+{% from "pagination.html" import pagination_bar, add_button %}
 {% extends "layout.html" %} {% block page %}
 
-<table class="table">
-  <tr class="header-row">
-    <th class="header-col">Title</th>
-    <th class="header-col">Artist</th>
-    <th class="header-col">Album</th>
-    <th class="header-col">Length</th>
-    <th class="header-col">Price</th>
-    <th class="header-col"></th>
-  </tr>
+{% with songs=songs %}
+  {% include "songs/table.html" %}
+{% endwith %}
 
-  {% for song in songs %}
-  <tr class="row">
-    <th class="col">{{ song.Title }}</th>
-    <th class="col">{{ song.Artist }} </th>
-    <th class="col">{{ song.AlbumTitle or '-' }}</th>
-    <th class="col">{{ song.Length }}</th>
-    <th class="col">{{ song.Price }}</th>
-    <th class="col"></th>
-  </tr>
-  {% endfor %}
-</table>
-
-<div class="pagination-bar">
-  {% if page-1 > 0 %}
-    <a href="/songs?page={{ page - 1 }}" class="button">
-      <div class="pagination-button">Previous</div>
-    </a>
-  {% endif %} 
-
-  <a href="/songs?page={{ page + 1 }}" class="button">
-    <div class="pagination-button">Next</div>
-  </a>
-</div>
-
-<a href="/songs/new" class="button">Add a song</a>
+{{ pagination_bar(pagination_data.href, pagination_data.page) }}
+{{ add_button(pagination_data.href, pagination_data.add_button_text) }}
 
 {% endblock %}

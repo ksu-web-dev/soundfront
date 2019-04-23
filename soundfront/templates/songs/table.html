@@ -1,0 +1,25 @@
+<table class="table">
+  <tr class="header-row">
+    <th class="header-col">Title</th>
+    <th class="header-col">Artist</th>
+    <th class="header-col">Album</th>
+    <th class="header-col">Length</th>
+    <th class="header-col">Price</th>
+    <th class="header-col"></th>
+  </tr>
+
+  {% for song in songs %}
+  <tr class="row">
+    <th class="col">
+      <a href="/songs/{{ song.SongID }}">{{ song.Title }}</a>
+    </th>
+    <th class="col">{{ song.Artist }}</th>
+    <th class="col">{{ song.AlbumTitle or '-' }}</th>
+    <th class="col">{{ song.Length }}</th>
+    <th class="col">{{ song.Price }}</th>
+    <th class="col">
+      <a href="/songs/{{ song.SongID }}/review" class="button">Review</a>
+    </th>
+  </tr>
+  {% endfor %}
+</table>

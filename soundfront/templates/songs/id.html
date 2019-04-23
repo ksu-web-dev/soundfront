@@ -1,0 +1,36 @@
+{% extends "layout.html" %} {% block page %}
+
+<h1>Ratings for '{{ song.Title}}'</h1>
+
+<table class="table">
+  <tr class="header-row">
+    <th class="header-col">User</th>
+    <th class="header-col">Rating</th>
+    <th class="header-col">Review</th>
+  </tr>
+
+  {% for rating in ratings %}
+  <tr class="row">
+    <th class="col">{{ rating.User }} </th>
+    <th class="col">{{ rating.Rating }} </th>
+    <th class="col">{{ rating.ReviewText }} </th>
+  </tr>
+  {% endfor %}
+</table>
+
+<div class="pagination-bar">
+  {% if page-1 > 0 %}
+    <a href="/songs/{{ song.SongID }}?page={{ page - 1 }}" class="button">
+      <div class="pagination-button">Previous</div>
+    </a>
+  {% endif %} 
+
+  <a href="/songs/{{ song.SongID}}?page={{ page + 1 }}" class="button">
+    <div class="pagination-button">Next</div>
+  </a>
+</div>
+
+<a href="/songs/new" class="button">Add a song</a>
+
+{% endblock %}
+

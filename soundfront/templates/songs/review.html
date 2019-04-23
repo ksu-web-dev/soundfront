@@ -1,0 +1,31 @@
+{% extends "layout.html" %} 
+{% block page %}
+
+<h1>Review for '{{ song.Title }}'</h1>
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class="flashes">
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+<form method="post">
+  <label>Rating</label>
+
+  <select name="rating" value={{ request.form.rating }}>
+    {% for x in range(1, 10) %}
+      <option value="{{x}}">{{x}}</option>
+    {% endfor %}
+  </select>
+
+  <label>Review (optional)</label>
+  <textarea name="review"cols="80" rows="10" value="{{ request.form.review }}"></textarea>
+
+  <button type="submit">Submit</button>
+</form>
+
+{% endblock %}
