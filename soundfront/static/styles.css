@@ -16,7 +16,8 @@ body {
 
 a {
   text-decoration: none;
-  color: inherit;
+  color: #5D309A
+;
   opacity: 0.8;
 }
 a:hover {
@@ -66,6 +67,10 @@ a.button {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+#navbar a {
+  color: white;
 }
 
 .nav-body {
