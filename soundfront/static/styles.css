@@ -142,6 +142,7 @@ h2 {
 
 .header {
   margin-top: 32px;
+  height: 30px;
   width: 100%;
   display: flex;
   justify-content: space-between;

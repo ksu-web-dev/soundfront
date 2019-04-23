@@ -4,21 +4,23 @@
 
 <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
 
+<div class="header">
 	<div class="breadcrumbs">
 	  <a href="/" class="crumb">SoundFront</a>
 	  <div class="crumb-separator">›</div>
 	  <a href="/tags" class="crumb">Tags</a>
 	</div>
+</div>
 
-	<div class="tags">
-		{% for tag in tags %}
-			<a class="tags-link" href="{{ '/tags/%s'%tag.TagID }}">
-				<div class="tag">
-					<div class="tag-name">{{tag.Name}}</div>
-				</div>
-			</a>
-		{% endfor %}
-	</div>
+<div class="tags">
+	{% for tag in tags %}
+		<a class="tags-link" href="{{ '/tags/%s'%tag.TagID }}">
+			<div class="tag">
+				<div class="tag-name">{{tag.Name}}</div>
+			</div>
+		</a>
+	{% endfor %}
+</div>
 
 	
 {{ pagination_bar(pagination_data.href, pagination_data.page) }}
