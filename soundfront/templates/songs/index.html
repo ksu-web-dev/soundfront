@@ -23,10 +23,10 @@
 </table>
 
 {% if page-1 > 0 %}
-  <a href="{{ page - 1 }}" class="button">Previous Page</a> | 
+  <a href="/songs?page={{ page - 1 }}" class="button">Previous Page</a> | 
 {% endif %} 
 
-<a href="{{ page + 1 }}" class="button">Next Page</a> |
+<a href="/songs?page={{ page + 1 }}" class="button">Next Page</a> |
 
 <a href="/songs/new" class="button">Add a song</a>
 

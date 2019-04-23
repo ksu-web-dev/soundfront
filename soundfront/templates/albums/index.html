@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block page %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+
+	<div class="albums">
+		{% for album in albums %}
+			<a class="album-link" href="{{ '/album/%s'%album.AlbumID }}">
+				<div class="album">
+					<div class="album-art">
+						<img src="https://placekitten.com/g/150/150">
+					</div>
+					<div class="album-title">{{album.Title}}</div>
+					<div class="album-artist">{{album.DisplayName}}</div>
+				</div>
+			</a>
+		{% endfor %}
+	</div>
+
+
+	{% if page-1 > 0 %}
+	  <a href="/albums?page={{ page - 1 }}" class="button">Previous Page</a> | 
+	{% endif %} 
+
+	<a href="/albums?page={{ page + 1 }}" class="button">Next Page</a>
+
+{% endblock %}

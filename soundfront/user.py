@@ -5,8 +5,10 @@ bp = Blueprint('users', __name__, url_prefix='/users')
 
 
 @bp.route('/', methods=['GET'])
-@bp.route('/<page>', methods=['GET'])
-def index(page=1):
+def index():
+    page = request.args.get('page')
+    if page is None: page = 1
+
     repo = current_app.config['user']
     users = repo.list_users(page, 10)
     user_count = repo.user_count()

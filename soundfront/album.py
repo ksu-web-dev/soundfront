@@ -1,15 +1,16 @@
-from flask import (Blueprint, render_template, current_app)
+from flask import (Blueprint, render_template, current_app, request)
 
-bp = Blueprint('album', __name__, url_prefix='/album')
+bp = Blueprint('album', __name__, url_prefix='/albums')
 
 
 @bp.route('/', methods=['GET'])
 def album_home():
+    page = request.args.get('page')
+    if page is None: page = 1
+    
     album_repo = current_app.config['album']
-    albums = album_repo.recent_albums(page=1, page_size=10)
-    # TODO: Update this - for now it is just rendering the same template as homepage (index.html)
-    #       which is also populated with the most recent albums
-    return render_template('index.html', albums=albums)
+    albums = album_repo.recent_albums(page=page, page_size=15)
+    return render_template('albums/index.html', albums=albums, page=int(page))
 
 @bp.route('/<album_id>', methods=['GET'])
 def album(album_id):
