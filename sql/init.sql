@@ -32,6 +32,7 @@ DROP PROCEDURE IF EXISTS Soundfront.[ReadSong];
 DROP PROCEDURE IF EXISTS Soundfront.[InsertSong];
 DROP PROCEDURE IF EXISTS Soundfront.[ListSong];
 DROP PROCEDURE IF EXISTS Soundfront.[ListSongsByUser];
+DROP PROCEDURE IF EXISTS Soundfront.[ListAlbumsByUser];
 
 DROP SCHEMA IF EXISTS Soundfront;
 GO

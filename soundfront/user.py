@@ -25,8 +25,9 @@ def profile(user_id):
         return render_template('error.html', message='User does not exist')
 
     songs = repo.list_songs(user_id)
+    albums = repo.list_albums(user_id)
 
-    return render_template('users/profile.html', user=user, songs=songs)
+    return render_template('users/profile.html', user=user, songs=songs, albums=albums)
 
 
 class UserRepo():
@@ -54,6 +55,12 @@ class UserRepo():
         cursor = self.conn.cursor()
         cursor.execute(
             'EXEC Soundfront.ListSongsByUser @UserID=?', user_id)
+        return cursor.fetchall()
+
+    def list_albums(self, user_id):
+        cursor = self.conn.cursor()
+        cursor.execute(
+            'EXEC Soundfront.ListAlbumsByUser @UserID=?', user_id)
         return cursor.fetchall()
 
     def user_count(self):

@@ -2,6 +2,22 @@
 
 <h1>{{ user.DisplayName }}'s Profile</h1>
 
+<h2>Albums</h2>
+<div class="albums">
+  {% for album in albums %}
+  <a class="album-link" href="{{ '/album/%s' % album.AlbumID }}">
+    <div class="album">
+      <div class="album-art">
+        <img src="https://placekitten.com/g/150/150" />
+      </div>
+      <div class="album-title">{{ album.Title }}</div>
+      <div class="album-artist">{{ album.DisplayName }}</div>
+    </div>
+  </a>
+  {% endfor %}
+</div>
+
+<h2>Songs</h2>
 <table class="table">
   <tr class="header-row">
     <th class="header-col">Title</th>
@@ -15,7 +31,7 @@
   {% for song in songs %}
   <tr class="row">
     <th class="col">{{ song.Title }}</th>
-    <th class="col">{{ song.Artist }} </th>
+    <th class="col">{{ song.Artist }}</th>
     <th class="col">{{ song.AlbumTitle or '-' }}</th>
     <th class="col">{{ song.Length }}</th>
     <th class="col">{{ song.Price }}</th>
