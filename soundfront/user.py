@@ -31,7 +31,7 @@ def profile(user_id):
     songs = repo.list_songs(user_id)
     albums = repo.list_albums(user_id)
 
-    return render_template('users/profile.html', user=user, songs=songs, albums=albums)
+    return render_template('users/id.html', user=user, songs=songs, albums=albums)
 
 
 class UserRepo():
