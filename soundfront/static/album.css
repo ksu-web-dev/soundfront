@@ -2,7 +2,7 @@
 	margin-top: 30px;
 	display: grid;
 	grid-template-columns: repeat(5, 1fr);
-	column-gap: 30px;
+	column-gap: 40px;
 	row-gap: 15px;
 }
 
@@ -15,7 +15,7 @@
 
 .album {
 	width: 200px;
-	height: 200px; /* Leave height value so that total content area height stays consistent across album pages */
+	height: 250px; /* Leave height value so that total content area height stays consistent across album pages */
 }
 .album:nth-child(6n) {
 	flex-basis: 100%;

@@ -1,4 +1,4 @@
-{% from "pagination.html" import pagination_bar, add_button %}
+{% from "pagination.html" import pagination_bar %}
 {% extends "layout.html" %}
 {% block page %}
 
@@ -10,6 +10,8 @@
 		<div class="crumb-separator">›</div>
 		<a href="/albums" class="crumb">Albums</a>
 	</div>
+
+	<a href="new" class="button">+ Add album</a>
 </div>
 
 <div class="albums">
@@ -17,7 +19,7 @@
 		<a class="album-link" href="{{ '/albums/%s'%album.AlbumID }}">
 			<div class="album">
 				<div class="album-art">
-					<img src="https://placekitten.com/g/150/150">
+					<img src="https://placekitten.com/g/200/200">
 				</div>
 				<div class="album-title">{{album.Title}}</div>
 				<div class="album-artist">{{album.DisplayName}}</div>
@@ -29,6 +31,5 @@
 <div style="margin-top: 10px"></div>
 
 {{ pagination_bar(pagination_data.href, pagination_data.page) }}
-{{ add_button(pagination_data.href, pagination_data.add_button_text) }}	
 
 {% endblock %}
