@@ -1,6 +1,14 @@
 {% extends "layout.html" %} {% block page %}
 
-<h1>{{ user.DisplayName }}'s Profile</h1>
+<div class="header">
+  <div class="breadcrumbs">
+    <a href="/" class="crumb">SoundFront</a>
+    <div class="crumb-separator">›</div>
+    <a href="/users" class="crumb">Users</a>
+    <div class="crumb-separator">›</div>
+    <div class="crumb">{{ user.DisplayName }}</div>
+  </div>
+</div>
 
 <h2>Albums</h2>
 <div class="albums">
