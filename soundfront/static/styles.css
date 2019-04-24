@@ -43,7 +43,7 @@ a.button {
   margin-bottom: 2px;
   display: flex;
   justify-content: center;
-  margin-bottom: 200px;
+  margin-bottom: 100px;
 }
 .pagination-button {
   height: 30px;
@@ -106,6 +106,7 @@ form > input {
 .table {
   margin-top: 24px;
   width: 100%;
+  table-layout: auto;
 }
 
 .header-row {
@@ -124,10 +125,12 @@ form > input {
 
 .col {
   height: 40px;
+  width: 10%;
   display: flex;
   align-items: center;
   font-size: 14px;
   padding: 0px 8px;
+  flex: 1 1 auto;
 }
 
 .col:last-of-type {

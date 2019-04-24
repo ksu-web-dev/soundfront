@@ -1,4 +1,4 @@
-{% from "pagination.html" import pagination_bar, add_button %}
+{% from "pagination.html" import pagination_bar, add_button %} 
 {% extends "layout.html" %} {% block page %}
 
 <div class="header">
@@ -9,22 +9,25 @@
   </div>
 </div>
 
-<div class="table">
-  <div class="header-row">
-    <div class="header-col">Name</div>
-    <div class="header-col"></div>
-  </div>
+<table class="table">
+  <tr class="header-row row" colspan="2">
+    <th class="header-col col">Name</th>
+    <th class="header-col col"></th>
+  </tr>
 
   {% for user in users %}
-  <div class="row">
-    <a href="/users/{{ user.UserID }}">
-      {{ user.DisplayName }}
-    </a>
-  </div>
+  <tr class="row">
+    <td class="col">
+      <a href="/users/{{ user.UserID }}">
+        {{ user.DisplayName }}
+      </a>
+    </td>
+    <td class="col"></td>
+  </tr>
   {% endfor %}
 
-  
+</table>
+
 {{ pagination_bar(pagination_data.href, pagination_data.page) }}
-</div>
 
 {% endblock %}
