@@ -25,7 +25,7 @@ def album(album_id):
     album = album_repo.get_album(album_id)
     album_songs = album_repo.list_songs(album_id)
     # TODO: Add check for when the album_id is not found.
-    return render_template('albums/album.html', album_songs=album_songs, album=album)
+    return render_template('albums/id.html', album_songs=album_songs, album=album)
 
 @bp.route('/new', methods=['GET', 'POST'])
 def new():
