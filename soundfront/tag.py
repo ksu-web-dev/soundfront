@@ -27,7 +27,7 @@ def album(tag_id):
     tag_repo = current_app.config['tag']
     tag_songs = tag_repo.list_songs_by_tag(tag_id, page=page, page_size=20)
     # TODO: Add check for when the tag_id is not found.
-    return render_template('tag_id.html', tag_songs=tag_songs, page=int(page))
+    return render_template('tags/id.html', tag_songs=tag_songs, page=int(page))
 
 class TagRepo():
     def __init__(self, conn):

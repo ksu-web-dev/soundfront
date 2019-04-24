@@ -10,6 +10,8 @@
 	  <div class="crumb-separator">›</div>
 	  <a href="/tags" class="crumb">Tags</a>
 	</div>
+
+	<a href="new" class="button">+ Add tag</a>
 </div>
 
 <div class="tags">
@@ -24,6 +26,5 @@
 
 	
 {{ pagination_bar(pagination_data.href, pagination_data.page) }}
-{{ add_button(pagination_data.href, pagination_data.add_button_text) }}
 
 {% endblock %}
