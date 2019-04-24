@@ -6,9 +6,16 @@
     <div class="crumb-separator">›</div>
     <a href="/songs" class="crumb">Songs</a>
     <div class="crumb-separator">›</div>
-    <div class="crumb">{{ song.Title}} </div>
+    <div class="crumb">{{ song.Title }}</div>
   </div>
 </div>
+
+<h2>Description</h2>
+<div class="song-description">
+  {{ song.Description or 'No description provided.'}}
+</div>
+
+<h2>Reviews</h2>
 
 <table class="table">
   <tr class="header-row row">
@@ -19,12 +26,11 @@
 
   {% for rating in ratings %}
   <tr class="row">
-    <td class="col">{{ rating.User }} </td>
-    <td class="col">{{ rating.Rating }} </td>
-    <td class="col">{{ rating.ReviewText }} </td>
+    <td class="col">{{ rating.User }}</td>
+    <td class="col">{{ rating.Rating }}</td>
+    <td class="col">{{ rating.ReviewText }}</td>
   </tr>
   {% endfor %}
 </table>
 
 {% endblock %}
-

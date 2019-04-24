@@ -182,3 +182,7 @@ h2 {
 .table-song .col:nth-child(5) {
   flex: 0 0 100px;
 }
+
+h2 {
+  font-size: 20px;
+}
