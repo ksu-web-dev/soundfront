@@ -22,7 +22,7 @@ CREATE OR ALTER PROCEDURE Soundfront.ListCart
 	@UserID INT
 AS
 
-SELECT SC.SongCartID as ID, S.Title, S.Price, 'Song' as [Type]
+SELECT S.SongID as ID, S.Title, S.Price, 'Song' as [Type]
 FROM Soundfront.SongCart SC
 	INNER JOIN Soundfront.Song S on S.SongID = SC.SongID
 	INNER JOIN Soundfront.Cart C on C.CartID = SC.CartID
@@ -30,7 +30,7 @@ WHERE C.UserID = @UserID
 
 UNION
 
-SELECT AC.AlbumCartID as ID, A.Title, A.Price, 'Album' as [Type]
+SELECT A.AlbumID as ID, A.Title, A.Price, 'Album' as [Type]
 FROM Soundfront.AlbumCart AC
 	INNER JOIN Soundfront.Album A on A.AlbumID = AC.AlbumID
 	INNER JOIN Soundfront.Cart C on C.CartID = AC.CartID
