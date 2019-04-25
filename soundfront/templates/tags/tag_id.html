@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block page %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+
+	<div class="tag_songs">
+		{% with songs=tag_songs %}
+            {% include "songs/table.html" %}
+        {% endwith %}
+	</div>
+
+
+	{% if page-1 > 0 %}
+	  <a href="/tags?page={{ page - 1 }}" class="button">Previous Page</a> | 
+	{% endif %} 
+
+	<a href="/tags?page={{ page + 1 }}" class="button">Next Page</a>
+
+{% endblock %}

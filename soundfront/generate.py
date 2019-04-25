@@ -43,6 +43,16 @@ for x in range(0, 300):
     )
 
     albums.append(album)
+ 
+taglist = [] 
+for x in range(0,5):
+    tagName = fake.sentence(nb_words=3)
+    
+    tag = tag_repo.create_tag(
+        name=tagName
+    )   
+    
+    taglist.append(tag)
 
 for album in albums:
     for x in range(1, random.randint(5, 12)):
@@ -53,13 +63,14 @@ for album in albums:
             length=random.randint(120,240),
             price=9.99
         )
+        
+        tag = random.choice(taglist)
+         
+        song_tag = tag_repo.add_song_tag(
+            tag_id=tag.TagID,
+            song_id=song.SongID
+        )
+        
 
-#creating tags for testing
-taglist = []
-for x in range(0,100):
-    tagName = fake.sentence(nb_words=3)
-    taglist.append(tagName)
-    
-    tag_repo.create_tag(
-        name=tagName
-    )
+
+  

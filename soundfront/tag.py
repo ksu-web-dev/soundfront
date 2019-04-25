@@ -23,11 +23,14 @@ def index():
 def album(tag_id):
     page = request.args.get('page')
     if page is None: page = 1
-
+    
     tag_repo = current_app.config['tag']
     tag_songs = tag_repo.list_songs_by_tag(tag_id, page=page, page_size=20)
+    print(tag_id)
+    for song in tag_songs:
+        print(song)
     # TODO: Add check for when the tag_id is not found.
-    return render_template('tags/id.html', tag_songs=tag_songs, page=int(page))
+    return render_template('tags/tag_id.html', tag_songs=tag_songs, page=int(page))
 
 class TagRepo():
     def __init__(self, conn):
