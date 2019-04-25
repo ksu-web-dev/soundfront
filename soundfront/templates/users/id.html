@@ -1,3 +1,4 @@
+{% from "songs/table.html" import song_table %}
 {% extends "layout.html" %} {% block page %}
 
 <div class="header">
@@ -9,7 +10,6 @@
     <div class="crumb">{{ user.DisplayName }}</div>
   </div>
 </div>
-
 <h2>Albums</h2>
 <div class="albums">
   {% for album in albums %}
@@ -27,8 +27,6 @@
 
 <h2>Songs</h2>
 
-{% with songs=songs %}
-  {% include "songs/table.html" %}
-{% endwith %}
+{{ song_table(songs) }}
 
 {% endblock %}

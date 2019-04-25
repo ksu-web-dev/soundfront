@@ -275,3 +275,12 @@ input.hidden {
 .table-price > .col:last-of-type {
   text-align: right;
 }
+
+.profile {
+  display: flex;
+}
+
+.profile-left {
+  height: 200px;
+  width: 150px;
+}

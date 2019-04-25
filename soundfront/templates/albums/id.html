@@ -1,3 +1,4 @@
+{% from "songs/table.html" import song_table %}
 {% extends "layout.html" %}
 {% block page %}
 
@@ -22,9 +23,6 @@
     <div class="album-artist">{{album.DisplayName}}</div>
 </div>
 
-{% with songs=album_songs %}
-  {% include "songs/table.html" %}
-{% endwith %}
-
+{{ song_table(album_songs) }}
 
 {% endblock %}
