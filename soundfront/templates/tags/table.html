@@ -3,26 +3,20 @@
     <th class="header-col col">Title</th>
     <th class="header-col col">Artist</th>
     <th class="header-col col">Album</th>
-    <th class="header-col col">Length (seconds)</th>
+    <th class="header-col col">Length</th>
     <th class="header-col col">Price</th>
     <th class="header-col col"></th>
   </tr>
 
-  {% for song in songs %}
+  {% for song in tag_songs %}
   <tr class="row item-row">
     <th class="col">
       <a href="/songs/{{ song.SongID }}">{{ song.Title }}</a>
     </th>
-    <th class="col"><a href="/users/{{ song.UserID }}">{{ song.Artist }}</a>
-    </th>
-    {% if song.AlbumTitle %}
-    <th class="col"> <a href="/albums/{{ song.AlbumID }}">{{ song.AlbumTitle }}</a>
-    </th>
-    {% else %}
-    <th class="col">-</th>
-    {% endif %}
+    <th class="col">{{ song.Artist }}</th>
+    <th class="col">{{ song.AlbumTitle or '-' }}</th>
     <th class="col">{{ song.Length }}</th>
-    <th class="col">${{ song.Price }}</th>
+    <th class="col">{{ song.Price }}</th>
     <th class="col">
       <a href="/songs/{{ song.SongID }}/review" class="button">Review</a>
     </th>

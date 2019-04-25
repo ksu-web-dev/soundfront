@@ -9,6 +9,8 @@
     </div>
     <div class="nav-right">
       {% if session['user_id'] %}
+      <a class="nav-profile" href="/users/{{ session['user_id']}}">My Profile</a>
+      <a class="nav-cart" href="/cart">My Cart</a>
       <a href="/auth/logout">Logout</a>
       {% else %}
       <a href="/auth/login">Login</a>

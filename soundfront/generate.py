@@ -42,7 +42,8 @@ for x in range(0, 300):
         album_price=random.uniform(0.00, 9.99),
         album_length=9
     )
-    # add a number of ratings (between 1 and 3) to this album
+
+    # create some ratings for this album (between 2 and 6)
     for n in range(0, random.randint(2,6)):
         album_rating = album_repo.rate_album(
             user_id=user.UserID, 
@@ -52,6 +53,16 @@ for x in range(0, 300):
         )
 
     albums.append(album)
+ 
+taglist = [] 
+for x in range(0,5):
+    tagName = fake.sentence(nb_words=3)
+    
+    tag = tag_repo.create_tag(
+        name=tagName
+    )   
+    
+    taglist.append(tag)
 
 for album in albums:
     for x in range(1, random.randint(5, 12)):
@@ -62,9 +73,14 @@ for album in albums:
             length=random.randint(120,240),
             price=9.99
         )
-
-
-
+        
+        tag = random.choice(taglist)
+         
+        song_tag = tag_repo.add_song_tag(
+            tag_id=tag.TagID,
+            song_id=song.SongID
+        )
+        
 #creating tags for testing
 taglist = []
 for x in range(0,100):

@@ -12,7 +12,7 @@ def index():
 
     pagination_data = {}
     pagination_data['page'] = int(page)
-    pagination_data['href'] = '/albums'
+    pagination_data['href'] = '/users'
 
     repo = current_app.config['user']
     users = repo.list_users(page, 10)
@@ -47,7 +47,10 @@ class UserRepo():
                 @Email=?,
                 @EnteredPassword=?
         """, 1, display_name, email, password)
-        return cursor.fetchone()
+        user = cursor.fetchone()
+        cursor.execute('EXEC Soundfront.CreateCart @UserID=?', user.UserID)
+
+        return user
 
     def list_users(self, page, page_size):
         cursor = self.conn.cursor()

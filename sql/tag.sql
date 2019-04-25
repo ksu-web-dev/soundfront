@@ -4,9 +4,19 @@ CREATE OR ALTER PROCEDURE Soundfront.CreateTag
     @Name NVARCHAR(50)
 AS
 INSERT Soundfront.Tag([Name])
-OUTPUT Inserted.[Name]
+OUTPUT Inserted.TagID, Inserted.[Name]
 VALUES(@Name)
 
+GO
+
+/* read tag */
+CREATE OR ALTER PROCEDURE Soundfront.ReadTag
+    @TagID INT
+AS
+
+SELECT T.TagID, T.[Name]
+FROM Soundfront.Tag T
+WHERE T.TagID = @TagID
 GO
 
 /* Add a tag to a song. */
@@ -16,6 +26,7 @@ CREATE OR ALTER PROCEDURE Soundfront.AddSongTag
 	@SongID INT
 AS
 INSERT Soundfront.SongTag(TagID, SongID)
+OUTPUT Inserted.SongTagID, Inserted.TagID, Inserted.SongID
 VALUES (@TagID, @SongID)
 GO
 
@@ -58,9 +69,13 @@ CREATE OR ALTER PROCEDURE Soundfront.ListSongsByTag
 AS
 
 SELECT S.SongID, S.UserID, S.AlbumID, S.Title, S.[Length],
-	S.UploadDate, S.Price, S.[Description]
-FROM Soundfront.Tag
-    INNER JOIN Soundfront.SongTag ST ON ST.TagID = @TagID
-    INNER JOIN Soundfront.Song S ON S.SongID = ST.SongID
+	S.UploadDate, S.Price, S.[Description], U.DisplayName as Artist,
+    A.Title as AlbumTitle
+FROM Soundfront.Song S
+    INNER JOIN Soundfront.SongTag ST ON ST.SongID = S.SongID
+    INNER JOIN Soundfront.Tag T ON T.TagID = ST.TagID
+    INNER JOIN Soundfront.Album A ON A.AlbumID = S.AlbumID
+    INNER JOIN Soundfront.[User] U ON U.UserID = A.UserID
+WHERE T.TagID = @TagID
 ORDER BY S.SongID
 OFFSET ((@Page * @PageSize) - @PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY;
