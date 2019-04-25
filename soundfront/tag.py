@@ -20,17 +20,19 @@ def index():
     return render_template('tags/index.html', tags=tags, page=int(page), pagination_data=pagination_data)
     
 @bp.route('/<tag_id>', methods=['GET'])
-def album(tag_id):
+def index_id(tag_id):
     page = request.args.get('page')
     if page is None: page = 1
     
+    pagination_data = {}
+    pagination_data['page'] = int(page)
+    pagination_data['href'] = '/tags/'+str(tag_id)
+      
     tag_repo = current_app.config['tag']
     tag_songs = tag_repo.list_songs_by_tag(tag_id, page=page, page_size=20)
-    print(tag_id)
-    for song in tag_songs:
-        print(song)
+
     # TODO: Add check for when the tag_id is not found.
-    return render_template('tags/tag_id.html', tag_songs=tag_songs, page=int(page))
+    return render_template('tags/tag_id.html', tag_songs=tag_songs, page=int(page), pagination_data=pagination_data)
 
 class TagRepo():
     def __init__(self, conn):

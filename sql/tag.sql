@@ -59,10 +59,13 @@ CREATE OR ALTER PROCEDURE Soundfront.ListSongsByTag
 AS
 
 SELECT S.SongID, S.UserID, S.AlbumID, S.Title, S.[Length],
-	S.UploadDate, S.Price, S.[Description]
+	S.UploadDate, S.Price, S.[Description], U.DisplayName as Artist,
+    A.Title as AlbumTitle
 FROM Soundfront.Song S
     INNER JOIN Soundfront.SongTag ST ON ST.SongID = S.SongID
-    INNER JOIN Soundfront.Tag T ON T.TagID = @TagID
-        AND T.TagID = ST.TagID
+    INNER JOIN Soundfront.Tag T ON T.TagID = ST.TagID
+    INNER JOIN Soundfront.Album A ON A.AlbumID = S.AlbumID
+    INNER JOIN Soundfront.[User] U ON U.UserID = A.UserID
+WHERE T.TagID = @TagID
 ORDER BY S.SongID
 OFFSET ((@Page * @PageSize) - @PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY;

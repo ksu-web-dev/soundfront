@@ -1,7 +1,18 @@
+{% from "pagination.html" import pagination_bar %}
 {% extends "layout.html" %}
 {% block page %}
 
 <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+
+    <div class="header">
+	<div class="breadcrumbs">
+	  <a href="/" class="crumb">SoundFront</a>
+	  <div class="crumb-separator">›</div>
+	  <a href="/tags" class="crumb">Tags</a>
+	</div>
+
+	<a href="new" class="button">+ Add tag</a>
+    </div>
 
 	<div class="tag_songs">
 		{% with songs=tag_songs %}
@@ -10,10 +21,6 @@
 	</div>
 
 
-	{% if page-1 > 0 %}
-	  <a href="/tags?page={{ page - 1 }}" class="button">Previous Page</a> | 
-	{% endif %} 
-
-	<a href="/tags?page={{ page + 1 }}" class="button">Next Page</a>
+    {{ pagination_bar(pagination_data.href, pagination_data.page) }}
 
 {% endblock %}
