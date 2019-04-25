@@ -14,9 +14,11 @@ def index():
     pagination_data['page'] = int(page)
     pagination_data['href'] = '/albums'
     pagination_data['add_button_text'] = 'Add an Album'
+    pagination_data['include_next_button'] = True
     
     album_repo = current_app.config['album']
     albums = album_repo.recent_albums(page=page, page_size=15)
+
     return render_template('albums/index.html', albums=albums, pagination_data=pagination_data)
 
 @bp.route('/<album_id>', methods=['GET'])
@@ -90,6 +92,12 @@ class AlbumRepo():
 
         return cursor.fetchall()
 
+    # Stretch Feature: Include a time frame for the top rated (e.g.: 1 year, 7 days, 1 day, etc)
+    def get_top_rated_albums(self):
+        cursor = self.conn.cursor()
+        cursor.execute('EXEC Soundfront.GetTopRatedAlbums')
+        return cursor.fetchall()
+
     def recent_albums(self, page, page_size):
         cursor = self.conn.cursor()
         cursor.execute("""
@@ -99,5 +107,16 @@ class AlbumRepo():
             """, page, page_size)
 
         return cursor.fetchall()
+
+    def rate_album(self, user_id, album_id, rating, review_text):
+        cursor = self.conn.cursor()
+        cursor.execute("""
+            EXEC Soundfront.InsertAlbumRating 
+                @UserID=?,
+                @AlbumID=?,
+                @Rating=?,
+                @ReviewText=?
+            """, user_id, album_id, rating, review_text)
+        return cursor.fetchone()
 
     

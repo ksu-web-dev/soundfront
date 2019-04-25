@@ -38,6 +38,7 @@ DROP PROCEDURE IF EXISTS Soundfront.[ListTags]
 DROP PROCEDURE IF EXISTS Soundfront.[GetTagsBySongID]
 DROP PROCEDURE IF EXISTS Soundfront.[ListSongsByUser];
 DROP PROCEDURE IF EXISTS Soundfront.[ListAlbumsByUser];
+DROP PROCEDURE IF EXISTS Soundfront.[GetTopRatedAlbums];
 
 
 DROP SCHEMA IF EXISTS Soundfront;
@@ -146,7 +147,7 @@ CREATE TABLE Soundfront.AlbumRating
     REFERENCES Soundfront.[User](UserID),
   AlbumID INT NOT NULL FOREIGN KEY
     REFERENCES Soundfront.Album(AlbumID),
-  Rating INT NOT NULL,
+  Rating FLOAT NOT NULL,
   ReviewText NVARCHAR(1024) NOT NULL,
 
   UNIQUE(RatingID, UserID)
@@ -159,7 +160,7 @@ CREATE TABLE Soundfront.SongRating
     REFERENCES Soundfront.[User](UserID),
   SongID INT NOT NULL FOREIGN KEY
     REFERENCES Soundfront.Song(SongID),
-  Rating INT NOT NULL,
+  Rating FLOAT NOT NULL,
   ReviewText NVARCHAR(1024) NOT NULL,
 
   UNIQUE(RatingID, UserID)

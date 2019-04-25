@@ -58,6 +58,32 @@ ORDER BY S.SongID
 
 GO
 
+-- Get Top by Average Rating
+--	-> "select the top 5 albums ordered by hightest average rating"
+CREATE OR ALTER PROCEDURE Soundfront.GetTopRatedAlbums
+	@TimeFrameInDays INT
+AS
+
+SELECT TOP 5 
+	A.AlbumID, U.DisplayName, A.Title, A.Price, AVG(AR.Rating) AS "Average Rating"
+FROM Soundfront.AlbumRating AR
+    INNER JOIN Soundfront.Album A ON A.AlbumID = AR.AlbumID
+    INNER JOIN Soundfront.[User] U ON U.UserID = A.UserID
+WHERE A.UploadDate < DATEADD(DAY, @TimeFrameInDays, SYSDATETIMEOFFSET())
+GROUP BY A.AlbumID, U.DisplayName, A.Title, A.Price
+ORDER BY AVG(AR.Rating) DESC, A.Price DESC
+-- DECLARE @TimeFrameInDays INT = 7 -- Get top 5 rated albums of the past 1 week (7 days)
+-- SELECT TOP 5 A.AlbumID, U.DisplayName, A.Title, A.Price, AVG(AR.Rating) AS "Average Rating"
+-- FROM Soundfront.AlbumRating AR
+--     INNER JOIN Soundfront.Album A ON A.AlbumID = AR.AlbumID
+--     INNER JOIN Soundfront.[User] U ON U.UserID = A.UserID
+-- WHERE A.UploadDate < DATEADD(DAY, @TimeFrameInDays, SYSDATETIMEOFFSET())
+-- GROUP BY A.AlbumID, U.DisplayName, A.Title, A.Price
+-- ORDER BY AVG(AR.Rating) DESC, A.Price DESC
+
+GO
+
+
 -- Delete
 CREATE OR ALTER PROCEDURE Soundfront.DeleteAlbum
 	@AlbumAlbumID INT
@@ -93,6 +119,7 @@ BEGIN
 	ORDER BY A.UploadDate DESC
 	OFFSET ((@Page * @PageSize) - @PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY;
 END
+
 GO
 
 CREATE OR ALTER PROCEDURE Soundfront.ListAlbumsByUser

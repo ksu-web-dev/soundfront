@@ -2,11 +2,12 @@
 CREATE OR ALTER PROCEDURE Soundfront.InsertAlbumRating
 	@UserID INT,
 	@AlbumID INT,
-	@Rating INT,
+	@Rating FLOAT,
 	@ReviewText NVARCHAR(1024)
 AS
 
 INSERT Soundfront.AlbumRating(UserID, AlbumID, Rating, ReviewText)
+OUTPUT Inserted.UserID, Inserted.AlbumID, Inserted.Rating, Inserted.ReviewText
 VALUES (@UserID, @AlbumID, @Rating, @ReviewText)
 
 GO
@@ -14,7 +15,7 @@ GO
 -- UPDATE AlbumRating
 CREATE OR ALTER PROCEDURE Soundfront.UpdateAlbumRating
 	@RatingID INT,
-	@Rating INT,
+	@Rating FLOAT,
 	@ReviewText NVARCHAR(1024)
 AS
 
@@ -64,7 +65,7 @@ GO
 CREATE OR ALTER PROCEDURE Soundfront.InsertSongRating
 	@UserID INT,
 	@SongID INT,
-	@Rating INT,
+	@Rating FLOAT,
 	@ReviewText NVARCHAR(1024)
 AS
 
@@ -77,7 +78,7 @@ GO
 -- UPDATE SongRating
 CREATE OR ALTER PROCEDURE Soundfront.UpdateSongRating
 	@RatingID INT,
-	@Rating INT,
+	@Rating FLOAT,
 	@ReviewText NVARCHAR(1024)
 AS
 
