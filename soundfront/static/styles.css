@@ -325,3 +325,7 @@ input.hidden {
 .following {
   margin-top: 32px;
 }
+
+.album-create-link {
+  margin-bottom: 18px;
+}

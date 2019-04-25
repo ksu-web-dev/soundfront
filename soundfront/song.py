@@ -87,7 +87,10 @@ def new():
 
         flash(error)
 
-    return render_template('songs/new.html')
+    user_repo = current_app.config['user']
+    albums = user_repo.list_albums(session['user_id'])
+
+    return render_template('songs/new.html', albums=albums)
 
 
 class SongRepo():
