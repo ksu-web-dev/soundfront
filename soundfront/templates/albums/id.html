@@ -15,13 +15,16 @@
 	</div>
 </div>
 
-<div class="album albumidpage">
+<div style="float:left" class="album albumidpage">
     <div class="album-art">
         <img src="{{ 'https://loremflickr.com/200/200?random=%s'%album.AlbumID }}">
     </div>
     <div class="album-title">{{album.Title}}</div>
     <div class="album-artist">{{album.DisplayName}}</div>
 </div>
+<div class="album_description album_description_bold">Description</div>
+
+<div class="album-description">{{album.Description}}</div>
 
 {{ song_table(album_songs) }}
 

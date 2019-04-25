@@ -29,13 +29,17 @@
     <div class="followers">
       <h2>Followers</h2>
       {% for user in followers %}
-        <div class="user">{{ user.DisplayName }}</div>
+        <div class="user">
+            <a href="/users/{{ user.UserID }}">{{ user.DisplayName }}</a>
+        </div>
       {% endfor %}
     </div>
     <div class="following">
       <h2>Following</h2>
       {% for user in following %}
-        <div class="user">{{ user.DisplayName }}</div>
+        <div class="user">
+            <a href="/users/{{ user.UserID }}">{{ user.DisplayName }}</a>
+        </div>
       {% endfor %}
     </div>
   </div>

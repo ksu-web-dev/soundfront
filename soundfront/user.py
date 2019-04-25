@@ -30,8 +30,10 @@ def profile(user_id):
 
     songs = repo.list_songs(user_id)
     albums = repo.list_albums(user_id)
+    followers = repo.list_followers(user_id)
+    following = repo.list_following(user_id)
 
-    return render_template('users/id.html', user=user, songs=songs, albums=albums)
+    return render_template('users/id.html', user=user, songs=songs, albums=albums, followers=followers, following=following)
 
 
 class UserRepo():
@@ -41,7 +43,7 @@ class UserRepo():
     def create_user(self, email='', display_name='', password=''):
         cursor = self.conn.cursor()
         cursor.execute("""
-            EXEC Soundfront.CreateUser 
+            EXEC Soundfront.CreateUser
                 @Privacy=?,
                 @DisplayName=?,
                 @Email=?,
@@ -88,3 +90,24 @@ class UserRepo():
     def remove_user(self, id):
         cursor = self.conn.cursor()
         cursor.execute('EXEC Soundfront.RemoveUser @UserID=?', id)
+
+    def follow_user(self, follower_user_id, followee_user_id):
+        cursor = self.conn.cursor()
+        cursor.execute("""
+            EXEC Soundfront.FollowUser
+                @FollowerUserID=?,
+                @FolloweeUserID=?
+            """, follower_user_id, followee_user_id)
+        return cursor.fetchone()
+
+    # pass in the id of the user page being viewed
+    def list_followers(self, followee_user_id):
+        cursor = self.conn.cursor()
+        cursor.execute('EXEC Soundfront.ListFollowers @FolloweeUserID=?', followee_user_id)
+        return cursor.fetchall()
+
+    # pass in the id of the user page being viewed
+    def list_following(self, follower_user_id):
+        cursor = self.conn.cursor()
+        cursor.execute('EXEC Soundfront.ListFollowing @FollowerUserID=?', follower_user_id)
+        return cursor.fetchall()

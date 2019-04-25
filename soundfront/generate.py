@@ -31,6 +31,27 @@ for x in range(0, 300):
 
     users.append(user)
 
+for user in users:
+    # followers following the user
+    for x in range(0,10):
+        try:
+            follower = random.choice(users)
+            if follower.UserID is not user.UserID:
+                user_repo.follow_user(
+                    follower_user_id = follower.UserID,
+                    followee_user_id = user.UserID
+                )
+        except: pass
+    # people the user is following
+    for x in range(0,10):
+        try:
+            follower = random.choice(users)
+            if follower.UserID is not user.UserID:
+                user_repo.follow_user(
+                    follower_user_id = user.UserID,
+                    followee_user_id = follower.UserID
+                )
+        except: pass
 # create some albums
 albums = []
 for x in range(0, 300):
@@ -40,7 +61,8 @@ for x in range(0, 300):
         user_id=user.UserID,
         album_title=fake.sentence(nb_words=3)[:-1],
         album_price=random.uniform(0.00, 9.99),
-        album_length=9
+        album_length=9,
+        album_description=fake.text()
     )
 
     # create some ratings for this album (between 2 and 6)

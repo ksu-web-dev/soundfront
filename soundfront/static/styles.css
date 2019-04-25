@@ -325,3 +325,27 @@ input.hidden {
 .following {
   margin-top: 32px;
 }
+
+.album-description {
+  border-top: 1px solid #e6edf4;
+  /*background-color: rgba(145,130,186,.3);*/
+  padding-left: 1%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  margin-top: 15px;
+  margin-left: 21.5%;
+  font-size: 85%;
+  border-bottom: 1px solid #e6edf4;
+}
+
+.album_description_bold {
+  margin-top: 25px;
+  margin-left: 20%;
+  font-weight: bold;
+  font-size: 95%;
+
+}
+
+.album-title {
+  font-size: 130%;
+}

@@ -40,8 +40,9 @@ CREATE OR ALTER PROCEDURE Soundfront.ReadAlbum
 	@AlbumAlbumId INT
 AS
 
-SELECT A.AlbumID, A.UserID, A.Title, A.[Length], A.Price, A.UploadDate, A.[Description]
+SELECT A.AlbumID, A.UserID, A.Title, A.[Length], A.Price, A.UploadDate, A.[Description], U.DisplayName
 FROM Soundfront.Album A
+	INNER JOIN Soundfront.[User] U ON U.UserID = A.UserID
 WHERE A.AlbumID = @AlbumAlbumId
 GO
 
@@ -65,7 +66,7 @@ CREATE OR ALTER PROCEDURE Soundfront.GetTopRatedAlbums
 	@TimeFrameInDays INT
 AS
 
-SELECT TOP 5 
+SELECT TOP 5
 	A.AlbumID, U.DisplayName, A.Title, A.Price, AVG(AR.Rating) AS "Average Rating"
 FROM Soundfront.AlbumRating AR
     INNER JOIN Soundfront.Album A ON A.AlbumID = AR.AlbumID
@@ -107,7 +108,7 @@ AS
 BEGIN
 	SET NOCOUNT ON
 	SELECT A.AlbumID, A.UserID, A.Title, U.DisplayName
-	FROM Soundfront.Album A 
+	FROM Soundfront.Album A
 		INNER JOIN Soundfront.[User] U ON A.UserID = U.UserID
 	ORDER BY A.UploadDate DESC
 	OFFSET ((@Page * @PageSize) - @PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY;
