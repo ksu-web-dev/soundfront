@@ -18,10 +18,11 @@ a {
   text-decoration: none;
   color: #5d309a;
   opacity: 0.8;
+  transition: opacity 0.2s ease;
 }
 a:hover {
   opacity: 1;
-  transition: all 0.2s ease;
+  transition: opacity 0.2s ease;
 }
 
 label {
@@ -36,6 +37,15 @@ button {
   border-radius: 2px;
   font-size: 14px;
   border: 1px solid rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  color: #5d309a;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+button:hover {
+  opacity: 1;
+  transition: opacity 0.2s ease;
 }
 
 button:focus {
@@ -87,6 +97,11 @@ button:focus {
   justify-content: space-between;
 }
 
+.nav-left, .nav-right {
+  display: flex;
+  align-items: center;
+}
+
 .nav-profile {
   margin-right: 12px;
 }
@@ -115,7 +130,7 @@ button:focus {
   margin-top: 18px;
 }
 
-form {
+.form {
   margin-top: 32px;
   padding-bottom: 150px;
 }
@@ -129,7 +144,7 @@ textarea {
   margin-top: 12px;
 }
 
-form > button {
+.form > button {
   display: block;
   cursor: pointer;
   margin-top: 12px;
@@ -206,7 +221,7 @@ h2 {
 }
 
 .table-song .col:first-of-type {
-  flex: 0 0 450px;
+  flex: 0 0 300px;
 }
 
 .table-song .col:nth-child(2) {
@@ -223,6 +238,10 @@ h2 {
 
 .table-song .col:nth-child(5) {
   flex: 0 0 100px;
+}
+
+.table-song .button {
+  margin-left: 8px;
 }
 
 h2 {
@@ -246,4 +265,12 @@ h2 {
 .albumidpage {
     margin-top: 25px;
     padding-bottom: 0px;
+}
+
+input.hidden {
+  display: none;
+}
+
+.table-price > .col:last-of-type {
+  text-align: right;
 }

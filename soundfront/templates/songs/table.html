@@ -25,6 +25,10 @@
     <th class="col">${{ song.Price }}</th>
     <th class="col">
       <a href="/songs/{{ song.SongID }}/review" class="button">Review</a>
+      <form action="/cart/" method="post">
+        <input type="text" class="hidden" name="songid" value="{{ song.SongID }}">
+        <button class="button" type="submit">Add to cart</button>
+      </form>
     </th>
   </tr>
   {% endfor %}

@@ -4,16 +4,23 @@ from flask import (Blueprint, flash, g, redirect,
 bp = Blueprint('cart', __name__, url_prefix='/cart')
 
 
-@bp.route('/', methods=['GET'])
+@bp.route('/', methods=['GET', 'POST'])
 def index():
-    page = request.args.get('page')
-    if page is None:
-        page = 1
     repo = current_app.config['cart']
 
-    cart = repo.read_cart(session['user_id'])
+    if 'user_id' not in session:
+        return redirect(url_for('auth.login'))
 
-    return render_template('cart/index.html', cart=cart, page=int(page))
+    user_id = session['user_id']
+    cart_items = repo.list_cart(user_id)
+
+    if request.method == 'POST':
+        cart = repo.get_cart(user_id)
+        song_id = request.form['songid']
+        repo.insert_songcart(song_id, cart.CartID)
+
+    print(cart_items)
+    return render_template('cart/index.html', cart=cart_items)
 
 
 class CartRepo():
@@ -25,16 +32,21 @@ class CartRepo():
         cursor.execute('EXEC Soundfront.CreateCart @UserID=?', userid)
         return cursor.fetchone()
 
-    def read_cart(self, userid=''):
+    def get_cart(self, user_id):
         cursor = self.conn.cursor()
-        cursor.execute('EXEC Soundfront.ReadCart @UserID=?', userid)
+        cursor.execute('EXEC Soundfront.GetCart @UserID=?', user_id)
+        return cursor.fetchone()
+
+    def list_cart(self, user_id):
+        cursor = self.conn.cursor()
+        cursor.execute('EXEC Soundfront.ListCart @UserID=?', user_id)
         return cursor.fetchall()
 
     def insert_songcart(self, songid='', cartid=''):
         cursor = self.conn.cursor()
         cursor.execute(
-            'EXEC Soundfront.InsertSongCart @SongID=? @CartID=?', songid, cartid)
-        return cursor.fetchone()
+            'EXEC SoundFront.InsertSongCart @SongID=?, @CartID=?', songid, cartid)
+        return True
 
     def delete_songcart(self, songcartid=''):
         cursor = self.conn.cursor()
