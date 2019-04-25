@@ -1,7 +1,8 @@
 import random
-import time
 import string
-import random
+import sys
+import requests
+import json
 
 from db import Database
 from user import UserRepo
@@ -19,6 +20,47 @@ user_repo = UserRepo(database.conn)
 album_repo = AlbumRepo(database.conn)
 song_repo = SongRepo(database.conn)
 tag_repo = TagRepo(database.conn)
+
+if len(sys.argv) > 1 and sys.argv[1] == '--real':
+    artists = ['Mt Eerie', 'Free Cake For Every Creature']
+    for artist in artists:
+
+        user = user_repo.create_user(
+            email=fake.email(),
+            display_name=artist,
+            password='password'
+        )
+
+        url = 'http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&artist=' + artist + '&api_key=c87fd2e998db2442bcca8ed22c08dbf0&format=json' 
+     
+        api_data = requests.get(url).content
+        parsed = json.loads(api_data)#['album'])
+        albums = parsed['topalbums']['album']
+        created_albums = []
+
+        num_albums = len(albums)
+        if num_albums > 5: 
+            num_albums = 5
+
+        for i in range(0, num_albums):
+            album_name = albums[i]['name']
+            album_art = albums[i]['image'][len(albums[i]['image']) - 1]['#text']
+
+            album = album_repo.create_album(
+                user_id=user.UserID,
+                album_title=album_name,
+                album_art=album_art,
+                album_price=random.uniform(0.00, 9.99),
+                album_length=9
+            )
+
+            created_albums.append(album)
+
+            print('\nalbum name: ' + album_name + 
+                  '\nalbum art: ' + album_art + 
+                  '\nartist name: ' + artist)
+
+    sys.exit()
 
 # create many faker users
 users = []

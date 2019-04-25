@@ -60,16 +60,17 @@ class AlbumRepo():
     def __init__(self, conn):
         self.conn = conn
 
-    def create_album(self, user_id='', album_title='', album_length='', album_price='', album_description=''):
+    def create_album(self, user_id='', album_title='', album_art='', album_length='', album_price='', album_description=''):
         cursor = self.conn.cursor()
         cursor.execute("""
         EXEC Soundfront.CreateAlbum
             @AlbumUserId=?,
             @AlbumTitle=?,
+            @AlbumAlbumArt=?,
             @AlbumLength=?,
             @AlbumPrice=?,
             @AlbumDescription=?
-            """, user_id, album_title, album_length, album_price, album_description)
+            """, user_id, album_title, album_art, album_length, album_price, album_description)
         return cursor.fetchone()
 
     def list_songs(self, album_id):

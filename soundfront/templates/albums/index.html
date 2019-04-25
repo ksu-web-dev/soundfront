@@ -18,10 +18,7 @@
 	{% for album in albums %}
 		<a class="album-link" href="{{ '/albums/%s'%album.AlbumID }}">
 			<div class="album">
-				<div class="album-art">
-					<!--<img src="https://placekitten.com/g/200/200">-->
-                    <img src="{{ 'https://loremflickr.com/200/200?random=%s'%album.AlbumID }}">
-				</div>
+                <img class="album-art" src="{{ album.AlbumArt }}">	
 				<div class="album-title">{{album.Title}}</div>
 				<div class="album-artist">{{album.DisplayName}}</div>
 			</div>

@@ -21,7 +21,8 @@
 	flex-basis: 100%;
 }
 .album-art {
-
+	width: 200px;
+	height: 200px;
 }
 .album-title {
 	width: inherit;
