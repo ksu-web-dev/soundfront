@@ -4,7 +4,7 @@
     <th class="header-col col">Title</th>
     <th class="header-col col">Artist</th>
     <th class="header-col col">Album</th>
-    <th class="header-col col">Length (seconds)</th>
+    <th class="header-col col">Length</th>
     <th class="header-col col">Price</th>
     <th class="header-col col"></th>
   </tr>
@@ -22,7 +22,7 @@
     {% else %}
     <th class="col">-</th>
     {% endif %}
-    <th class="col">{{ song.Length }}</th>
+    <th class="col">{{ song.Length|duration }}</th>
     <th class="col">${{ song.Price }}</th>
     <th class="col">
       <a href="/songs/{{ song.SongID }}/review" class="button">Review</a>

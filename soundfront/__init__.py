@@ -1,4 +1,5 @@
 import os
+import math
 
 from flask import Flask, render_template
 from .db import Database
@@ -41,4 +42,11 @@ def create_app():
     def db_test():
         return database.get_version()
 
+    app.jinja_env.filters['duration'] = format_duration
     return app
+
+def format_duration(duration):
+    duration = int(duration)
+    minutes = math.floor(duration / 60)
+    seconds = duration % 60
+    return f'{minutes}:{seconds:02}'
