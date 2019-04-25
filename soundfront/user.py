@@ -41,7 +41,7 @@ def profile(user_id):
         cart_repo = current_app.config['cart']
         cart = cart_repo.list_cart(user_id)
 
-    return render_template('users/id.html', user=user, songs=songs, albums=albums, cart=cart)
+    return render_template('users/id.html', user=user, songs=songs, albums=albums, cart=cart, followers=followers, following=following)
 
 
 class UserRepo():
