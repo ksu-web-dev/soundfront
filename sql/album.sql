@@ -2,17 +2,19 @@
 CREATE OR ALTER PROCEDURE Soundfront.CreateAlbum
 	@AlbumUserId INT,
 	@AlbumTitle NVARCHAR(50),
+	@AlbumAlbumArt NVARCHAR(256),
 	@AlbumPrice INT,
 	@AlbumDescription NVARCHAR(1024)
 
 AS
 BEGIN
 	SET NOCOUNT ON
-	INSERT Soundfront.Album(UserID, Title, Price, [Description])
-	OUTPUT Inserted.AlbumID, Inserted.Title, Inserted.Price, Inserted.Description, Inserted.UserID
+	INSERT Soundfront.Album(UserID, Title, AlbumArt, Price, [Description])
+	OUTPUT Inserted.AlbumID, Inserted.Title, Inserted.AlbumArt, Inserted.Price, Inserted.Description, Inserted.UserID
 	VALUES
-		(@AlbumUserId, @AlbumTitle, @AlbumPrice, @AlbumDescription)
+		(@AlbumUserId, @AlbumTitle, @AlbumAlbumArt, @AlbumPrice, @AlbumDescription)
 END
+
 GO
 
 -- Update
@@ -37,7 +39,7 @@ CREATE OR ALTER PROCEDURE Soundfront.ReadAlbum
 	@AlbumAlbumId INT
 AS
 
-SELECT A.AlbumID, A.UserID, A.Title, A.Price, A.UploadDate, A.[Description]
+SELECT A.AlbumID, A.UserID, A.Title, A.AlbumArt, A.Price, A.UploadDate, A.[Description]
 FROM Soundfront.Album A
 WHERE A.AlbumID = @AlbumAlbumId
 GO
@@ -47,7 +49,7 @@ CREATE OR ALTER PROCEDURE Soundfront.GetAlbumSongs
 	@AlbumID INT
 AS
 
-SELECT A.AlbumID, A.Title AS AlbumTitle, S.Title, S.[Length], S.Price, S.UploadDate, U.DisplayName as Artist, U.UserID, S.SongID
+SELECT A.AlbumID, A.Title AS AlbumTitle, S.Title, A.AlbumArt, S.[Length], S.Price, S.UploadDate, U.DisplayName as Artist, U.UserID, S.SongID
 FROM Soundfront.Album A
 	INNER JOIN Soundfront.Song S ON S.AlbumID = A.AlbumID
     INNER JOIN Soundfront.[User] U ON U.UserID = A.UserID
@@ -63,12 +65,12 @@ CREATE OR ALTER PROCEDURE Soundfront.GetTopRatedAlbums
 AS
 
 SELECT TOP 5 
-	A.AlbumID, U.DisplayName, A.Title, A.Price, AVG(AR.Rating) AS "Average Rating"
+	A.AlbumID, U.DisplayName, A.Title, A.AlbumArt, A.Price, AVG(AR.Rating) AS "Average Rating"
 FROM Soundfront.AlbumRating AR
     INNER JOIN Soundfront.Album A ON A.AlbumID = AR.AlbumID
     INNER JOIN Soundfront.[User] U ON U.UserID = A.UserID
 WHERE A.UploadDate < DATEADD(DAY, @TimeFrameInDays, SYSDATETIMEOFFSET())
-GROUP BY A.AlbumID, U.DisplayName, A.Title, A.Price
+GROUP BY A.AlbumID, U.DisplayName, A.Title, A.AlbumArt, A.Price
 ORDER BY AVG(AR.Rating) DESC, A.Price DESC
 
 GO
@@ -90,7 +92,7 @@ CREATE OR ALTER PROCEDURE Soundfront.ListAlbums
 	@PageSize INT
 AS
 
-SELECT A.AlbumID, A.UserID, A.Title, A.Price, A.UploadDate, A.[Description]
+SELECT A.AlbumID, A.UserID, A.Title, A.AlbumArt, A.Price, A.UploadDate, A.[Description]
 FROM Soundfront.Album A
 ORDER BY A.UploadDate DESC
 OFFSET ((@Page * @PageSize) - @PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY;
@@ -103,7 +105,7 @@ CREATE OR ALTER PROCEDURE Soundfront.RecentAlbums
 AS
 BEGIN
 	SET NOCOUNT ON
-	SELECT A.AlbumID, A.UserID, A.Title, U.DisplayName
+	SELECT A.AlbumID, A.UserID, A.Title, A.AlbumArt, U.DisplayName
 	FROM Soundfront.Album A 
 		INNER JOIN Soundfront.[User] U ON A.UserID = U.UserID
 	ORDER BY A.UploadDate DESC
@@ -116,7 +118,7 @@ CREATE OR ALTER PROCEDURE Soundfront.ListAlbumsByUser
 	@UserID INT
 AS
 
-SELECT A.AlbumID, A.UserID, A.Title, A.Price, A.UploadDate, A.[Description]
+SELECT A.AlbumID, A.UserID, A.Title, A.AlbumArt, A.Price, A.UploadDate, A.[Description]
 FROM Soundfront.Album A
 WHERE A.UserID = @UserID
 ORDER BY A.UploadDate DESC;

@@ -16,9 +16,7 @@
 </div>
 
 <div class="album albumidpage">
-    <div class="album-art">
-        <img src="{{ 'https://loremflickr.com/200/200?random=%s'%album.AlbumID }}">
-    </div>
+	<img class="album-art" src="{{ album.AlbumArt }}">
     <div class="album-title">{{album.Title}}</div>
     <div class="album-artist">{{album.DisplayName}}</div>
 </div>
