@@ -51,7 +51,6 @@ if len(sys.argv) > 1 and sys.argv[1] == '--real':
                 album_title=album_name,
                 album_art=album_art,
                 album_price=random.uniform(0.00, 9.99),
-                album_length=9
             )
 
             created_albums.append(album)
@@ -103,7 +102,6 @@ for x in range(0, 300):
         user_id=user.UserID,
         album_title=fake.sentence(nb_words=3)[:-1],
         album_price=random.uniform(0.00, 9.99),
-        album_length=9,
         album_description=fake.text()
     )
 

@@ -5,7 +5,6 @@ CREATE OR ALTER PROCEDURE Soundfront.CreateAlbum
 	@AlbumAlbumArt NVARCHAR(256),
 	@AlbumPrice INT,
 	@AlbumDescription NVARCHAR(1024)
-
 AS
 BEGIN
 	SET NOCOUNT ON
@@ -39,11 +38,7 @@ CREATE OR ALTER PROCEDURE Soundfront.ReadAlbum
 	@AlbumAlbumId INT
 AS
 
-<<<<<<< HEAD
-SELECT A.AlbumID, A.UserID, A.Title, A.[Length], A.Price, A.UploadDate, A.[Description], U.DisplayName
-=======
 SELECT A.AlbumID, A.UserID, A.Title, A.AlbumArt, A.Price, A.UploadDate, A.[Description]
->>>>>>> 35a67359a216cef06fb4d6a3b124b5d2cd44d5e9
 FROM Soundfront.Album A
 	INNER JOIN Soundfront.[User] U ON U.UserID = A.UserID
 WHERE A.AlbumID = @AlbumAlbumId
