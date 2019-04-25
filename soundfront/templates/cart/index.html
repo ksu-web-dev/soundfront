@@ -1,0 +1,28 @@
+{% extends "layout.html" %} {% block page %}
+
+<div class="header">
+  <div class="breadcrumbs">
+    <a href="/" class="crumb">SoundFront</a>
+    <div class="crumb-separator">›</div>
+    <div class="crumb">Cart</div>
+  </div>
+</div>
+
+<table class="table table-price">
+  <tr class="header-row row">
+    <th class="header-col col">Title</th>
+    <th class="header-col col">Type</th>
+    <th class="header-col col">Price</th>
+  </tr>
+
+  {% for item in cart %}
+  <tr class="row item-row">
+    <td class="col">{{ item.Title }}</td>
+    <td class="col">{{ item.Type }}</td>
+    <td class="col">${{ item.Price }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+
+{% endblock %}

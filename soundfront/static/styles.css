@@ -6,7 +6,7 @@ html {
 }
 
 body {
-  color: #1e1e21;
+  color: #7d8998;
 }
 
 .page {
@@ -18,10 +18,11 @@ a {
   text-decoration: none;
   color: #5d309a;
   opacity: 0.8;
+  transition: opacity 0.2s ease;
 }
 a:hover {
   opacity: 1;
-  transition: all 0.2s ease;
+  transition: opacity 0.2s ease;
 }
 
 label {
@@ -36,6 +37,16 @@ button {
   border-radius: 2px;
   font-size: 14px;
   border: 1px solid rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  color: #5d309a;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+  flex: 0 0 auto;
+}
+
+button:hover {
+  opacity: 1;
+  transition: opacity 0.2s ease;
 }
 
 button:focus {
@@ -87,6 +98,11 @@ button:focus {
   justify-content: space-between;
 }
 
+.nav-left, .nav-right {
+  display: flex;
+  align-items: center;
+}
+
 .nav-profile {
   margin-right: 12px;
 }
@@ -115,12 +131,13 @@ button:focus {
   margin-top: 18px;
 }
 
-form {
+.form {
   margin-top: 32px;
   padding-bottom: 150px;
 }
 
 form > input,
+select,
 textarea {
   margin-bottom: 20px;
   padding: 8px 12px;
@@ -129,7 +146,7 @@ textarea {
   margin-top: 12px;
 }
 
-form > button {
+.form > button {
   display: block;
   cursor: pointer;
   margin-top: 12px;
@@ -183,8 +200,10 @@ textarea {
 }
 
 h2 {
-  margin-bottom: 24px;
-  margin-top: 42px;
+  margin: 0px;
+  margin-bottom: 32px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid #e6edf4;
 }
 
 .breadcrumbs {
@@ -206,11 +225,11 @@ h2 {
 }
 
 .table-song .col:first-of-type {
-  flex: 0 0 450px;
+  flex: 1 0 300px;
 }
 
 .table-song .col:nth-child(2) {
-  flex: 0 0 200px;
+  flex: 0 0 100px;
 }
 
 .table-song .col:nth-child(3) {
@@ -222,7 +241,11 @@ h2 {
 }
 
 .table-song .col:nth-child(5) {
-  flex: 0 0 100px;
+  flex: 0 0 75px;
+}
+
+.table-song .button {
+  margin-left: 8px;
 }
 
 h2 {
@@ -246,4 +269,75 @@ h2 {
 .albumidpage {
     margin-top: 25px;
     padding-bottom: 0px;
+}
+
+input.hidden {
+  display: none;
+}
+
+.table-price > .col:last-of-type {
+  text-align: right;
+}
+
+.profile {
+  display: flex;
+  margin-top: 42px;
+}
+
+.avatar {
+  width: 200px;
+  height: 200px;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.description {
+  margin-top: 32px;
+}
+
+.desc-item {
+  margin-top: 8px;
+}
+
+.profile-left {
+  margin-right: 32px;
+}
+
+.profile-right {
+  flex: 1 1 auto;
+}
+
+.profile-songs {
+  margin-top: 32px;
+}
+
+.profile .none {
+  opacity: 0.8;
+}
+
+.followers {
+  margin-top: 32px;
+}
+
+.profile .user {
+  margin-top: 8px;
+}
+
+.following {
+  margin-top: 32px;
+}
+
+.album-create-link {
+  margin-bottom: 18px;
+}
+
+.song-detail-description {
+  margin-top: 32px;
+}
+
+.song-description {
+  margin-bottom: 42px;
+}
+
+.details {
+  margin-top: 32px;
 }

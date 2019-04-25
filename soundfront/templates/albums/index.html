@@ -1,4 +1,5 @@
 {% from "pagination.html" import pagination_bar %}
+{% from "albums/table.html" import album_table %} 
 {% extends "layout.html" %}
 {% block page %}
 
@@ -14,17 +15,8 @@
 	<a href="new" class="button">+ Add album</a>
 </div>
 
-<div class="albums">
-	{% for album in albums %}
-		<a class="album-link" href="{{ '/albums/%s'%album.AlbumID }}">
-			<div class="album">
-                <img class="album-art" src="{{ album.AlbumArt }}">	
-				<div class="album-title">{{album.Title}}</div>
-				<div class="album-artist">{{album.DisplayName}}</div>
-			</div>
-		</a>
-	{% endfor %}
-</div>
+
+{{ album_table(albums) }}
 
 <div style="margin-top: 10px"></div>
 

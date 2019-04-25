@@ -1,9 +1,10 @@
+{% macro song_table(songs) %}
 <table class="table table-song">
   <tr class="header-row row">
     <th class="header-col col">Title</th>
     <th class="header-col col">Artist</th>
     <th class="header-col col">Album</th>
-    <th class="header-col col">Length (seconds)</th>
+    <th class="header-col col">Length</th>
     <th class="header-col col">Price</th>
     <th class="header-col col"></th>
   </tr>
@@ -21,11 +22,16 @@
     {% else %}
     <th class="col">-</th>
     {% endif %}
-    <th class="col">{{ song.Length }}</th>
+    <th class="col">{{ song.Length|duration }}</th>
     <th class="col">${{ song.Price }}</th>
     <th class="col">
       <a href="/songs/{{ song.SongID }}/review" class="button">Review</a>
+      <form action="/cart/" method="post">
+        <input type="text" class="hidden" name="songid" value="{{ song.SongID }}">
+        <button class="button" type="submit">Add to cart</button>
+      </form>
     </th>
   </tr>
   {% endfor %}
 </table>
+{% endmacro %}

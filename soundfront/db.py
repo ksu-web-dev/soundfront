@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 
 class Database:
-    def __init__(self, server=None, database=None, username=None, password=None, setup=False):
+    def __init__(self, server=None, database=None, username=None, password=None, setup=False, test=False):
         load_dotenv()
         self.server = server or os.environ.get(
             'DB_SERVER', default='localhost,1433')
@@ -14,6 +14,7 @@ class Database:
         self.username = username or os.environ.get('DB_USERNAME', default='sa')
         self.password = password or os.environ.get('DB_PASSWORD', default='')
         self.setup = setup
+        self.test = test
 
     def connect(self):
         self.master_conn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+self.server +
@@ -22,6 +23,10 @@ class Database:
         cursor = self.master_conn.cursor()
         cursor.execute(f"SELECT DB_ID(N'{self.database}')")
         db_exists = cursor.fetchone()
+
+        if self.test and db_exists[0] is not None:
+            cursor.execute(f'DROP DATABASE {self.database}')
+            db_exists[0] = None
 
         if db_exists[0] is None:
             cursor.execute(f'CREATE DATABASE {self.database}')

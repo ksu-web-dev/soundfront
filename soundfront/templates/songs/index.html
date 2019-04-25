@@ -1,4 +1,5 @@
 {% from "pagination.html" import pagination_bar %}
+{% from "songs/table.html" import song_table %}
 {% extends "layout.html" %} {% block page %}
 
 <div class="header">
@@ -11,9 +12,7 @@
 	<a href="new" class="button">+ Add song</a>
 </div>
 
-{% with songs=songs %}
-  {% include "songs/table.html" %}
-{% endwith %}
+{{ song_table(songs) }}
 
 {{ pagination_bar(pagination_data.href, pagination_data.page) }}
 

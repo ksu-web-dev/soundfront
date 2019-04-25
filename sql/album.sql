@@ -3,25 +3,24 @@ CREATE OR ALTER PROCEDURE Soundfront.CreateAlbum
 	@AlbumUserId INT,
 	@AlbumTitle NVARCHAR(50),
 	@AlbumAlbumArt NVARCHAR(256),
-	@AlbumLength INT,
 	@AlbumPrice INT,
 	@AlbumDescription NVARCHAR(1024)
 
 AS
 BEGIN
 	SET NOCOUNT ON
-	INSERT Soundfront.Album(UserID, Title, AlbumArt, [Length], Price, [Description])
-	OUTPUT Inserted.AlbumID, Inserted.Title, Inserted.AlbumArt, Inserted.Length, Inserted.Price, Inserted.Description, Inserted.UserID
+	INSERT Soundfront.Album(UserID, Title, AlbumArt, Price, [Description])
+	OUTPUT Inserted.AlbumID, Inserted.Title, Inserted.AlbumArt, Inserted.Price, Inserted.Description, Inserted.UserID
 	VALUES
-		(@AlbumUserId, @AlbumTitle, @AlbumAlbumArt, @AlbumLength, @AlbumPrice, @AlbumDescription)
+		(@AlbumUserId, @AlbumTitle, @AlbumAlbumArt, @AlbumPrice, @AlbumDescription)
 END
+
 GO
 
 -- Update
 CREATE OR ALTER PROCEDURE Soundfront.UpdateAlbum
 	@AlbumAlbumId INT,
 	@AlbumTitle NVARCHAR(50),
-	@AlbumLength INT,
 	@AlbumPrice INT,
 	@AlbumDescription NVARCHAR(1024)
 
@@ -30,7 +29,6 @@ AS
 UPDATE Soundfront.Album
 	SET
 		Title = @AlbumTitle,
-		[Length] = @AlbumLength,
 		Price = @AlbumPrice,
 		[Description] = @AlbumDescription
 WHERE AlbumID = @AlbumAlbumId
@@ -41,7 +39,7 @@ CREATE OR ALTER PROCEDURE Soundfront.ReadAlbum
 	@AlbumAlbumId INT
 AS
 
-SELECT A.AlbumID, A.UserID, A.Title, A.AlbumArt, A.[Length], A.Price, A.UploadDate, A.[Description]
+SELECT A.AlbumID, A.UserID, A.Title, A.AlbumArt, A.Price, A.UploadDate, A.[Description]
 FROM Soundfront.Album A
 WHERE A.AlbumID = @AlbumAlbumId
 GO
@@ -94,7 +92,7 @@ CREATE OR ALTER PROCEDURE Soundfront.ListAlbums
 	@PageSize INT
 AS
 
-SELECT A.AlbumID, A.UserID, A.Title, A.AlbumArt, A.[Length], A.Price, A.UploadDate, A.[Description]
+SELECT A.AlbumID, A.UserID, A.Title, A.AlbumArt, A.Price, A.UploadDate, A.[Description]
 FROM Soundfront.Album A
 ORDER BY A.UploadDate DESC
 OFFSET ((@Page * @PageSize) - @PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY;
@@ -120,7 +118,7 @@ CREATE OR ALTER PROCEDURE Soundfront.ListAlbumsByUser
 	@UserID INT
 AS
 
-SELECT A.AlbumID, A.UserID, A.Title, A.AlbumArt, A.[Length], A.Price, A.UploadDate, A.[Description]
+SELECT A.AlbumID, A.UserID, A.Title, A.AlbumArt, A.Price, A.UploadDate, A.[Description]
 FROM Soundfront.Album A
 WHERE A.UserID = @UserID
 ORDER BY A.UploadDate DESC;

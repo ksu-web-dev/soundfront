@@ -6,7 +6,7 @@ from soundfront.user import UserRepo
 class TestUser(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        db = Database(database=f'soundfront_test', setup=True)
+        db = Database(database=f'soundfront_test', setup=True, test=True)
         cls.db = db
         db.connect()
         cls.user_repo = UserRepo(db.conn)

@@ -1,4 +1,5 @@
 {% from "pagination.html" import pagination_bar %}
+{% from "songs/table.html" import song_table %}
 {% extends "layout.html" %}
 {% block page %}
 
@@ -17,9 +18,7 @@
     </div>
 
 	<div class="tag_songs">
-		{% with songs=tag_songs %}
-            {% include "songs/table.html" %}
-        {% endwith %}
+		{{ song_table(songs) }}
 	</div>
 
 

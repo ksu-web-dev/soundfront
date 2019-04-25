@@ -1,7 +1,15 @@
 {% extends "layout.html" %}
 {% block page %}
 
-<h1> Add an Album </h1>
+<div class="header">
+	<div class="breadcrumbs">
+		<a href="/" class="crumb">SoundFront</a>
+		<div class="crumb-separator">›</div>
+		<a href="/albums" class="crumb">Albums</a>
+		<div class="crumb-separator">›</div>
+		<div class="crumb">Add an album</div>
+	</div>
+</div>
 
 {% with messages = get_flashed_messages() %}
   {% if messages %}
@@ -13,12 +21,9 @@
   {% endif %}
 {% endwith %}
 
-<form method="post">
+<form method="post" class="form">
   <label>Title</label>
   <input type="text" name="title" id="title" value="{{ request.form.title }}"/>
-
-  <label>Length</label>
-  <input type="text" name="length" id="length" value="{{ request.form.length }}"/>
 
   <label>Price</label>
   <input type="text" name="price" id="price" value="{{ request.form.price }}"/>
@@ -26,7 +31,7 @@
   <label>Description (optional)</label>
   <input type="text" name="description" id="description" value="{{ request.form.description }}"/>
 
-  <button type="submit">Submit</button>
+  <button type="submit">Create album</button>
 </form>
 
 {% endblock %}

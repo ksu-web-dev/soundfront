@@ -21,21 +21,27 @@
   {% endif %}
 {% endwith %}
 
-<form method="post">
+<form method="post" class="form">
   <label>Title</label>
-  <input type="text" name="title" id="title" value="{{ request.form.title }}"/>
+  <input type="text" name="title" id="title" value="{{ request.form.title }}"/ autofocus>
 
-  <label>Album ID (optional)</label>
-  <input type="text" name="album" id="album" value="{{ request.form.album }}"/>
+  <label>Album (optional)</label>
+  <select name="album" id="album" value="{{ request.form.album }}">
+    {% if not albums == [] %}
+      {% for album in albums %}
+        <option value="{{ album.AlbumID }}">{{ album.Title }}</option>
+      {% endfor %}
+    {% endif %}
+  </select>
+  <div class="album-create-link"><a href="/albums/new">Create an album</a></div>
 
-  <label>Length</label>
+  <label>Length (seconds)</label>
   <input type="text" name="length" id="length" value="{{ request.form.length }}"/>
 
   <label>Price</label>
   <input type="text" name="price" id="price" value="{{ request.form.price }}"/>
 
   <label>Description (optional)</label>
-  <!-- <input type="text" name="description" id="description" value="{{ request.form.description }}"/> -->
   <textarea name="description"cols="60" rows="8" value="{{ request.form.description }}"></textarea>
 
   <button type="submit">Submit</button>

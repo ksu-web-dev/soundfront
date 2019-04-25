@@ -1,7 +1,17 @@
 {% extends "layout.html" %} 
 {% block page %}
 
-<h1>Review for '{{ song.Title }}'</h1>
+<div class="header">
+  <div class="breadcrumbs">
+    <a href="/" class="crumb">SoundFront</a>
+    <div class="crumb-separator">›</div>
+    <a href="/songs" class="crumb">Songs</a>
+    <div class="crumb-separator">›</div>
+    <a href="/songs/{{ song.SongID }}" class="crumb">{{ song.Title }}</a>
+    <div class="crumb-separator">›</div>
+    <div class="crumb">Review</div>
+  </div>
+</div>
 
 {% with messages = get_flashed_messages() %}
   {% if messages %}
@@ -13,11 +23,10 @@
   {% endif %}
 {% endwith %}
 
-<form method="post">
+<form method="post" class="form">
   <label>Rating</label>
-
   <select name="rating" value={{ request.form.rating }}>
-    {% for x in range(1, 10) %}
+    {% for x in range(0, 6) %}
       <option value="{{x}}">{{x}}</option>
     {% endfor %}
   </select>
@@ -25,7 +34,7 @@
   <label>Review (optional)</label>
   <textarea name="review"cols="80" rows="10" value="{{ request.form.review }}"></textarea>
 
-  <button type="submit">Submit</button>
+  <button type="submit">Create review</button>
 </form>
 
 {% endblock %}
