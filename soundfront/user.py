@@ -47,7 +47,10 @@ class UserRepo():
                 @Email=?,
                 @EnteredPassword=?
         """, 1, display_name, email, password)
-        return cursor.fetchone()
+        user = cursor.fetchone()
+        cursor.execute('EXEC Soundfront.CreateCart @UserID=?', user.UserID)
+
+        return user
 
     def list_users(self, page, page_size):
         cursor = self.conn.cursor()
