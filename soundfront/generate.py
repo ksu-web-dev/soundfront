@@ -39,8 +39,7 @@ for x in range(0, 300):
     album = album_repo.create_album(
         user_id=user.UserID,
         album_title=fake.sentence(nb_words=3)[:-1],
-        album_price=random.uniform(0.00, 9.99),
-        album_length=9
+        album_price=random.uniform(0.00, 9.99)
     )
 
     # create some ratings for this album (between 2 and 6)
