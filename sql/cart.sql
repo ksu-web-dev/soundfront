@@ -10,12 +10,22 @@ GO
 
 -- Read/Select Cart
 CREATE OR ALTER PROCEDURE Soundfront.ReadCart
-	@CartID INT
+	@UserID INT
 AS
 
-SELECT C.CartID, C.UserID
-FROM Soundfront.Cart C
-WHERE C.CartID = @CartID
+SELECT SC.SongCartID, S.Title, S.Price, "Song" AS [type]
+FROM Soundfront.SongCart SC
+INNER JOIN Soundfront.Song S on S.SongID = SC.SongID
+INNER JOIN Soundfront.Cart C on C.CartID = SC.SongCartID
+WHERE @UserID = C.UserID
+
+UNION
+
+SELECT AC.AlbumCartID, A.Title, A.Price, "Album" AS [type]
+FROM Soundfront.AlbumCart AC
+INNER JOIN Soundfront.Album A on A.AlbumID = AC.AlbumID
+INNER JOIN Soundfront.Cart C on C.CartID = SC.AlbumCartID
+WHERE @UserID = C.UserID
 
 GO
 
