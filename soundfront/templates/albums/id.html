@@ -14,6 +14,13 @@
 	</div>
 </div>
 
+<div class="album albumidpage">
+    <div class="album-art">
+        <img src="https://placekitten.com/g/200/200">
+    </div>
+    <div class="album-title">{{album.Title}}</div>
+    <div class="album-artist">{{album.DisplayName}}</div>
+</div>
 
 {% with songs=album_songs %}
   {% include "songs/table.html" %}
