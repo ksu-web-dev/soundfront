@@ -136,6 +136,7 @@ button:focus {
 }
 
 form > input,
+select,
 textarea {
   margin-bottom: 20px;
   padding: 8px 12px;
