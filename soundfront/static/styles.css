@@ -329,3 +329,15 @@ input.hidden {
 .album-create-link {
   margin-bottom: 18px;
 }
+
+.song-detail-description {
+  margin-top: 32px;
+}
+
+.song-description {
+  margin-bottom: 42px;
+}
+
+.details {
+  margin-top: 32px;
+}
