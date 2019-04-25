@@ -16,7 +16,7 @@ def index():
     pagination_data['add_button_text'] = 'Add a Tag'
     
     tag_repo = current_app.config['tag']
-    tags = tag_repo.list_tags(page=page, page_size=20)
+    tags = tag_repo.list_tags(page=page, page_size=50)
     return render_template('tags/index.html', tags=tags, page=int(page), pagination_data=pagination_data)
     
 @bp.route('/<tag_id>', methods=['GET'])

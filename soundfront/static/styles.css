@@ -28,12 +28,18 @@ label {
   display: block;
 }
 
-a.button {
+a.button,
+button {
   display: inline-block;
   padding: 8px 12px;
   border: 1px solid #e6edf4;
   border-radius: 2px;
   font-size: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+button:focus {
+  outline: none;
 }
 
 .pagination-bar {
@@ -97,10 +103,37 @@ a.button {
   padding: 12px;
   list-style-type: none;
   margin-bottom: 32px;
+  margin-top: 18px;
 }
 
-form > input {
-  margin-bottom: 12px;
+form {
+  margin-top: 32px;
+  padding-bottom: 150px;
+}
+
+form > input,
+textarea {
+  margin-bottom: 20px;
+  padding: 8px 12px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  margin-top: 12px;
+}
+
+form > button {
+  display: block;
+  cursor: pointer;
+  margin-top: 12px;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border: 1px solid #9182ba;
+}
+
+textarea {
+  border: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .table {
@@ -185,4 +218,18 @@ h2 {
 
 h2 {
   font-size: 20px;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 32px;
+}
+
+.tags-link {
+  display: inline-block;
+  padding: 8px 12px;
+  margin-right: 6px;
+  margin-bottom: 6px;
+  background: rgb(0, 0, 0, 0.05);
 }

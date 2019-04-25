@@ -10,6 +10,7 @@ from .album import AlbumRepo, bp as albums_bp
 from .user  import UserRepo, bp as users_bp
 from .song  import SongRepo, bp as songs_bp
 from .tag	import TagRepo, bp as tag_bp
+from .cart	import CartRepo, bp as cart_bp
 
 def create_app():
     app = Flask(__name__)
@@ -22,6 +23,7 @@ def create_app():
     app.config['album'] = AlbumRepo(database.conn)
     app.config['song'] = SongRepo(database.conn)
     app.config['tag'] = TagRepo(database.conn)
+    app.config['cart'] = CartRepo(database.conn)
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(index_bp)
@@ -29,6 +31,7 @@ def create_app():
     app.register_blueprint(users_bp)
     app.register_blueprint(songs_bp)
     app.register_blueprint(tag_bp)
+    app.register_blueprint(cart_bp)
 
     @app.route('/hello')
     def hello():
