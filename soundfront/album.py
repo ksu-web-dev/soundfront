@@ -92,10 +92,9 @@ class AlbumRepo():
 
         return cursor.fetchall()
 
-    # Stretch Feature: Include a time frame for the top rated (e.g.: 1 year, 7 days, 1 day, etc)
-    def get_top_rated_albums(self):
+    def get_top_rated_albums(self, time_frame):
         cursor = self.conn.cursor()
-        cursor.execute('EXEC Soundfront.GetTopRatedAlbums')
+        cursor.execute('EXEC Soundfront.GetTopRatedAlbums @TimeFrameInDays=?', time_frame)
         return cursor.fetchall()
 
     def recent_albums(self, page, page_size):
