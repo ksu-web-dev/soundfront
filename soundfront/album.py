@@ -27,7 +27,15 @@ def album(album_id):
     album = album_repo.get_album(album_id)
     album_songs = album_repo.list_songs(album_id)
     # TODO: Add check for when the album_id is not found.
-    return render_template('albums/id.html', album_songs=album_songs, album=album)
+
+    cart = []
+
+    if 'user_id' in session:
+        user_id = session['user_id']
+        cart_repo = current_app.config['cart']
+        cart = cart_repo.list_cart(user_id)
+
+    return render_template('albums/id.html', album_songs=album_songs, album=album, cart=cart)
 
 @bp.route('/new', methods=['GET', 'POST'])
 def new():

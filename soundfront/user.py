@@ -17,6 +17,7 @@ def index():
     repo = current_app.config['user']
     users = repo.list_users(page, 10)
     user_count = repo.user_count()
+
     return render_template('users/index.html', users=users, current_page=int(page), user_count=user_count, pagination_data=pagination_data)
 
 
@@ -31,7 +32,14 @@ def profile(user_id):
     songs = repo.list_songs(user_id)
     albums = repo.list_albums(user_id)
 
-    return render_template('users/id.html', user=user, songs=songs, albums=albums)
+    cart = []
+
+    if 'user_id' in session:
+        user_id = session['user_id']
+        cart_repo = current_app.config['cart']
+        cart = cart_repo.list_cart(user_id)
+
+    return render_template('users/id.html', user=user, songs=songs, albums=albums, cart=cart)
 
 
 class UserRepo():
