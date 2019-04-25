@@ -1,6 +1,12 @@
 {% extends "layout.html" %} {% block page %}
 
-<h1>Login</h1>
+<div class="header">
+  <div class="breadcrumbs">
+    <a href="/" class="crumb">SoundFront</a>
+    <div class="crumb-separator">›</div>
+    <div class="crumb">Login</div>
+  </div>
+</div>
 
 {% with messages = get_flashed_messages() %} {% if messages %}
 <ul class="flashes">
@@ -21,7 +27,7 @@
     <a href="/auth/register">Create an account</a>
   </div>
 
-  <button type="submit">Submit</button>
+  <button type="submit">Login</button>
 </form>
 
 {% endblock %}

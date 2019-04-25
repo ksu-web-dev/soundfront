@@ -1,7 +1,14 @@
 {% extends "layout.html" %} 
 {% block page %}
 
-<h1>Registration </h1>
+<div class="header">
+  <div class="breadcrumbs">
+    <a href="/" class="crumb">SoundFront</a>
+    <div class="crumb-separator">›</div>
+    <div class="crumb">Register</div>
+  </div>
+</div>
+
 
 {% with messages = get_flashed_messages() %}
   {% if messages %}
