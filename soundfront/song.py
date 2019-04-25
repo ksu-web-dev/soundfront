@@ -15,9 +15,16 @@ def index():
     pagination_data['href'] = '/songs'
     pagination_data['add_button_text'] = 'Add a Song'
 
+    cart = []
+
+    if 'user_id' in session:
+        user_id = session['user_id']
+        cart_repo = current_app.config['cart']
+        cart = cart_repo.list_cart(user_id)
+
     repo = current_app.config['song']
     songs = repo.list_song(page, 10)
-    return render_template('songs/index.html', songs=songs, page=int(page), pagination_data=pagination_data)
+    return render_template('songs/index.html', songs=songs, page=int(page), pagination_data=pagination_data, cart=cart)
 
 
 @bp.route('/<song_id>', methods=['GET'])
@@ -87,7 +94,10 @@ def new():
 
         flash(error)
 
-    return render_template('songs/new.html')
+    user_repo = current_app.config['user']
+    albums = user_repo.list_albums(session['user_id'])
+
+    return render_template('songs/new.html', albums=albums)
 
 
 class SongRepo():

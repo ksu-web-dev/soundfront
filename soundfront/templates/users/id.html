@@ -58,7 +58,7 @@
       {% if songs == [] %}
         <div class="none">User has no songs</div>
       {% else %}
-        {{ song_table(songs) }}
+        {{ song_table(songs, cart) }}
       {% endif %}
     </div>
   </div>

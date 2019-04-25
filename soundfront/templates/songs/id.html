@@ -10,27 +10,52 @@
   </div>
 </div>
 
-<h2>Description</h2>
-<div class="song-description">
-  {{ song.Description or 'No description provided.'}}
+<div class="details">
+  <h2>Details</h2>
+  <div class="desc-item">
+    <b>Title:</b> {{ song.Title }}
+  <div class="desc-item">
+    <b>Artist:</b> {{ song.Artist }}
+  </div>
+  <div class="desc-item">
+    <b>Album:</b> {{ song.Album or 'None'}}
+  </div>
+  <div class="desc-item">
+    <b>Length:</b> {{ song.Length|duration }}
+  </div>
+  <div class="desc-item">
+    <b>Uploaded:</b> {{ song.UploadDate.strftime("%m/%d/%Y") }}
+  </div>
+  <div class="desc-item">
+    <b>Price:</b> {{ song.Price }}
+  </div>
+</div>
+
+<div class="song-detail-description">
+  <h2>Description</h2>
+  <div class="song-description">
+    {{ song.Description or 'No description provided.'}}
+  </div>
 </div>
 
 <h2>Reviews</h2>
+  {% if ratings == [] %}
+    No reviews yet.
+  {% else %}
+    <table class="table">
+      <tr class="header-row row">
+        <td class="header-col col">User</td>
+        <td class="header-col col">Rating</td>
+        <td class="header-col col">Review</td>
+      </tr>
 
-<table class="table">
-  <tr class="header-row row">
-    <td class="header-col col">User</td>
-    <td class="header-col col">Rating</td>
-    <td class="header-col col">Review</td>
-  </tr>
-
-  {% for rating in ratings %}
-  <tr class="row">
-    <td class="col">{{ rating.User }}</td>
-    <td class="col">{{ rating.Rating }}</td>
-    <td class="col">{{ rating.ReviewText }}</td>
-  </tr>
-  {% endfor %}
-</table>
-
+      {% for rating in ratings %}
+        <tr class="row">
+          <td class="col">{{ rating.User }}</td>
+          <td class="col">{{ rating.Rating }}</td>
+          <td class="col">{{ rating.ReviewText }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  {% endif %}
 {% endblock %}

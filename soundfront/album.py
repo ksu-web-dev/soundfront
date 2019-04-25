@@ -27,7 +27,15 @@ def album(album_id):
     album = album_repo.get_album(album_id)
     album_songs = album_repo.list_songs(album_id)
     # TODO: Add check for when the album_id is not found.
-    return render_template('albums/id.html', album_songs=album_songs, album=album)
+
+    cart = []
+
+    if 'user_id' in session:
+        user_id = session['user_id']
+        cart_repo = current_app.config['cart']
+        cart = cart_repo.list_cart(user_id)
+
+    return render_template('albums/id.html', album_songs=album_songs, album=album, cart=cart)
 
 @bp.route('/new', methods=['GET', 'POST'])
 def new():
@@ -37,7 +45,6 @@ def new():
     if request.method == 'POST':
         user_id = session['user_id']
         title = request.form['title']
-        length = request.form['length']
         price = request.form['price']
         description = request.form['description']
 
@@ -50,7 +57,7 @@ def new():
 
         if error is None:
             album_repo = current_app.config['album']
-            album_repo.create_album(user_id, title, length, price, description)
+            album_repo.create_album(user_id, title, price, description)
             return redirect(url_for('albums.index'))
 
         flash(error)
@@ -61,16 +68,17 @@ class AlbumRepo():
     def __init__(self, conn):
         self.conn = conn
 
-    def create_album(self, user_id='', album_title='', album_length='', album_price='', album_description=''):
+    def create_album(self, user_id='', album_title='', album_art='', album_price='', album_description=''):
         cursor = self.conn.cursor()
         cursor.execute("""
         EXEC Soundfront.CreateAlbum
             @AlbumUserId=?,
             @AlbumTitle=?,
-            @AlbumLength=?,
+            @AlbumAlbumArt=?,
             @AlbumPrice=?,
             @AlbumDescription=?
-            """, user_id, album_title, album_length, album_price, album_description)
+            """, user_id, album_title, album_art, album_price, album_description)
+
         return cursor.fetchone()
 
     def list_songs(self, album_id):

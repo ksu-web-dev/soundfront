@@ -19,7 +19,8 @@ def index():
         song_id = request.form['songid']
         repo.insert_songcart(song_id, cart.CartID)
 
-    print(cart_items)
+        return redirect(request.url)
+
     return render_template('cart/index.html', cart=cart_items)
 
 
