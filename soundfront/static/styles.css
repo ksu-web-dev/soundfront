@@ -87,6 +87,15 @@ button:focus {
   justify-content: space-between;
 }
 
+.nav-profile {
+  margin-right: 12px;
+}
+
+.nav-cart {
+  margin-right: 12px;
+}
+
+
 #logo {
   opacity: 1;
   font-size: 20px;
