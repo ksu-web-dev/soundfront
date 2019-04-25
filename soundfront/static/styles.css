@@ -269,6 +269,7 @@ h2 {
 .albumidpage {
     margin-top: 25px;
     padding-bottom: 0px;
+    float:left;
 }
 
 input.hidden {
