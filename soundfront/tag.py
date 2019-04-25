@@ -31,8 +31,9 @@ def index_id(tag_id):
     tag_repo = current_app.config['tag']
     tag_songs = tag_repo.list_songs_by_tag(tag_id, page=page, page_size=20)
 
+    tag = tag_repo.read_tag(tag_id)
     # TODO: Add check for when the tag_id is not found.
-    return render_template('tags/tag_id.html', tag_songs=tag_songs, page=int(page), pagination_data=pagination_data)
+    return render_template('tags/tag_id.html', tag_songs=tag_songs, page=int(page), tag=tag, pagination_data=pagination_data)
 
 class TagRepo():
     def __init__(self, conn):
@@ -86,3 +87,11 @@ class TagRepo():
             @PageSize=?
             """, tag_id, page, page_size)
         return cursor.fetchall()
+        
+    def read_tag(self, tag_id):
+        cursor = self.conn.cursor()
+        cursor.execute("""
+            EXEC Soundfront.ReadTag
+            @TagID=?
+            """, tag_id)
+        return cursor.fetchone()

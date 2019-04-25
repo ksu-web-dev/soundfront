@@ -50,9 +50,10 @@ CREATE OR ALTER PROCEDURE Soundfront.GetAlbumSongs
 	@AlbumID INT
 AS
 
-SELECT A.AlbumID, A.Title AS AlbumTitle, S.Title, S.[Length], S.Price, S.UploadDate
+SELECT A.AlbumID, A.Title AS AlbumTitle, S.Title, S.[Length], S.Price, S.UploadDate, U.DisplayName as Artist, U.UserID
 FROM Soundfront.Album A
 	INNER JOIN Soundfront.Song S ON S.AlbumID = A.AlbumID
+    INNER JOIN Soundfront.[User] U ON U.UserID = A.UserID
 WHERE A.AlbumID = @AlbumID
 ORDER BY S.SongID
 

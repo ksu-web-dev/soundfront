@@ -9,6 +9,16 @@ VALUES(@Name)
 
 GO
 
+/* read tag */
+CREATE OR ALTER PROCEDURE Soundfront.ReadTag
+    @TagID INT
+AS
+
+SELECT T.TagID, T.[Name]
+FROM Soundfront.Tag T
+WHERE T.TagID = @TagID
+GO
+
 /* Add a tag to a song. */
 
 CREATE OR ALTER PROCEDURE Soundfront.AddSongTag
