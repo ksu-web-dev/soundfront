@@ -38,6 +38,9 @@ def get(song_id):
 
 @bp.route('/<song_id>/review', methods=['GET', 'POST'])
 def review(song_id):
+    if 'user_id' not in session:
+        return redirect(url_for('auth.login'))
+        
     repo = current_app.config['song']
     song = repo.read_song(song_id)
 
@@ -57,6 +60,9 @@ def review(song_id):
 
 @bp.route('/new', methods=['GET', 'POST'])
 def new():
+    if 'user_id' not in session:
+        return redirect(url_for('auth.login'))
+
     if request.method == 'POST':
         title = request.form['title']
         album = request.form['album'] or None
@@ -138,8 +144,8 @@ class SongRepo():
     def rate_song(self, user_id, song_id, rating=1, review_text=''):
         cursor = self.conn.cursor()
         cursor.execute("""
-            EXEC Soundfront.InsertSongRating 
-                @UserID=?, 
+            EXEC Soundfront.InsertSongRating
+                @UserID=?,
                 @SongID=?,
                 @Rating=?,
                 @ReviewText=?
