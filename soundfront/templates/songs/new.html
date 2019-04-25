@@ -1,7 +1,15 @@
 {% extends "layout.html" %} 
 {% block page %}
 
-<h1>Add a song</h1>
+<div class="header">
+  <div class="breadcrumbs">
+    <a href="/" class="crumb">SoundFront</a>
+    <div class="crumb-separator">›</div>
+    <a href="/songs" class="crumb">Songs</a>
+    <div class="crumb-separator">›</div>
+    <div class="crumb">Add a song</div>
+  </div>
+</div>
 
 {% with messages = get_flashed_messages() %}
   {% if messages %}
@@ -27,7 +35,8 @@
   <input type="text" name="price" id="price" value="{{ request.form.price }}"/>
 
   <label>Description (optional)</label>
-  <input type="text" name="description" id="description" value="{{ request.form.description }}"/>
+  <!-- <input type="text" name="description" id="description" value="{{ request.form.description }}"/> -->
+  <textarea name="description"cols="60" rows="8" value="{{ request.form.description }}"></textarea>
 
   <button type="submit">Submit</button>
 </form>
