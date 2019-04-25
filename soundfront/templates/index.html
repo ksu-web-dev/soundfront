@@ -4,6 +4,85 @@
  <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
  <link rel="stylesheet" href="{{ url_for('static', filename='album.css') }}">
 
+	<div class="header">
+		<div class="breadcrumbs">
+
+		</div>
+	</div>
+
+ 	<div id="top-rated">
+ 		<div class="top">
+ 			<div class="top-name">Top Rated Albums</div>
+ 			<div class="top-select">
+ 				<input type="checkbox" name="time-frame" id="year" class="top-select-item"/>
+ 				<label class="top-select-item" for="year">
+ 					<a href="/?frame=year">1 year</a>
+ 				</label>
+
+ 				<input type="checkbox" name="time-frame" id="month" class="top-select-item"/>
+ 				<label class="top-select-item" for="month">
+ 					<a href="/?frame=month">30 days</a>
+ 				</label>
+
+ 				<input type="checkbox" name="time-frame" id="week" class="top-select-item"/>
+ 				<label class="top-select-item" for="week">
+ 					<a href="/?frame=week">7 days</a>
+ 				</label>
+
+ 				<input type="checkbox" name="time-frame" id="day" class="top-select-item"/>
+ 				<label class="top-select-item" for="day">
+ 					<a href="/?frame=day">24 hours</a>
+ 				</label>
+ 			</div>
+ 		</div>
+
+ 		<div class="albums">
+		{% for album in top_rated_albums %}
+			<a class="album-link" href="{{ '/albums/%s'%album.AlbumID }}">
+				<div class="album">
+					<div class="album-art">
+						<img src="https://placekitten.com/g/150/150">
+					</div>
+					<div class="album-title">{{album.Title}}</div>
+					<div class="album-artist">{{album.DisplayName}}</div>
+				</div>
+			</a>
+		{% endfor %}
+		</div>
+ 	</div>
+
+ 	<!-- Import JQuery -->
+ 	<script src="https://code.jquery.com/jquery-3.4.0.slim.min.js"
+ 			integrity="sha256-ZaXnYkHGqIhqTbJ6MB4l9Frs/r7U4jlx7ir8PJYBqbI="
+ 			crossorigin="anonymous"></script>
+ 	<script type="text/javascript">
+ 		var url = window.location.href;
+ 		var urlpieces = url.split("?");
+ 		var lastparam = urlpieces[urlpieces.length - 1].split("=")[1];
+ 		switch (lastparam) {
+ 			case "year":
+ 				$('#year').prop('checked', true);
+ 				break;
+ 			case "month":
+ 				$('#month').prop('checked', true);
+ 				break;
+ 			case "week":
+ 				$('#week').prop('checked', true);
+ 				break;
+ 			case "day":
+ 				$('#day').prop('checked', true);
+ 				break;
+ 			default:
+ 				$('#year').prop('checked', true);
+ 				break;
+ 		}
+ 		
+ 		$(".top-select-item").change(function() {
+
+			$(".top-select-item").prop('checked',false);
+			$(this).prop('checked',true);
+		});
+ 	</script>
 
 	<div id="recently-added">
 		<div class="top"> 
@@ -12,7 +91,7 @@
 		</div> 
 	
 		<div class="albums">
-		{% for album in albums %}
+		{% for album in recent_albums %}
 			<a class="album-link" href="{{ '/albums/%s'%album.AlbumID }}">
 				<div class="album">
 					<div class="album-art">

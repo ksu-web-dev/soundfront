@@ -20,6 +20,39 @@
 	font-size: 15px;
 }
 
+.top-select {
+	flex: 1;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+.top-select input[type=checkbox] {
+	display: none;
+}
+
+.top-select-item {
+	height: 17px;
+    padding: 6px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    line-height: 16px;
+    font-size: 12px;
+    text-align: center;
+    margin-left: 10px;
+    color: #7D8998;
+}
+.top-select input[type=checkbox]:checked + .top-select-item {
+	background-color: #E6EDF4;
+	border-bottom-width: 0px;
+	border-bottom-color: #E6EDF4;
+	border-bottom-style: solid;
+	border-radius: 2px;
+	color: black;
+}
+.top-select-item a {
+	color: inherit;
+}
+
 .top-view-more {
 	flex: 1;
 	display: flex;

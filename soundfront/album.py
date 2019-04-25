@@ -92,9 +92,9 @@ class AlbumRepo():
 
         return cursor.fetchall()
 
-    def get_top_rated_albums(self, time_frame):
+    def get_top_rated_albums(self, frame):
         cursor = self.conn.cursor()
-        cursor.execute('EXEC Soundfront.GetTopRatedAlbums @TimeFrameInDays=?', time_frame)
+        cursor.execute('EXEC Soundfront.GetTopRatedAlbums @TimeFrameInDays=?', frame)
         return cursor.fetchall()
 
     def recent_albums(self, page, page_size):
