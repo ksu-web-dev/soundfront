@@ -12,6 +12,7 @@
 	border-bottom-width: 1px;
 	border-bottom-color: #E6EDF4;
 	border-bottom-style: solid;
+	padding-bottom: 12px;
 	padding-left: 1px;
 	padding-right: 1px;
 }
@@ -21,7 +22,7 @@
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
-	font-size: 15px;
+	font-size: 18px;
 }
 
 .top-select {

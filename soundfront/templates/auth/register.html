@@ -5,10 +5,9 @@
   <div class="breadcrumbs">
     <a href="/" class="crumb">SoundFront</a>
     <div class="crumb-separator">›</div>
-    <div class="crumb">Register</div>
+    <div class="crumb">Registration</div>
   </div>
 </div>
-
 
 {% with messages = get_flashed_messages() %}
   {% if messages %}
@@ -33,7 +32,7 @@
   <label for="password">Repeat password</label>
   <input type="password" name="password_repeat" id="password-repeat" />
 
-  <button type="submit">Submit</button>
+  <button type="submit">Create account</button>
 </form>
 
 {% endblock %}
