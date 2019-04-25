@@ -1,4 +1,4 @@
-{% macro song_table(songs) %}
+{% macro song_table(songs, cart=[]) %}
 <table class="table table-song">
   <tr class="header-row row">
     <th class="header-col col">Title</th>
@@ -8,7 +8,6 @@
     <th class="header-col col">Price</th>
     <th class="header-col col"></th>
   </tr>
-
   {% for song in songs %}
   <tr class="row item-row">
     <th class="col">
@@ -26,10 +25,13 @@
     <th class="col">${{ song.Price }}</th>
     <th class="col">
       <a href="/songs/{{ song.SongID }}/review" class="button">Review</a>
-      <form action="/cart/" method="post">
-        <input type="text" class="hidden" name="songid" value="{{ song.SongID }}">
-        <button class="button" type="submit">Add to cart</button>
-      </form>
+
+      {% if not in_cart(song, cart) %}
+        <form action="/cart/" method="post">
+          <input type="text" class="hidden" name="songid" value="{{ song.SongID }}">
+          <button class="button" type="submit">Add to cart</button>
+        </form>
+      {% endif %}
     </th>
   </tr>
   {% endfor %}
