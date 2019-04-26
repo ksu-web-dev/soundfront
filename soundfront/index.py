@@ -17,7 +17,7 @@ def index():
 	album_repo = current_app.config['album']
 	user_repo = current_app.config['user']
 
-	recent_albums = album_repo.recent_albums(page=1, page_size=10)
+	recent_albums = album_repo.list_albums(page=1, page_size=10)
 	top_rated_albums = album_repo.get_top_rated_albums(frame=frame)
 	most_critical_users = user_repo.get_most_critical_users(count=6)
 
