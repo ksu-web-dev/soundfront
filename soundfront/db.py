@@ -18,7 +18,7 @@ class Database:
 
     def connect(self):
         self.master_conn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+self.server +
-                                          ';DATABASE=master'+';UID='+self.username+';PWD=' + self.password, autocommit=True)
+                                          ';DATABASE=master'+';UID='+self.username+';PWD=' + self.password+';MARS_Connection=yes', autocommit=True)
 
         cursor = self.master_conn.cursor()
         cursor.execute(f"SELECT DB_ID(N'{self.database}')")
@@ -33,7 +33,7 @@ class Database:
             self.setup = True
 
         self.conn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+self.server +
-                                   ';DATABASE='+self.database+';UID='+self.username+';PWD=' + self.password, autocommit=True)
+                                   ';DATABASE='+self.database+';UID='+self.username+';PWD=' + self.password+';MARS_Connection=yes', autocommit=True)
         if self.setup:
             self.run_scripts()
 

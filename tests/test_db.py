@@ -6,4 +6,3 @@ class TestDatabase(unittest.TestCase):
         db = Database(database='soundfront_test', setup=True, test=True)
         db.connect()
 
-

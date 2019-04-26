@@ -42,6 +42,7 @@ button {
   opacity: 0.8;
   transition: opacity 0.2s ease;
   flex: 0 0 auto;
+  white-space: nowrap;
 }
 
 button:hover {
@@ -301,6 +302,7 @@ input.hidden {
 
 .profile-left {
   margin-right: 32px;
+  width: 250px;
 }
 
 .profile-right {
