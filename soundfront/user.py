@@ -45,6 +45,17 @@ def profile(user_id):
 
     return render_template('users/id.html', user=user, songs=songs, albums=albums, cart=cart, followers=followers, following=following, isfollowing=isfollowing)
 
+@bp.route('/<user_id>/follow', methods=['GET'])
+def follow(user_id):
+    repo = current_app.config['user']
+
+    if 'user_id' not in session:
+        return redirect(url_for('auth.login'))
+
+    repo.follow_user(session['user_id'], user_id)
+
+    return redirect(url_for('users.profile', user_id=user_id))
+
 
 class UserRepo():
     def __init__(self, conn):
