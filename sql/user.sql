@@ -100,3 +100,12 @@ SELECT S.FollowingID, U.DisplayName, U.UserID
 FROM Soundfront.Social S
   INNER JOIN Soundfront.[User] U ON U.UserID = S.FollowingID
 WHERE S.FollowerID = @FollowerUserID
+GO
+
+CREATE OR ALTER PROCEDURE Soundfront.IsFollowing
+  @FollowerUserID INT,
+  @FolloweeUserID INT
+AS
+SELECT *
+FROM Soundfront.Social S
+WHERE S.FollowerID = @FollowerUserID AND S.FollowingID = @FolloweeUserID
