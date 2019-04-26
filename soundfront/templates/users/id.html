@@ -27,10 +27,14 @@
       </div>
     </div>
 
-    {% if isfollowing == [] %}
-      <a href="/users/{{user.UserID}}/follow" class="button idfollow">+ Follow User</a>
+    {% if isfollowing %}
+      <form action="/users/{{user.UserID}}/unfollow" method="post">
+        <button class="button" type="submit">Unfollow</button>
+      </form>
     {% else %}
-      <a href="/users/{{user.UserID}}/follow" class="button idfollow">+ Followed</a>
+      <form action="/users/{{user.UserID}}/follow" method="post">
+        <button class="button" type="submit">Follow</button>
+      </form>
     {% endif %}
 
     <div class="followers">

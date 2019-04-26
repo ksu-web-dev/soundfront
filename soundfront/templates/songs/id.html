@@ -1,4 +1,5 @@
 {% extends "layout.html" %} {% block page %}
+{% from "ratings.html" import ratings_table %}
 
 <div class="header">
   <div class="breadcrumbs">
@@ -38,24 +39,18 @@
   </div>
 </div>
 
-<h2>Reviews</h2>
-  {% if ratings == [] %}
-    No reviews yet.
-  {% else %}
-    <table class="table">
-      <tr class="header-row row">
-        <td class="header-col col">User</td>
-        <td class="header-col col">Rating</td>
-        <td class="header-col col">Review</td>
-      </tr>
+<h2>Tags</h2>
 
-      {% for rating in ratings %}
-        <tr class="row">
-          <td class="col">{{ rating.User }}</td>
-          <td class="col">{{ rating.Rating }}</td>
-          <td class="col">{{ rating.ReviewText }}</td>
-        </tr>
-      {% endfor %}
-    </table>
-  {% endif %}
+<div class="tags">
+	{% for tag in tags %}
+		<a class="tags-link" href="{{ '/tags/%s'%tag.TagID }}">
+			<div class="tag">
+				<div class="tag-name">{{tag.Name}}</div>
+			</div>
+		</a>
+	{% endfor %}
+</div>
+
+{{ ratings_table(ratings) }}
+
 {% endblock %}

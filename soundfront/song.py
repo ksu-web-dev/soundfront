@@ -40,7 +40,8 @@ def get(song_id):
         page = 1
 
     ratings = repo.list_reviews(song.SongID, page, 10)
-    return render_template('songs/id.html', song=song, ratings=ratings, page=int(page))
+    tags = repo.list_tags(song.SongID)
+    return render_template('songs/id.html', song=song, ratings=ratings, page=int(page), tags=tags)
 
 
 @bp.route('/<song_id>/rate', methods=['GET', 'POST'])
@@ -148,6 +149,12 @@ class SongRepo():
         cursor = self.conn.cursor()
         cursor.execute(
             'EXEC Soundfront.ListSongRating @SongID=?, @Page=?, @PageSize=?', song_id, page, page_size)
+        return cursor.fetchall()
+
+    def list_tags(self, song_id):
+        cursor = self.conn.cursor()
+        cursor.execute(
+            'EXEC Soundfront.ListSongTags @SongID=?', song_id)
         return cursor.fetchall()
 
 
