@@ -374,3 +374,8 @@ input.hidden {
 .idfollow {
   margin-top: 11.5%;
 }
+
+.ordertotal {
+  margin-top: 1.5%;
+  text-align: right;
+}

@@ -21,7 +21,8 @@ def index():
 
         return redirect(request.url)
 
-    return render_template('cart/index.html', cart=cart_items)
+    ordertotal = repo.cart_total_price(user_id)
+    return render_template('cart/index.html', cart=cart_items, ordertotal=ordertotal)
 
 
 class CartRepo():
@@ -89,4 +90,10 @@ class CartRepo():
         cursor = self.conn.cursor()
         cursor.execute(
             'EXEC Soundfront.ListAlbumCart @Page=? @PageSize=?', page, pagesize)
+        return cursor.fetchone()
+
+    def cart_total_price(self, user_id):
+        cursor = self.conn.cursor()
+        cursor.execute(
+            'EXEC Soundfront.CartTotalPrice @UserID=?', user_id)
         return cursor.fetchone()
