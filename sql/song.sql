@@ -84,3 +84,18 @@ FROM Soundfront.Song S
 	INNER JOIN Soundfront.[User] U ON U.UserID = S.UserID
 WHERE S.UserID = @UserID
 ORDER BY S.UploadDate DESC;
+
+GO
+
+-- Search for song
+CREATE OR ALTER PROCEDURE Soundfront.SearchForSong
+	@Page INT,
+	@PageSize INT,
+	@Search NVARCHAR(100)
+AS 
+
+SELECT S.Title, S.UserID
+FROM Soundfront.Song S
+WHERE S.Title LIKE @Search
+ORDER BY S.Title
+OFFSET ((@Page * @PageSize) - @PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY;

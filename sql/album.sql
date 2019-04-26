@@ -123,3 +123,18 @@ SELECT A.AlbumID, A.UserID, A.Title, A.[Length], A.Price, A.UploadDate, A.[Descr
 FROM Soundfront.Album A
 WHERE A.UserID = @UserID
 ORDER BY A.UploadDate DESC;
+
+GO
+
+-- Search for album
+CREATE OR ALTER PROCEDURE Soundfront.SearchForAlbum
+	@Page INT,
+	@PageSize INT,
+	@Search NVARCHAR(100)
+AS 
+
+SELECT A.Title, A.UserID
+FROM Soundfront.Album A
+WHERE A.Title LIKE @Search
+ORDER BY A.Title
+OFFSET ((@Page * @PageSize) - @PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY;
