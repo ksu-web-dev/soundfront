@@ -17,6 +17,7 @@ def index():
     repo = current_app.config['user']
     users = repo.list_users(page, 10)
     user_count = repo.user_count()
+
     return render_template('users/index.html', users=users, current_page=int(page), user_count=user_count, pagination_data=pagination_data)
 
 
@@ -30,8 +31,19 @@ def profile(user_id):
 
     songs = repo.list_songs(user_id)
     albums = repo.list_albums(user_id)
+    followers = repo.list_followers(user_id)
+    following = repo.list_following(user_id)
+    isfollowing = []
 
-    return render_template('users/id.html', user=user, songs=songs, albums=albums)
+    cart = []
+
+    if 'user_id' in session:
+        user_id = session['user_id']
+        cart_repo = current_app.config['cart']
+        cart = cart_repo.list_cart(user_id)
+        isfollowing = repo.is_following(session['user_id'], user_id)
+
+    return render_template('users/id.html', user=user, songs=songs, albums=albums, cart=cart, followers=followers, following=following, isfollowing=isfollowing)
 
 
 class UserRepo():
@@ -41,7 +53,7 @@ class UserRepo():
     def create_user(self, email='', display_name='', password=''):
         cursor = self.conn.cursor()
         cursor.execute("""
-            EXEC Soundfront.CreateUser 
+            EXEC Soundfront.CreateUser
                 @Privacy=?,
                 @DisplayName=?,
                 @Email=?,
@@ -51,6 +63,12 @@ class UserRepo():
         cursor.execute('EXEC Soundfront.CreateCart @UserID=?', user.UserID)
 
         return user
+
+    def check_login(self, email, password):
+        cursor = self.conn.cursor()
+        cursor.execute(
+            'EXEC Soundfront.CheckLogin @Email=?, @EnteredPassword=?', email, password)
+        return cursor.fetchone()
 
     def list_users(self, page, page_size):
         cursor = self.conn.cursor()
@@ -88,3 +106,33 @@ class UserRepo():
     def remove_user(self, id):
         cursor = self.conn.cursor()
         cursor.execute('EXEC Soundfront.RemoveUser @UserID=?', id)
+
+    def follow_user(self, follower_user_id, followee_user_id):
+        cursor = self.conn.cursor()
+        cursor.execute("""
+            EXEC Soundfront.FollowUser
+                @FollowerUserID=?,
+                @FolloweeUserID=?
+            """, follower_user_id, followee_user_id)
+        return cursor.fetchone()
+
+    # pass in the id of the user page being viewed
+    def list_followers(self, followee_user_id):
+        cursor = self.conn.cursor()
+        cursor.execute('EXEC Soundfront.ListFollowers @FolloweeUserID=?', followee_user_id)
+        return cursor.fetchall()
+
+    # pass in the id of the user page being viewed
+    def list_following(self, follower_user_id):
+        cursor = self.conn.cursor()
+        cursor.execute('EXEC Soundfront.ListFollowing @FollowerUserID=?', follower_user_id)
+        return cursor.fetchall()
+
+    def is_following(self, follower_user_id, followee_user_id):
+        cursor = self.conn.cursor()
+        cursor.execute("""
+            EXEC Soundfront.IsFollowing
+                @FollowerUserID=?,
+                @FolloweeUserID=?
+            """, follower_user_id, followee_user_id)
+        return cursor.fetchall()

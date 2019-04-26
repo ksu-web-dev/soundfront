@@ -7,7 +7,7 @@ bp = Blueprint('albums', __name__, url_prefix='/albums')
 @bp.route('/', methods=['GET'])
 def index():
     page = request.args.get('page')
-    if page is None: 
+    if page is None:
         page = 1
 
     pagination_data = {}
@@ -15,7 +15,7 @@ def index():
     pagination_data['href'] = '/albums'
     pagination_data['add_button_text'] = 'Add an Album'
     pagination_data['include_next_button'] = True
-    
+
     album_repo = current_app.config['album']
     albums = album_repo.recent_albums(page=page, page_size=15)
 
@@ -27,14 +27,24 @@ def album(album_id):
     album = album_repo.get_album(album_id)
     album_songs = album_repo.list_songs(album_id)
     # TODO: Add check for when the album_id is not found.
-    return render_template('albums/id.html', album_songs=album_songs, album=album)
+
+    cart = []
+
+    if 'user_id' in session:
+        user_id = session['user_id']
+        cart_repo = current_app.config['cart']
+        cart = cart_repo.list_cart(user_id)
+
+    return render_template('albums/id.html', album_songs=album_songs, album=album, cart=cart)
 
 @bp.route('/new', methods=['GET', 'POST'])
 def new():
+    if 'user_id' not in session:
+        return redirect(url_for('auth.login'))
+        
     if request.method == 'POST':
         user_id = session['user_id']
         title = request.form['title']
-        length = request.form['length']
         price = request.form['price']
         description = request.form['description']
 
@@ -44,13 +54,11 @@ def new():
             error = 'Title is required'
         elif not price:
             error = 'Price is required'
-        elif not user_id:
-            return redirect(url_for('auth.login'))
 
         if error is None:
             album_repo = current_app.config['album']
-            album_repo.create_album(user_id, title, length, price, description)
-            return redirect(url_for('albums.index')) 
+            album_repo.create_album(user_id, title, price, description)
+            return redirect(url_for('albums.index'))
 
         flash(error)
 
@@ -60,16 +68,17 @@ class AlbumRepo():
     def __init__(self, conn):
         self.conn = conn
 
-    def create_album(self, user_id='', album_title='', album_length='', album_price='', album_description=''):
+    def create_album(self, user_id='', album_title='', album_art='', album_price='', album_description=''):
         cursor = self.conn.cursor()
         cursor.execute("""
         EXEC Soundfront.CreateAlbum
             @AlbumUserId=?,
             @AlbumTitle=?,
-            @AlbumLength=?,
+            @AlbumAlbumArt=?,
             @AlbumPrice=?,
             @AlbumDescription=?
-            """, user_id, album_title, album_length, album_price, album_description)
+            """, user_id, album_title, album_art, album_price, album_description)
+
         return cursor.fetchone()
 
     def list_songs(self, album_id):
@@ -110,12 +119,10 @@ class AlbumRepo():
     def rate_album(self, user_id, album_id, rating, review_text):
         cursor = self.conn.cursor()
         cursor.execute("""
-            EXEC Soundfront.InsertAlbumRating 
+            EXEC Soundfront.InsertAlbumRating
                 @UserID=?,
                 @AlbumID=?,
                 @Rating=?,
                 @ReviewText=?
             """, user_id, album_id, rating, review_text)
         return cursor.fetchone()
-
-    

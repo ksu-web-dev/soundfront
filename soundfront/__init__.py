@@ -1,4 +1,5 @@
 import os
+import math
 
 from flask import Flask, render_template
 from .db import Database
@@ -41,4 +42,20 @@ def create_app():
     def db_test():
         return database.get_version()
 
+    app.jinja_env.filters['duration'] = format_duration
+    app.jinja_env.globals.update(in_cart=in_cart)
+
     return app
+
+def format_duration(duration):
+    duration = int(duration)
+    minutes = math.floor(duration / 60)
+    seconds = duration % 60
+    return f'{minutes}:{seconds:02}'
+
+def in_cart(song, cart):
+    for item in cart:
+        if item.Type == 'Song' and item.ID == song.SongID: 
+            return True
+
+    return False

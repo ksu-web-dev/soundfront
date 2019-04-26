@@ -43,14 +43,19 @@ def login():
         if not email:
             error = 'Email is required.'
         elif not password:
-            error = 'Password is required'
+            error = 'Password is required.'
 
         if error is None:
             user_repo = current_app.config['user']
             user = user_repo.get_user_by_email(email)
 
             if user is None:
-                error = 'User does not exist with that email'
+                error = 'User does not exist with that email.'
+            else:
+                valid = user_repo.check_login(email, password)
+
+                if valid is None:
+                    error = 'Invalid password'
 
         if error is None:
             session.clear()

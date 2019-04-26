@@ -1,4 +1,5 @@
 {% from "songs/table.html" import song_table %}
+{% from "albums/table.html" import album_table %}
 {% extends "layout.html" %} {% block page %}
 
 <div class="header">
@@ -12,27 +13,63 @@
 </div>
 
 <div class="profile">
-  <div class="profile-left"></div>
-  <div class="profile-right"></div>
-</div>
-
-<h2>Albums</h2>
-<div class="albums">
-  {% for album in albums %}
-  <a class="album-link" href="{{ '/albums/%s' % album.AlbumID }}">
-    <div class="album">
-      <div class="album-art">
-        <img src="https://placekitten.com/g/150/150" />
+  <div class="profile-left">
+    <div class="avatar"></div>
+    <div class="description">
+      <div class="desc-item">
+        <b>Name: </b> {{ user.DisplayName }}
       </div>
-      <div class="album-title">{{ album.Title }}</div>
-      <div class="album-artist">{{ album.DisplayName }}</div>
+      <div class="desc-item">
+        <b>Joined:</b> {{ user.JoinDate.strftime("%m/%d/%Y") }}
+      </div>
+      <div class="desc-item">
+        <b>Last logged in:</b> {{ user.LastLoginDate.strftime("%m/%d/%Y") }}
+      </div>
     </div>
-  </a>
-  {% endfor %}
+
+    {% if isfollowing == [] %}
+      <a href="new" class="button idfollow">+ Follow User</a>
+    {% else %}
+      <a href="new" class="button idfollow">+ Followed</a>
+    {% endif %}
+
+    <div class="followers">
+      <h2>Followers</h2>
+      {% for user in followers %}
+        <div class="user">
+            <a href="/users/{{ user.UserID }}">{{ user.DisplayName }}</a>
+        </div>
+      {% endfor %}
+    </div>
+    <div class="following">
+      <h2>Following</h2>
+      {% for user in following %}
+        <div class="user">
+            <a href="/users/{{ user.UserID }}">{{ user.DisplayName }}</a>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="profile-right">
+    <div class="profile-albums">
+      <h2>Albums</h2>
+      {% if albums == [] %}
+        <div class="none">User has no albums</div>
+      {% else %}
+        {{ album_table(albums) }}
+      {% endif %}
+
+    </div>
+    <div class="profile-songs">
+      <h2>Songs</h2>
+      {% if songs == [] %}
+        <div class="none">User has no songs</div>
+      {% else %}
+        {{ song_table(songs, cart) }}
+      {% endif %}
+    </div>
+  </div>
 </div>
 
-<h2>Songs</h2>
-
-{{ song_table(songs) }}
 
 {% endblock %}

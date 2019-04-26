@@ -1,6 +1,12 @@
 {% extends "layout.html" %} {% block page %}
 
-<h1>Login</h1>
+<div class="header">
+  <div class="breadcrumbs">
+    <a href="/" class="crumb">SoundFront</a>
+    <div class="crumb-separator">›</div>
+    <div class="crumb">Login</div>
+  </div>
+</div>
 
 {% with messages = get_flashed_messages() %} {% if messages %}
 <ul class="flashes">
@@ -12,7 +18,7 @@
 
 <form method="post" class="form">
   <label for="email">Email</label>
-  <input type="text" name="email" id="email" value="{{ request.form.email }}" />
+  <input type="text" name="email" id="email" value="{{ request.form.email }}" autofocus/>
 
   <label for="password">Password</label>
   <input type="password" name="password" id="password" />
@@ -21,7 +27,7 @@
     <a href="/auth/register">Create an account</a>
   </div>
 
-  <button type="submit">Submit</button>
+  <button type="submit">Login</button>
 </form>
 
 {% endblock %}
