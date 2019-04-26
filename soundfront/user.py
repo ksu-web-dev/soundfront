@@ -37,14 +37,13 @@ def profile(user_id):
     cart = []
 
     if 'user_id' in session:
-        user_id = session['user_id']
         cart_repo = current_app.config['cart']
         cart = cart_repo.list_cart(user_id)
-        isfollowing = repo.is_following(session['user_id'], user_id)
+        isfollowing = repo.is_following(session['user_id'], user.UserID)
 
     return render_template('users/id.html', user=user, songs=songs, albums=albums, cart=cart, followers=followers, following=following, isfollowing=isfollowing)
 
-@bp.route('/<user_id>/follow', methods=['GET'])
+@bp.route('/<user_id>/follow', methods=['POST'])
 def follow(user_id):
     repo = current_app.config['user']
 
@@ -55,6 +54,16 @@ def follow(user_id):
 
     return redirect(url_for('users.profile', user_id=user_id))
 
+@bp.route('/<user_id>/unfollow', methods=['POST'])
+def unfollow(user_id):
+    repo = current_app.config['user']
+
+    if 'user_id' not in session:
+        return redirect(url_for('auth.login'))
+
+    repo.unfollow_user(session['user_id'], user_id)
+
+    return redirect(url_for('users.profile', user_id=user_id))
 
 class UserRepo():
     def __init__(self, conn):
@@ -121,6 +130,15 @@ class UserRepo():
             """, follower_user_id, followee_user_id)
         return cursor.fetchone()
 
+    def unfollow_user(self, follower_user_id, followee_user_id):
+        cursor = self.conn.cursor()
+        cursor.execute("""
+            EXEC Soundfront.Unfollow
+                @FollowerUserID=?,
+                @FolloweeUserID=?
+            """, follower_user_id, followee_user_id)
+        return 
+
     # pass in the id of the user page being viewed
     def list_followers(self, followee_user_id):
         cursor = self.conn.cursor()
@@ -140,7 +158,7 @@ class UserRepo():
                 @FollowerUserID=?,
                 @FolloweeUserID=?
             """, follower_user_id, followee_user_id)
-        return cursor.fetchall()
+        return cursor.fetchone() is not None
 
     def get_most_critical_users(self):
         cursor = self.conn.cursor()
