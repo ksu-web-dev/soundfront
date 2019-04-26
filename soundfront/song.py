@@ -43,8 +43,8 @@ def get(song_id):
     return render_template('songs/id.html', song=song, ratings=ratings, page=int(page))
 
 
-@bp.route('/<song_id>/review', methods=['GET', 'POST'])
-def review(song_id):
+@bp.route('/<song_id>/rate', methods=['GET', 'POST'])
+def rate(song_id):
     if 'user_id' not in session:
         return redirect(url_for('auth.login'))
         
@@ -62,7 +62,7 @@ def review(song_id):
 
         return redirect(url_for('songs.get', song_id=song.SongID))
 
-    return render_template('songs/review.html', song=song)
+    return render_template('songs/rate.html', song=song)
 
 
 @bp.route('/new', methods=['GET', 'POST'])
@@ -161,15 +161,3 @@ class SongRepo():
                 @ReviewText=?
         """, user_id, song_id, rating, review_text)
         return cursor.fetchone()
-
-    def searchfor_song(self, page, page_size, search):
-        cursor = self.conn.cursor()
-        cursor.execute("""
-            EXEC Soundfront.SearchForSong
-                @Page=?,
-                @PageSize=?,
-                @Search=?
-        """, page, page_size, search)
-        return cursor.fetchone()
-            
-
