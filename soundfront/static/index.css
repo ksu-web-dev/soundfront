@@ -1,5 +1,10 @@
 #recently-added {
-	margin-top: 15px;
+	margin-top: 32px;
+}
+
+#critical-users {
+	margin-top: 28px;
+	margin-bottom: 50px;
 }
 
 #top-rated {
@@ -66,3 +71,24 @@
 	font-size: 12px;
 	color: #7D8998;
 }
+
+.users {
+	display: flex;
+	width: 1200px;
+	/*overflow: hidden;*/
+	justify-content: space-between;
+	align-items: center;
+}
+.user {
+	margin-right: 45px;
+	width: 120px;
+}
+.user-name {
+	margin-top: 5px;
+	margin-bottom: 5px;
+	font-size: 15px;
+}
+.user-info {
+	font-size: 12px;
+}
+

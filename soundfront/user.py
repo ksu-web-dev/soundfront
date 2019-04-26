@@ -142,8 +142,8 @@ class UserRepo():
             """, follower_user_id, followee_user_id)
         return cursor.fetchall()
 
-    def get_most_critical_users(self):
+    def get_most_critical_users(self, count):
         cursor = self.conn.cursor()
-        cursor.execute('EXEC Soundfront.GetMostCriticalUsers')
-        return cursort.fetchall()
+        cursor.execute('EXEC Soundfront.GetMostCriticalUsers @Count=?', count)
+        return cursor.fetchall()
 

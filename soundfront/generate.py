@@ -24,9 +24,9 @@ tag_repo = TagRepo(database.conn)
 api_url = 'http://ws.audioscrobbler.com/2.0/'
 
 if len(sys.argv) > 1 and sys.argv[1] == '--real':
-    # create 20 totally random users to review the music
+    # create 50 totally random users to review the music
     reviewers = []
-    for x in range(0, 20):
+    for x in range(0, 50):
         user = user_repo.create_user(
             email=fake.email(),
             display_name=fake.name(),
@@ -90,7 +90,7 @@ if len(sys.argv) > 1 and sys.argv[1] == '--real':
                 continue
 
             # create some ratings for this album (between 2 and 6)
-            for n in range(2, random.randint(5,8)):
+            for n in range(2, len(reviewers)):
                 album_rating = album_repo.rate_album(
                     user_id=reviewers[n].UserID,
                     album_id=album.AlbumID,
