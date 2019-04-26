@@ -1,5 +1,7 @@
 {% macro album_table(albums) %}
 
+<link rel="stylesheet" href="{{ url_for('static', filename='album.css') }}">
+
 <div class="albums">
 	{% for album in albums %}
 		<a class="album-link" href="{{ '/albums/%s'%album.AlbumID }}">
