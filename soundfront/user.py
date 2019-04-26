@@ -62,6 +62,12 @@ class UserRepo():
 
         return user
 
+    def check_login(self, email, password):
+        cursor = self.conn.cursor()
+        cursor.execute(
+            'EXEC Soundfront.CheckLogin @Email=?, @EnteredPassword=?', email, password)
+        return cursor.fetchone()
+
     def list_users(self, page, page_size):
         cursor = self.conn.cursor()
         cursor.execute(
