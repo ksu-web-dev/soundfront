@@ -26,7 +26,8 @@ def register():
         if error is None:
             user = current_app.config['user']
             user.create_user(email, name, password)
-            return redirect(url_for('auth.login'))
+            session['user_id'] =  user.UserID
+            return redirect(url_for('index.index'))
 
         flash(error)
 
