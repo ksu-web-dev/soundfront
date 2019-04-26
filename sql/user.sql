@@ -10,7 +10,7 @@ BEGIN
 
     INSERT Soundfront.[User](Privacy, DisplayName, Email, PasswordHash)
     OUTPUT Inserted.UserID, Inserted.DisplayName, Inserted.Email, Inserted.Privacy, Inserted.PasswordHash
-    VALUES(@Privacy, @DisplayName, @Email, HASHBYTES('SHA2_512', @EnteredPassword));
+    VALUES(@Privacy, @DisplayName, @Email, HASHBYTES('SHA2_256', @EnteredPassword));
 END
 GO
 
@@ -21,7 +21,7 @@ AS
 
 SELECT U.UserID
 FROM Soundfront.[User] U
-WHERE U.PasswordHash = HASHBYTES('SHA2_512', @EnteredPassword)
+WHERE U.PasswordHash = HASHBYTES('SHA2_256', @EnteredPassword)
 GO
 
 /* Get a single user. */
