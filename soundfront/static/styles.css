@@ -301,12 +301,17 @@ input.hidden {
   margin-top: 8px;
 }
 
-.profile-left {
+.album-id {
+  margin-top: 32px;
+  display: flex;
+}
+
+.profile-left, .album-id-left {
   margin-right: 32px;
   width: 250px;
 }
 
-.profile-right {
+.profile-right, .album-id-right {
   flex: 1 1 auto;
 }
 
@@ -423,6 +428,6 @@ input.hidden {
   margin-left: 12px;
 }
 
-.ratings {
+.album-tags, .album-songs, .album-ratings, .ratings, .album-ratings {
   margin-top: 32px;
 }

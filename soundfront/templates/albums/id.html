@@ -1,6 +1,8 @@
 {% from "songs/table.html" import song_table %}
 {% extends "layout.html" %}
 {% block page %}
+{% from "ratings.html" import ratings_table %}
+{% from "tags.html" import tag_list %}
 
  <link rel="stylesheet" href="{{ url_for('static', filename='album.css') }}">
 
@@ -26,17 +28,44 @@
 	</div>
 </div>
 
-<div class="album albumidpage">
-	<img class="album-art" src="{{ album.AlbumArt }}">
-    <div class="album-title album-title-bold">{{album.Title}}</div>
-    <div class="album-artist">{{album.DisplayName}}</div>
+<div class="album-id">
+	<div class="album-id-left">
+		<img class="album-art" src="{{ album.AlbumArt }}">
+    <div class="description">
+      <div class="desc-item">
+        <b>Name: </b> {{ album.Title }}
+      </div>
+      <div class="desc-item">
+        <b>UploadDate:</b> {{ album.UploadDate.strftime("%m/%d/%Y") }}
+      </div>
+      <div class="desc-item">
+        <b>Price: </b> {{ album.Price }}
+      </div>
+    </div>
+	</div>
+	<div class="album-id-right">
+		<h2>Description</h2>
+		{{ album.Description or 'No description provided' }}
+
+		<div class="album-tags">
+			<h2>Tags</h2>
+			{{ tag_list(tags) }}
+		</div>
+
+		<div class="album-songs">
+			<h2>Songs</h2>
+			{{ song_table(album_songs, cart) }}
+		</div>
+
+		<div class="album-ratings">
+			<h2>Ratings</h2>
+			{{ ratings_table(ratings) }}
+		</div>
+
+
+	</div>
 </div>
-<div class="album_description album_description_bold">Description</div>
 
-<div class="album-description">{{album.Description}}</div>
-
-<div class="albums-songs-id">
-{{ song_table(album_songs, cart) }}
 
 {% endblock %}
 </div>
