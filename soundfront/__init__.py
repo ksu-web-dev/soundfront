@@ -53,9 +53,13 @@ def format_duration(duration):
     seconds = duration % 60
     return f'{minutes}:{seconds:02}'
 
-def in_cart(song, cart):
+def in_cart(song_or_album, cart, type):
     for item in cart:
-        if item.Type == 'Song' and item.ID == song.SongID: 
-            return True
+        if type == 'Album':
+            if item.Type == 'Album' and item.ID == song_or_album.AlbumID: 
+                return True
+        elif type == 'Song':
+            if item.Type == 'Song' and item.ID == song_or_album.SongID: 
+                return True
 
     return False

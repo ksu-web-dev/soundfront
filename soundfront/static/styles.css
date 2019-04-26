@@ -383,3 +383,11 @@ input.hidden {
 .albums-songs-id {
   margin-bottom: 1%;
 }
+
+.header-buttons {
+  display: flex;
+}
+
+.header-buttons > * {
+  margin-left: 12px;
+}
