@@ -422,3 +422,7 @@ input.hidden {
 .header-buttons > * {
   margin-left: 12px;
 }
+
+.ratings {
+  margin-top: 32px;
+}

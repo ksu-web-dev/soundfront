@@ -79,3 +79,13 @@ FROM Soundfront.Song S
 WHERE T.TagID = @TagID
 ORDER BY S.SongID
 OFFSET ((@Page * @PageSize) - @PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY;
+GO
+
+CREATE OR ALTER PROCEDURE Soundfront.ListSongTags
+	@SongID INT
+AS 
+
+SELECT T.Name
+FROM Soundfront.SongTag ST
+    INNER JOIN Soundfront.Tag T ON T.TagID = ST.TagID
+WHERE ST.SongID = @SongID

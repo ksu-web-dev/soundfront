@@ -38,7 +38,20 @@
   </div>
 </div>
 
-<h2>Reviews</h2>
+<h2>Tags</h2>
+
+<div class="tags">
+	{% for tag in tags %}
+		<a class="tags-link" href="{{ '/tags/%s'%tag.TagID }}">
+			<div class="tag">
+				<div class="tag-name">{{tag.Name}}</div>
+			</div>
+		</a>
+	{% endfor %}
+</div>
+
+<div class="ratings">
+<h2>Ratings</h2>
   {% if ratings == [] %}
     No reviews yet.
   {% else %}
@@ -58,4 +71,7 @@
       {% endfor %}
     </table>
   {% endif %}
+
 {% endblock %}
+
+</div>
