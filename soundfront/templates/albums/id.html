@@ -13,6 +13,17 @@
 		<div class="crumb-separator">›</div>
 		<div class="crumb" style="color: #7d8998">{{ album.Title }}</div>
 	</div>
+
+	<div class="header-buttons">
+		<a href="/albums/{{ album.AlbumID}}/rate" class="button">Rate album</a>
+		{% if not in_cart(album, cart, 'Album') %}
+			<form action="/cart/" method="post">
+				<input type="text" class="hidden" name="albumid" value="{{ album.AlbumID }}">
+				<input type="text" class="hidden" name="type" value="Album">
+				<button class="button" type="submit">Add album to cart</button>
+			</form>
+		{% endif %}
+	</div>
 </div>
 
 <div class="album albumidpage">

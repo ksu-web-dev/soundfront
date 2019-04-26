@@ -9,7 +9,7 @@
     <div class="crumb-separator">›</div>
     <a href="/songs/{{ song.SongID }}" class="crumb">{{ song.Title }}</a>
     <div class="crumb-separator">›</div>
-    <div class="crumb">Review</div>
+    <div class="crumb">Rating</div>
   </div>
 </div>
 
@@ -34,7 +34,7 @@
   <label>Review (optional)</label>
   <textarea name="review"cols="80" rows="10" value="{{ request.form.review }}"></textarea>
 
-  <button type="submit">Create review</button>
+  <button type="submit">Create rating</button>
 </form>
 
 {% endblock %}

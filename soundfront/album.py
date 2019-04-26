@@ -22,7 +22,7 @@ def index():
     return render_template('albums/index.html', albums=albums, pagination_data=pagination_data)
 
 @bp.route('/<album_id>', methods=['GET'])
-def album(album_id):
+def get(album_id):
     album_repo = current_app.config['album']
     album = album_repo.get_album(album_id)
     album_songs = album_repo.list_songs(album_id)
@@ -63,6 +63,27 @@ def new():
         flash(error)
 
     return render_template('albums/new.html')
+
+@bp.route('/<album_id>/rate', methods=['GET', 'POST'])
+def rate(album_id):
+    if 'user_id' not in session:
+        return redirect(url_for('auth.login'))
+        
+    repo = current_app.config['album']
+    album = repo.get_album(album_id)
+
+    if request.method == 'POST':
+        rating = request.form['rating']
+        review = request.form['review']
+
+        if 'user_id' not in session:
+            return render_template('error.html', message='Not logged in.')
+
+        repo.rate_album(session['user_id'], album.AlbumID, rating, review)
+
+        return redirect(url_for('albums.get', album_id=album.AlbumID))
+
+    return render_template('albums/rate.html', album=album)
 
 class AlbumRepo():
     def __init__(self, conn):
