@@ -38,7 +38,7 @@ CREATE OR ALTER PROCEDURE Soundfront.ReadAlbum
 	@AlbumAlbumId INT
 AS
 
-SELECT A.AlbumID, A.UserID, A.Title, A.AlbumArt, A.Price, A.UploadDate, A.[Description]
+SELECT A.AlbumID, A.UserID, A.Title, A.AlbumArt, A.Price, A.UploadDate, A.[Description], U.DisplayName
 FROM Soundfront.Album A
 	INNER JOIN Soundfront.[User] U ON U.UserID = A.UserID
 WHERE A.AlbumID = @AlbumAlbumId
