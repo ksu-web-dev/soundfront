@@ -121,7 +121,7 @@ CREATE TABLE Soundfront.SongCart
   CartID INT NOT NULL FOREIGN KEY 
     REFERENCES Soundfront.Cart(CartID)
 
-  UNIQUE(AlbumID, CartID)
+  UNIQUE(SongID, CartID)
 );
 
 CREATE TABLE Soundfront.AlbumCart
