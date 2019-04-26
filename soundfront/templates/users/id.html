@@ -28,9 +28,9 @@
     </div>
 
     {% if isfollowing == [] %}
-      <a href="new" class="button idfollow">+ Follow User</a>
+      <a href="/users/{{user.UserID}}/follow" class="button idfollow">+ Follow User</a>
     {% else %}
-      <a href="new" class="button idfollow">+ Followed</a>
+      <a href="/users/{{user.UserID}}/follow" class="button idfollow">+ Followed</a>
     {% endif %}
 
     <div class="followers">
