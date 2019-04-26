@@ -61,7 +61,6 @@ button:focus {
   margin-bottom: 2px;
   display: flex;
   justify-content: center;
-  margin-bottom: 100px;
 }
 .pagination-button {
   height: 30px;
@@ -430,4 +429,8 @@ input.hidden {
 
 .album-tags, .album-songs, .album-ratings, .ratings, .album-ratings {
   margin-top: 32px;
+}
+
+.blank-space {
+  height: 150px;
 }
