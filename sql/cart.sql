@@ -12,7 +12,7 @@ CREATE OR ALTER PROCEDURE Soundfront.GetCart
 	@UserID INT
 AS
 
-SELECT C.CartID 
+SELECT C.CartID
 FROM Soundfront.Cart C
 WHERE C.UserID = @UserID
 GO
@@ -126,3 +126,24 @@ OFFSET ((@Page * @PageSize) - @PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY;
 
 GO
 
+CREATE OR ALTER PROCEDURE Soundfront.CartTotalPrice
+	@UserID INT
+AS
+WITH PriceCTE as
+(
+	SELECT S.Price
+	FROM Soundfront.SongCart SC
+		INNER JOIN Soundfront.Song S on S.SongID = SC.SongID
+		INNER JOIN Soundfront.Cart C on C.CartID = SC.CartID
+	WHERE C.UserID = @UserID
+
+	UNION ALL
+
+	SELECT A.Price
+	FROM Soundfront.AlbumCart AC
+		INNER JOIN Soundfront.Album A on A.AlbumID = AC.AlbumID
+		INNER JOIN Soundfront.Cart C on C.CartID = AC.CartID
+	WHERE C.UserID = @UserID
+)
+SELECT SUM(P.Price) as OrderTotal
+FROM PriceCTE P

@@ -370,3 +370,16 @@ input.hidden {
 .album-title {
   font-size: 130%;
 }
+
+.idfollow {
+  margin-top: 11.5%;
+}
+
+.ordertotal {
+  margin-top: 1.5%;
+  text-align: right;
+}
+
+.albums-songs-id {
+  margin-bottom: 1%;
+}

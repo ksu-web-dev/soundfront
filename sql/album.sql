@@ -38,7 +38,7 @@ CREATE OR ALTER PROCEDURE Soundfront.ReadAlbum
 	@AlbumAlbumId INT
 AS
 
-SELECT A.AlbumID, A.UserID, A.Title, A.AlbumArt, A.Price, A.UploadDate, A.[Description]
+SELECT A.AlbumID, A.UserID, A.Title, A.AlbumArt, A.Price, A.UploadDate, A.[Description], U.DisplayName
 FROM Soundfront.Album A
 	INNER JOIN Soundfront.[User] U ON U.UserID = A.UserID
 WHERE A.AlbumID = @AlbumAlbumId
@@ -82,6 +82,7 @@ CREATE OR ALTER PROCEDURE Soundfront.DeleteAlbum
 AS
 
 DELETE FROM Soundfront.Album
+OUTPUT Deleted.AlbumID, Deleted.Title
 WHERE AlbumID = @AlbumId
 
 GO
@@ -122,3 +123,18 @@ SELECT A.AlbumID, A.UserID, A.Title, A.AlbumArt, A.Price, A.UploadDate, A.[Descr
 FROM Soundfront.Album A
 WHERE A.UserID = @UserID
 ORDER BY A.UploadDate DESC;
+
+GO
+
+-- Search for album
+CREATE OR ALTER PROCEDURE Soundfront.SearchForAlbum
+	@Page INT,
+	@PageSize INT,
+	@Search NVARCHAR(100)
+AS 
+
+SELECT A.Title, A.UserID
+FROM Soundfront.Album A
+WHERE A.Title LIKE @Search
+ORDER BY A.Title
+OFFSET ((@Page * @PageSize) - @PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY;

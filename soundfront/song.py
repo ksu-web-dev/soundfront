@@ -161,3 +161,15 @@ class SongRepo():
                 @ReviewText=?
         """, user_id, song_id, rating, review_text)
         return cursor.fetchone()
+
+    def searchfor_song(self, page, page_size, search):
+        cursor = self.conn.cursor()
+        cursor.execute("""
+            EXEC Soundfront.SearchForSong
+                @Page=?,
+                @PageSize=?,
+                @Search=?
+        """, page, page_size, search)
+        return cursor.fetchone()
+            
+

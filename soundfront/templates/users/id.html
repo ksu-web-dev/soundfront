@@ -26,6 +26,13 @@
         <b>Last logged in:</b> {{ user.LastLoginDate.strftime("%m/%d/%Y") }}
       </div>
     </div>
+
+    {% if isfollowing == [] %}
+      <a href="/users/{{user.UserID}}/follow" class="button idfollow">+ Follow User</a>
+    {% else %}
+      <a href="/users/{{user.UserID}}/follow" class="button idfollow">+ Followed</a>
+    {% endif %}
+
     <div class="followers">
       <h2>Followers</h2>
       {% for user in followers %}
@@ -64,5 +71,6 @@
   </div>
 </div>
 
+<div class="albums-songs-id"></div>
 
 {% endblock %}

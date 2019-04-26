@@ -33,6 +33,7 @@ def profile(user_id):
     albums = repo.list_albums(user_id)
     followers = repo.list_followers(user_id)
     following = repo.list_following(user_id)
+    isfollowing = []
 
     cart = []
 
@@ -40,8 +41,20 @@ def profile(user_id):
         user_id = session['user_id']
         cart_repo = current_app.config['cart']
         cart = cart_repo.list_cart(user_id)
+        isfollowing = repo.is_following(session['user_id'], user_id)
 
-    return render_template('users/id.html', user=user, songs=songs, albums=albums, cart=cart, followers=followers, following=following)
+    return render_template('users/id.html', user=user, songs=songs, albums=albums, cart=cart, followers=followers, following=following, isfollowing=isfollowing)
+
+@bp.route('/<user_id>/follow', methods=['GET'])
+def follow(user_id):
+    repo = current_app.config['user']
+
+    if 'user_id' not in session:
+        return redirect(url_for('auth.login'))
+
+    repo.follow_user(session['user_id'], user_id)
+
+    return redirect(url_for('users.profile', user_id=user_id))
 
 
 class UserRepo():
@@ -124,4 +137,13 @@ class UserRepo():
     def list_following(self, follower_user_id):
         cursor = self.conn.cursor()
         cursor.execute('EXEC Soundfront.ListFollowing @FollowerUserID=?', follower_user_id)
+        return cursor.fetchall()
+
+    def is_following(self, follower_user_id, followee_user_id):
+        cursor = self.conn.cursor()
+        cursor.execute("""
+            EXEC Soundfront.IsFollowing
+                @FollowerUserID=?,
+                @FolloweeUserID=?
+            """, follower_user_id, followee_user_id)
         return cursor.fetchall()
