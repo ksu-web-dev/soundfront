@@ -24,8 +24,8 @@ def register():
             error = 'Passwords do not match.'
 
         if error is None:
-            user = current_app.config['user']
-            user.create_user(email, name, password)
+            user_repo = current_app.config['user']
+            user = user_repo.create_user(email, name, password)
             session['user_id'] =  user.UserID
             return redirect(url_for('index.index'))
 
