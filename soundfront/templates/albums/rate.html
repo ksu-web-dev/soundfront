@@ -1,0 +1,40 @@
+{% extends "layout.html" %} 
+{% block page %}
+
+<div class="header">
+  <div class="breadcrumbs">
+    <a href="/" class="crumb">SoundFront</a>
+    <div class="crumb-separator">›</div>
+    <a href="/albums" class="crumb">Albums</a>
+    <div class="crumb-separator">›</div>
+    <a href="/albums/{{ album.AlbumID }}" class="crumb">{{ album.Title }}</a>
+    <div class="crumb-separator">›</div>
+    <div class="crumb">Rating</div>
+  </div>
+</div>
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class="flashes">
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+<form method="post" class="form">
+  <label>Rating</label>
+  <select name="rating" value={{ request.form.rating }}>
+    {% for x in range(0, 6) %}
+      <option value="{{x}}">{{x}}</option>
+    {% endfor %}
+  </select>
+
+  <label>Review (optional)</label>
+  <textarea name="review"cols="80" rows="10" value="{{ request.form.review }}"></textarea>
+
+  <button type="submit">Create rating</button>
+</form>
+
+{% endblock %}

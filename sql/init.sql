@@ -150,7 +150,7 @@ CREATE TABLE Soundfront.AlbumRating
   Rating FLOAT NOT NULL,
   ReviewText NVARCHAR(1024) NOT NULL,
 
-  UNIQUE(RatingID, UserID)
+  UNIQUE(AlbumID, UserID)
 );
 
 CREATE TABLE Soundfront.SongRating
@@ -163,7 +163,7 @@ CREATE TABLE Soundfront.SongRating
   Rating FLOAT NOT NULL,
   ReviewText NVARCHAR(1024) NOT NULL,
 
-  UNIQUE(RatingID, UserID)
+  UNIQUE(SongID, UserID)
 );
 
 CREATE TABLE Soundfront.Tag

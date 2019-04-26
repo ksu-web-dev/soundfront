@@ -24,11 +24,12 @@
     <th class="col">{{ song.Length|duration }}</th>
     <th class="col">${{ song.Price }}</th>
     <th class="col">
-      <a href="/songs/{{ song.SongID }}/review" class="button">Review</a>
+      <a href="/songs/{{ song.SongID }}/rate" class="button">Rate</a>
 
-      {% if not in_cart(song, cart) %}
+      {% if not in_cart(song, cart, 'Song') %}
         <form action="/cart/" method="post">
           <input type="text" class="hidden" name="songid" value="{{ song.SongID }}">
+          <input type="text" class="hidden" name="type" value="Song">
           <button class="button" type="submit">Add to cart</button>
         </form>
       {% endif %}

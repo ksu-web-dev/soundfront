@@ -412,3 +412,10 @@ input.hidden {
   font-weight: bold;
   margin-left: .8%;
 }
+.header-buttons {
+  display: flex;
+}
+
+.header-buttons > * {
+  margin-left: 12px;
+}

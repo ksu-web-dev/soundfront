@@ -16,8 +16,15 @@ def index():
 
     if request.method == 'POST':
         cart = repo.get_cart(user_id)
-        song_id = request.form['songid']
-        repo.insert_songcart(song_id, cart.CartID)
+
+        item_type = request.form['type']
+
+        if item_type == 'Song':
+            song_id = request.form['songid']
+            repo.insert_songcart(song_id, cart.CartID)
+        elif item_type == 'Album':
+            album_id = request.form['albumid']
+            repo.insert_albumcart(album_id, cart.CartID)
 
         return redirect(request.url)
 
@@ -112,7 +119,7 @@ class CartRepo():
     def insert_albumcart(self, albumid='', cartid=''):
         cursor = self.conn.cursor()
         cursor.execute(
-            'EXEC Soundfront.InsertAlbumCart @AlbumID=? @CartID=?', albumid, cartid)
+            'EXEC Soundfront.InsertAlbumCart @AlbumID=?, @CartID=?', albumid, cartid)
         return cursor.fetchone()
 
     def delete_albumcart(self, cartid=''):
