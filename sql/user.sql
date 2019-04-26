@@ -14,6 +14,16 @@ BEGIN
 END
 GO
 
+CREATE OR ALTER PROCEDURE Soundfront.CheckLogin
+    @Email NVARCHAR(32),
+    @EnteredPassword NVARCHAR(50)
+AS
+
+SELECT U.UserID
+FROM Soundfront.[User] U
+WHERE U.PasswordHash = HASHBYTES('SHA2_512', @EnteredPassword)
+GO
+
 /* Get a single user. */
 CREATE OR ALTER PROCEDURE Soundfront.GetUser
     @UserID INT
