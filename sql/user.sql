@@ -119,3 +119,12 @@ AS
 SELECT *
 FROM Soundfront.Social S
 WHERE S.FollowerID = @FollowerUserID AND S.FollowingID = @FolloweeUserID
+GO
+
+CREATE OR ALTER PROCEDURE Soundfront.Unfollow
+  @FollowerUserID INT,
+  @FolloweeUserID INT
+AS
+DELETE Soundfront.Social
+WHERE @FollowerUserID = FollowerID
+  AND @FolloweeUserID = FollowingID
