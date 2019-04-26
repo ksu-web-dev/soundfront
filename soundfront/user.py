@@ -16,9 +16,8 @@ def index():
 
     repo = current_app.config['user']
     users = repo.list_users(page, 10)
-    user_count = repo.user_count()
 
-    return render_template('users/index.html', users=users, current_page=int(page), user_count=user_count, pagination_data=pagination_data)
+    return render_template('users/index.html', users=users, current_page=int(page), pagination_data=pagination_data)
 
 
 @bp.route('/<user_id>', methods=['GET'])
@@ -98,11 +97,6 @@ class UserRepo():
         cursor.execute(
             'EXEC Soundfront.ListAlbumsByUser @UserID=?', user_id)
         return cursor.fetchall()
-
-    def user_count(self):
-        cursor = self.conn.cursor()
-        cursor.execute('EXEC Soundfront.UserCount')
-        return cursor.fetchone()[0]
 
     def get_user(self, id):
         cursor = self.conn.cursor()

@@ -6,7 +6,7 @@ from soundfront.user import UserRepo
 class TestUser(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        db = Database(database=f'soundfront_test', setup=True, test=True)
+        db = Database(database=f'soundfront_user_test', setup=True, test=True)
         cls.db = db
         db.connect()
         cls.user_repo = UserRepo(db.conn)
@@ -27,10 +27,6 @@ class TestUser(unittest.TestCase):
 
         self.assertEqual(len(users), 2)
 
-    def test_user_count(self):
-        count = TestUser.user_repo.user_count()
-        self.assertEqual(count, 2)
-
     def test_get_user_by_email(self):
         user = TestUser.user_repo.get_user_by_email('email')
         assert user is not None
@@ -39,5 +35,5 @@ class TestUser(unittest.TestCase):
     def test_list_songs(self):
         user = TestUser.user_repo.get_user_by_email('email')
         songs = TestUser.user_repo.list_songs(user.UserID)
-        self.assertEqual(len(songs), 1)
+        self.assertEqual(len(songs), 0)
 

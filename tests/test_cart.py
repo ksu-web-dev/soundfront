@@ -8,7 +8,7 @@ from soundfront.song import SongRepo
 class TestCart(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        db = Database(database=f'soundfront_test', setup=True, test=True)
+        db = Database(database=f'soundfront_cart_test', setup=True, test=True)
         cls.db = db
         db.connect()
         cls.user_repo = UserRepo(db.conn)
