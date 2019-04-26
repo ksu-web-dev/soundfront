@@ -78,11 +78,11 @@ GO
 
 -- Delete
 CREATE OR ALTER PROCEDURE Soundfront.DeleteAlbum
-	@AlbumAlbumID INT
+	@AlbumID INT
 AS
 
 DELETE FROM Soundfront.Album
-WHERE AlbumID = @AlbumAlbumId
+WHERE AlbumID = @AlbumId
 
 GO
 

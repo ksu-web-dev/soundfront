@@ -126,3 +126,11 @@ class AlbumRepo():
                 @ReviewText=?
             """, user_id, album_id, rating, review_text)
         return cursor.fetchone()
+
+    def delete_album(self, album_id):
+        cursor = self.conn.cursor()
+        cursor.execute("""
+            EXEC Soundfront.DeleteAlbum
+                @AlbumID=?
+            """, album_id)
+
