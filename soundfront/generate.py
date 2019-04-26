@@ -124,13 +124,13 @@ if len(sys.argv) > 1 and sys.argv[1] == '--real':
                     )
 
                 # create some ratings for this song (between 1 and 4 ratings)
-                for n in range(0, random.randint(1, 4)):
-                    song_rating = song_repo.rate_song(
-                        user_id=user.UserID,
-                        song_id=created_song.SongID,
-                        rating=random.randint(0, 10),
-                        review_text=fake.sentence(nb_words=random.randint(5, 15))
-                    )
+                # for n in range(0, random.randint(1, 4)):
+                song_rating = song_repo.rate_song(
+                    user_id=user.UserID,
+                    song_id=created_song.SongID,
+                    rating=random.randint(0, 10),
+                    review_text=fake.sentence(nb_words=random.randint(5, 15))
+                )
 
 
     sys.exit()
