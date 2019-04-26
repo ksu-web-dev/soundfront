@@ -128,13 +128,10 @@ GO
 
 -- Search for album
 CREATE OR ALTER PROCEDURE Soundfront.SearchForAlbum
-	@Page INT,
-	@PageSize INT,
 	@Search NVARCHAR(100)
-AS 
+AS
 
-SELECT A.Title, A.UserID
+SELECT TOP(10) *
 FROM Soundfront.Album A
 WHERE A.Title LIKE @Search
 ORDER BY A.Title
-OFFSET ((@Page * @PageSize) - @PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY;

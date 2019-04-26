@@ -41,7 +41,7 @@ def get(album_id):
 def new():
     if 'user_id' not in session:
         return redirect(url_for('auth.login'))
-        
+
     if request.method == 'POST':
         user_id = session['user_id']
         title = request.form['title']
@@ -68,7 +68,7 @@ def new():
 def rate(album_id):
     if 'user_id' not in session:
         return redirect(url_for('auth.login'))
-        
+
     repo = current_app.config['album']
     album = repo.get_album(album_id)
 
@@ -157,12 +157,10 @@ class AlbumRepo():
             """, album_id)
         return cursor.fetchone()
 
-    def searchfor_album(self, page, page_size, search):
+    def searchfor_album(self, search):
         cursor = self.conn.cursor()
         cursor.execute("""
             EXEC Soundfront.SearchForAlbum
-            @Page=?,
-            @PageSize=?,
             @Search=?
-            """, page, page_size, search)
-        return cursor.fetchone()
+            """, search)
+        return cursor.fetchall()

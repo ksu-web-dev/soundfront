@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+{% from "songs/table.html" import song_table %}
+{% block page %}
+
+ <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+ <link rel="stylesheet" href="{{ url_for('static', filename='album.css') }}">
+
+	<div class="header">
+		<div class="breadcrumbs">
+			<a href="/" class="crumb">SoundFront</a>
+			<div class="crumb-separator">›</div>
+			<a href="/" class="crumb">Home</a>
+      <div class="crumb-separator">›</div>
+      <div class="crumb">{{ searchtext }}</div>
+		</div>
+	</div>
+
+  <div class="searchbar">
+  <form action="{{ url_for('index.search') }}" method="post">
+    <input class="searchbarinput" value="{{ searchtext }}" placeholder="Search by Album or Song Name..." name="searchform">
+  </form>
+  </div>
+
+  {% if albums == [] %}
+      <p class="resultsearch">No results found for '{{ searchtext }}'...</p>
+  {% else %}
+  <p class="resultsearch">Results for '{{ searchtext }}'...</p>
+  <div class="albums">
+  {% for album in albums %}
+  <a class="album-link" href="{{ '/albums/%s'%album.AlbumID }}">
+    	<div class="album">
+    		<img class="album-art" src="{{ album.AlbumArt }}">
+    		<div class="album-title">{{album.Title}}</div>
+    		<div class="album-artist">{{album.DisplayName}}</div>
+    	</div>
+  </a>
+  {% endfor %}
+  </div>
+
+  {% endif %}
+
+<div class="albums-songs-id">
+  {{ song_table(songs, cart) }}
+</div>
+
+
+{% endblock %}

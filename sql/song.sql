@@ -92,13 +92,14 @@ GO
 
 -- Search for song
 CREATE OR ALTER PROCEDURE Soundfront.SearchForSong
-	@Page INT,
-	@PageSize INT,
 	@Search NVARCHAR(100)
-AS 
+AS
 
-SELECT S.Title, S.UserID
+SELECT S.SongID, S.UserID, S.AlbumID, S.Title, S.[Length],
+	S.UploadDate, S.Price, S.[Description], U.DisplayName as Artist,
+	A.Title as AlbumTitle
 FROM Soundfront.Song S
+	LEFT JOIN Soundfront.Album A ON A.AlbumID = S.AlbumID
+	INNER JOIN Soundfront.[User] U ON U.UserID = S.UserID
 WHERE S.Title LIKE @Search
 ORDER BY S.Title
-OFFSET ((@Page * @PageSize) - @PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY;

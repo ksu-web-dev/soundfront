@@ -421,3 +421,17 @@ input.hidden {
 .header-buttons > * {
   margin-left: 12px;
 }
+
+.searchbar{
+  display: flex;
+  justify-content: center;
+}
+
+.searchbarinput {
+  width: 500px;
+  height: 40%;
+}
+
+.resultsearch {
+  margin-top: 1.5%;
+}

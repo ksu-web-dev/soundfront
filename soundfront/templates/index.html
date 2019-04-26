@@ -12,6 +12,12 @@
 		</div>
 	</div>
 
+  <div class="searchbar">
+  <form action="{{ url_for('index.search') }}" method="post">
+    <input class="searchbarinput" placeholder="Search by Album or Song Name..." name="searchform">
+  </form>
+  </div>
+
  	<div id="top-rated">
  		<div class="top">
  			<div class="top-name">Top Rated Albums</div>
@@ -76,7 +82,7 @@
  				$('#year').prop('checked', true);
  				break;
  		}
- 		
+
  		$(".top-select-item").change(function() {
 
 			$(".top-select-item").prop('checked',false);
@@ -85,11 +91,11 @@
  	</script>
 
 	<div id="recently-added">
-		<div class="top"> 
+		<div class="top">
 			<div class="top-name">Recently Added</div>
 			<div class="top-view-more"><a class="album-link" href="/albums">view more</a></div>
-		</div> 
-	
+		</div>
+
 		<div class="albums">
 		{% for album in recent_albums %}
 			<a class="album-link" href="{{ '/albums/%s'%album.AlbumID }}">
