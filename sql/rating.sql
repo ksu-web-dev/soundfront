@@ -49,16 +49,15 @@ WHERE A.RatingID = @RatingID
 GO
 
 -- LIST AlbumRating
-CREATE OR ALTER PROCEDURE Soundfront.ListAlbumRating
-	@Page INT,
-	@PageSize INT
+CREATE OR ALTER PROCEDURE Soundfront.ListAlbumRatings
+	@AlbumID INT
 AS
 
-SELECT A.RatingID, A.UserID, A.AlbumID, A.Rating, A.ReviewText
+SELECT A.RatingID, A.UserID, A.AlbumID, A.Rating, A.ReviewText, U.DisplayName as [User]
 FROM Soundfront.AlbumRating A
+	INNER JOIN Soundfront.[User] U on A.UserID = U.UserID
+WHERE A.AlbumID = @AlbumID
 ORDER BY A.RatingID
-OFFSET ((@Page * @PageSize) - @PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY;
-
 GO
 
 -- INSERT SongRating

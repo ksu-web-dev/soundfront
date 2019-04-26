@@ -39,6 +39,7 @@ DROP PROCEDURE IF EXISTS Soundfront.[GetTagsBySongID]
 DROP PROCEDURE IF EXISTS Soundfront.[ListSongsByUser];
 DROP PROCEDURE IF EXISTS Soundfront.[ListAlbumsByUser];
 DROP PROCEDURE IF EXISTS Soundfront.[GetTopRatedAlbums];
+DROP PROCEDURE IF EXISTS Soundfront.[GetMostCriticalUsers];
 
 
 DROP SCHEMA IF EXISTS Soundfront;
@@ -120,6 +121,8 @@ CREATE TABLE Soundfront.SongCart
     REFERENCES Soundfront.Song(SongID),
   CartID INT NOT NULL FOREIGN KEY 
     REFERENCES Soundfront.Cart(CartID)
+
+  UNIQUE(SongID, CartID)
 );
 
 CREATE TABLE Soundfront.AlbumCart
@@ -129,6 +132,8 @@ CREATE TABLE Soundfront.AlbumCart
     REFERENCES Soundfront.Album(AlbumID),
   CartID INT NOT NULL FOREIGN KEY 
     REFERENCES Soundfront.Cart(CartID)
+
+  UNIQUE(AlbumID, CartID)
 );
 
 --CREATE TABLE Soundfront.MusicCart

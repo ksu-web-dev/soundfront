@@ -21,6 +21,7 @@ def index():
 
     return render_template('albums/index.html', albums=albums, pagination_data=pagination_data)
 
+
 @bp.route('/<album_id>', methods=['GET'])
 def get(album_id):
     album_repo = current_app.config['album']
@@ -35,7 +36,10 @@ def get(album_id):
         cart_repo = current_app.config['cart']
         cart = cart_repo.list_cart(user_id)
 
-    return render_template('albums/id.html', album_songs=album_songs, album=album, cart=cart)
+    ratings = album_repo.list_ratings(album.AlbumID)
+    tags = album_repo.list_tags(album.AlbumID)
+    return render_template('albums/id.html', album_songs=album_songs, album=album, cart=cart, ratings=ratings, tags=tags)
+
 
 @bp.route('/new', methods=['GET', 'POST'])
 def new():
@@ -64,6 +68,7 @@ def new():
 
     return render_template('albums/new.html')
 
+
 @bp.route('/<album_id>/rate', methods=['GET', 'POST'])
 def rate(album_id):
     if 'user_id' not in session:
@@ -84,6 +89,7 @@ def rate(album_id):
         return redirect(url_for('albums.get', album_id=album.AlbumID))
 
     return render_template('albums/rate.html', album=album)
+
 
 class AlbumRepo():
     def __init__(self, conn):
@@ -107,6 +113,16 @@ class AlbumRepo():
         cursor.execute('EXEC Soundfront.GetAlbumSongs @AlbumId=?', album_id)
         return cursor.fetchall()
 
+    def list_ratings(self, album_id):
+        cursor = self.conn.cursor()
+        cursor.execute('EXEC Soundfront.ListAlbumRatings @AlbumId=?', album_id)
+        return cursor.fetchall()
+
+    def list_tags(self, album_id):
+        cursor = self.conn.cursor()
+        cursor.execute('EXEC Soundfront.ListAlbumTags @AlbumId=?', album_id)
+        return cursor.fetchall()
+
     def get_album(self, album_id):
         cursor = self.conn.cursor()
         cursor.execute('EXEC Soundfront.ReadAlbum @AlbumAlbumId=?', album_id)
@@ -124,7 +140,8 @@ class AlbumRepo():
 
     def get_top_rated_albums(self, frame):
         cursor = self.conn.cursor()
-        cursor.execute('EXEC Soundfront.GetTopRatedAlbums @TimeFrameInDays=?', frame)
+        cursor.execute(
+            'EXEC Soundfront.GetTopRatedAlbums @TimeFrameInDays=?', frame)
         return cursor.fetchall()
 
     def recent_albums(self, page, page_size):
@@ -147,7 +164,6 @@ class AlbumRepo():
                 @ReviewText=?
             """, user_id, album_id, rating, review_text)
         return cursor.fetchone()
-
 
     def delete_album(self, album_id):
         cursor = self.conn.cursor()

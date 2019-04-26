@@ -90,9 +90,11 @@
 		});
  	</script>
 
+
+ 	<!-- Recently Added Albums -->
 	<div id="recently-added">
 		<div class="top">
-			<div class="top-name">Recently Added</div>
+			<div class="top-name">Recently Added Albums</div>
 			<div class="top-view-more"><a class="album-link" href="/albums">view more</a></div>
 		</div>
 
@@ -108,5 +110,28 @@
 		{% endfor %}
 		</div>
 	</div>
+
+	<!-- Most Critical Users -->
+ 	<div id="critical-users">
+ 		<div class="top">
+ 			<div class="top-name">Most Critical Users</div>
+ 		</div>
+ 		<!-- <marquee> -->
+	 		<div class="users">
+	 			{% for user in most_critical_users %}
+		 			<div class="user">
+		 				<a href="{{ '/users/%s'%user.UserID }}">
+		 					<div class="user-name">
+		 						{{ user.DisplayName }}
+		 					</div>
+		 				</a>
+		 				<div class="user-info">
+		 					Average Rating: {{ user.AverageRating | round(2) }}
+		 				</div>
+		 			</div>
+	 			{% endfor %}
+	 		</div>
+ 		<!-- </marquee> -->
+ 	</div>
 
 {% endblock %}

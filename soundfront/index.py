@@ -17,9 +17,13 @@ def index():
 		frame = 1
 
 	album_repo = current_app.config['album']
+	user_repo = current_app.config['user']
+
 	recent_albums = album_repo.recent_albums(page=1, page_size=10)
 	top_rated_albums = album_repo.get_top_rated_albums(frame=frame)
-	return render_template('index.html', recent_albums=recent_albums, top_rated_albums=top_rated_albums)
+	most_critical_users = user_repo.get_most_critical_users(count=6)
+
+	return render_template('index.html', top_rated_albums=top_rated_albums, most_critical_users=most_critical_users, recent_albums=recent_albums)
 
 @bp.route('/search', methods=['GET','POST'])
 def search():

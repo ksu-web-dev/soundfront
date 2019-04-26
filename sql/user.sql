@@ -133,16 +133,30 @@ GO
 
 -- GetMostCriticalUsers: Gets the 3 users with the lowest average review for albums and songs
 CREATE OR ALTER PROCEDURE Soundfront.GetMostCriticalUsers
+  @Count INT
 AS
 
-SELECT TOP 3
-    U.UserID, U.DisplayName, 
-    AVG(SR.Rating) AS AverageSongRating, 
-    AVG(AR.Rating) AS AverageAlbumRating, 
-    ((AVG(SR.Rating) + AVG(AR.Rating)) / 2) AS AverageRatingGiven
-FROM Soundfront.[User] U 
-  INNER JOIN Soundfront.AlbumRating AR ON AR.UserID = U.UserID
-  INNER JOIN Soundfront.SongRating SR ON SR.UserID = U.UserID
-GROUP BY U.UserID, U.DisplayName
-ORDER BY AverageRatingGiven ASC
+WITH SourceCTE(UserID, DisplayName, AverageRating)
+AS
+(
+    SELECT TOP (@Count)
+        U.UserID, U.DisplayName, 
+        AVG(AR.Rating) AS AverageRating
+    FROM Soundfront.[User] U 
+    INNER JOIN Soundfront.AlbumRating AR ON AR.UserID = U.UserID
+    GROUP BY U.UserID, U.DisplayName
+
+    UNION
+
+    SELECT TOP (@Count)
+        U.UserID, U.DisplayName, 
+        AVG(SR.Rating) AS AverageRating
+    FROM Soundfront.[User] U 
+        INNER JOIN Soundfront.SongRating SR ON SR.UserID = U.UserID
+    GROUP BY U.UserID, U.DisplayName
+)
+SELECT TOP (@Count) 
+  S.UserID, S.DisplayName, S.AverageRating
+FROM SourceCTE S
+ORDER BY AverageRating ASC
 
