@@ -49,11 +49,11 @@ GO
 
 -- Delete SongCart
 CREATE OR ALTER PROCEDURE Soundfront.DeleteSongCart
-	@SongCartID INT
+	@CartID INT
 AS
 
 DELETE FROM Soundfront.SongCart
-WHERE SongCartID = @SongCartID
+WHERE CartID = CartID
 
 GO
 
@@ -94,11 +94,11 @@ GO
 
 -- Delete AlbumCart
 CREATE OR ALTER PROCEDURE Soundfront.DeleteAlbumCart
-	@AlbumCartID INT
+	@CartID INT
 AS
 
 DELETE FROM Soundfront.AlbumCart
-WHERE AlbumCartID = @AlbumCartID
+WHERE CartID = @CartID
 
 GO
 

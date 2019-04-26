@@ -4,10 +4,18 @@
   <div class="breadcrumbs">
     <a href="/" class="crumb">SoundFront</a>
     <div class="crumb-separator">›</div>
-    <div class="crumb">Cart</div>
+    <a  href="/cart/" class="crumb">Cart</a>
+    <div class="crumb-separator">›</div>
+    <div class="crumb">Checkout Confirmation</div>
+    <div class="crumb-separator">›</div>
+    <div class="crumb">Confirmation Page</div>
   </div>
 </div>
 
+<p class="thankyou">Thank you for your purchase!</p>
+<a href="/"><p class="returntohome">Click Here to Return </br> to the Home Page</p></a>
+
+<p class="bought">Here's what you bought:</p>
 <table class="table table-price">
   <tr class="header-row row">
     <th class="header-col col">Title</th>
@@ -24,12 +32,9 @@
   {% endfor %}
 </table>
 
-{% if ordertotal.OrderTotal %}
-<div class="ordertotal">Current Order Total: <br />${{ ordertotal.OrderTotal }}</div>
-{% else %}
-<div class="ordertotal">Current Order Total: <br />$0</div>
-{% endif %}
-
-<a class="checkout" href="/cart/checkout">Click Here to Checkout</a>
+<div class="ordertotal">How much you spent: <br />${{ ordertotal.OrderTotal }}</div>
+<!--
+<input name="review" value="{{ request.form.review }}"></input>
+-->
 
 {% endblock %}

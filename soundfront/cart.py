@@ -24,6 +24,48 @@ def index():
     ordertotal = repo.cart_total_price(user_id)
     return render_template('cart/index.html', cart=cart_items, ordertotal=ordertotal)
 
+@bp.route('/checkout')
+def checkout():
+    repo = current_app.config['cart']
+
+    if 'user_id' not in session:
+        return redirect(url_for('auth.login'))
+
+    user_id = session['user_id']
+    cart_items = repo.list_cart(user_id)
+
+    if request.method == 'POST':
+        cart = repo.get_cart(user_id)
+        song_id = request.form['songid']
+        repo.insert_songcart(song_id, cart.CartID)
+
+        return redirect(request.url)
+
+    ordertotal = repo.cart_total_price(user_id)
+    return render_template('cart/checkout.html', cart=cart_items, ordertotal=ordertotal)
+
+@bp.route('/confirmation')
+def confirmation():
+    repo = current_app.config['cart']
+
+    if 'user_id' not in session:
+        return redirect(url_for('auth.login'))
+
+    user_id = session['user_id']
+    cart_items = repo.list_cart(user_id)
+    cartID = repo.get_cart(user_id)
+    ordertotal = repo.cart_total_price(user_id)
+    repo.delete_songcart(cartID.CartID)
+    repo.delete_albumcart(cartID.CartID)
+
+    if request.method == 'POST':
+        cart = repo.get_cart(user_id)
+        song_id = request.form['songid']
+        repo.insert_songcart(song_id, cart.CartID)
+
+        return redirect(request.url)
+
+    return render_template('cart/confirmation.html', cart=cart_items, ordertotal=ordertotal)
 
 class CartRepo():
     def __init__(self, conn):
@@ -50,11 +92,10 @@ class CartRepo():
             'EXEC SoundFront.InsertSongCart @SongID=?, @CartID=?', songid, cartid)
         return True
 
-    def delete_songcart(self, songcartid=''):
+    def delete_songcart(self, cartid=''):
         cursor = self.conn.cursor()
         cursor.execute(
-            'EXEC Soundfront.DeleteSongCart @SongCartID=?', songcartid)
-        return cursor.fetchone()
+            'EXEC Soundfront.DeleteSongCart @CartID=?', cartid)
 
     def read_songcart(self, songcartid=''):
         cursor = self.conn.cursor()
@@ -74,11 +115,10 @@ class CartRepo():
             'EXEC Soundfront.InsertAlbumCart @AlbumID=? @CartID=?', albumid, cartid)
         return cursor.fetchone()
 
-    def delete_albumcart(self, albumcartid=''):
+    def delete_albumcart(self, cartid=''):
         cursor = self.conn.cursor()
         cursor.execute(
-            'EXEC Soundfront.DeleteAlbumCart @AlbumCartID=?', albumcartid)
-        return cursor.fetchone()
+            'EXEC Soundfront.DeleteAlbumCart @CartID=?', cartid)
 
     def read_albumcart(self, albumcartid=''):
         cursor = self.conn.cursor()
