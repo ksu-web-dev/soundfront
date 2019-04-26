@@ -363,6 +363,10 @@ input.hidden {
 
 }
 
+.album-title-bold {
+  font-weight: bold;
+}
+
 .album-title {
   font-size: 130%;
 }
