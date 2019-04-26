@@ -61,7 +61,7 @@ if len(sys.argv) > 1 and sys.argv[1] == '--real':
         for album in created_albums:
 
             # call api again to get all the songs for this album
-            song_url = 'http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=c87fd2e998db2442bcca8ed22c08dbf0&format=json&artist=' + artist + '&album=' + album.Title + ''
+            song_url = api_url + '?method=album.getinfo&api_key=c87fd2e998db2442bcca8ed22c08dbf0&format=json&artist=' + artist + '&album=' + album.Title + ''
             api_song_data = requests.get(song_url).content
             parsed_songs = json.loads(api_song_data)
 
@@ -71,7 +71,6 @@ if len(sys.argv) > 1 and sys.argv[1] == '--real':
             songs = parsed_songs['album']['tracks']['track']
             song_tags = parsed_songs['album']['tags']['tag']
             
-            created_songs = []
             if len(songs) == 0:
                 # remove the album since it had no songs
                 album_repo.delete_album(album_id=album.AlbumID)
@@ -101,6 +100,7 @@ if len(sys.argv) > 1 and sys.argv[1] == '--real':
             for song_tag in song_tags:
                 try:
                     tag = tag_repo.create_tag(song_tag['name'])
+                    created_tags.append(tag)
                 except:
                     pass
 
@@ -108,6 +108,7 @@ if len(sys.argv) > 1 and sys.argv[1] == '--real':
                 song_name = song['name']
                 song_length = song['duration']
 
+                # create the song
                 created_song = song_repo.insert_song(
                     userid=user.UserID,
                     albumid=album.AlbumID,
@@ -115,14 +116,12 @@ if len(sys.argv) > 1 and sys.argv[1] == '--real':
                     length=song_length
                 )
 
-                # create song_tags (every tag associated with the album gets applied to every song in the album)
+                # create a song_tag for every tag that was found for the album
                 for tag in created_tags:
                     song_tag = tag_repo.add_song_tag(
-                        tag_id=tag.TagID, 
+                        tag_id=tag.TagID,
                         song_id=created_song.SongID
                     )
-
-                created_songs.append(created_song)
 
                 # create some ratings for this song (between 1 and 4 ratings)
                 for n in range(0, random.randint(1, 4)):

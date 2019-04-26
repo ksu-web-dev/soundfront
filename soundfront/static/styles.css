@@ -386,6 +386,34 @@ input.hidden {
   margin-bottom: 1%;
 }
 
+.checkout {
+  float: right;
+  margin-top: 2.5%;
+  font-size: 110%;
+  padding: 1%;
+  border: 1px solid #e6edf4;
+  box-shadow: 2px 2px 2px 2px #e6edf4;
+}
+
+.thankyou {
+  font-size: 150%;
+  text-align: center;
+  margin-top: 3%;
+  font-weight: bold;
+}
+
+.returntohome {
+  text-align: center;
+  font-size: 90%;
+  margin-top: 2%;
+}
+
+.bought{
+  margin-top: 3%;
+  font-size: 92.5%;
+  font-weight: bold;
+  margin-left: .8%;
+}
 .header-buttons {
   display: flex;
 }
