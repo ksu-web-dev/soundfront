@@ -108,6 +108,12 @@ class AlbumRepo():
 
         return cursor.fetchone()
 
+    # def create_album_with_date(self, user_id='', album_title='', album_art='', album_price='', album_description='', upload_date=''):
+    #     cursor = self.conn.cursor()
+    #     cursor.execute("""
+    #         """, user_id, album_title, album_art, album_price, album_description, upload_date)
+    #     return cursor.fetchone()
+
     def list_songs(self, album_id):
         cursor = self.conn.cursor()
         cursor.execute('EXEC Soundfront.ListAlbumSongs @AlbumID=?', album_id)

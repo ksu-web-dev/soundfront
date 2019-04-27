@@ -35,7 +35,7 @@ if len(sys.argv) > 1 and sys.argv[1] == '--real':
 
         reviewers.append(user)
 
-    artists = ['Lomelda', 'Madlib', 'The Microphones', 'Tame Impala', 'Mount Eerie', 'Free Cake For Every Creature', 'Justice', 'Daft Punk', 'Massive Attack']
+    artists = ['Adult Mom', 'Kanye West', 'Death Cab For Cutie', 'Flume', 'Porter Robinson', 'Lomelda', 'Madlib', 'The Microphones', 'Tame Impala', 'Mount Eerie', 'Free Cake For Every Creature', 'Justice', 'Daft Punk', 'Massive Attack']
 
     for artist in artists:
 
@@ -60,6 +60,9 @@ if len(sys.argv) > 1 and sys.argv[1] == '--real':
         for i in range(0, num_albums):
             album_name = albums[i]['name']
             album_art = albums[i]['image'][len(albums[i]['image']) - 1]['#text']
+
+            if album_name == '(null)':
+                continue
 
             album = album_repo.create_album(
                 user_id=user.UserID,
@@ -114,7 +117,20 @@ if len(sys.argv) > 1 and sys.argv[1] == '--real':
                     tag = tag_repo.create_tag(song_tag['name'])
                     created_tags.append(tag)
                 except:
-                    pass
+                    try:
+                        tag = tag_repo.read_tag_by_name(song_tag['name'])
+                        if tag is None: 
+                            continue
+                        created_tags.append(tag)
+                    except:
+                        pass
+
+            # TODO: Currently this makes it so songs get aribrarily tagged with the last 15 
+            #       tags that were entered whenever we would otherwise be entering 0 tags. We should
+            #       change this so that it is adding actually relevant tags to songs in the album
+            if len(created_tags) == 0:
+                created_tags = tag_repo.list_tags(1, 15)
+
 
             for song in songs:
                 song_name = song['name']
