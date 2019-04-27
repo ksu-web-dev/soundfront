@@ -41,25 +41,6 @@ FROM Soundfront.[User] U
 WHERE U.Email = @Email;
 GO
 
-/* Update a user. */
-CREATE OR ALTER PROCEDURE Soundfront.UpdateUser
-    @UserID INT,
-    @Privacy BIT,
-    @LastLoginDate DATETIMEOFFSET,
-    @DisplayName NVARCHAR(32),
-    @Email NVARCHAR(32)
-
-AS
-
-UPDATE Soundfront.[User]
-    SET
-       Privacy = @Privacy,
-       LastLoginDate =  @LastLoginDate,
-       DisplayName = @DisplayName,
-       Email = @Email
-WHERE UserID = @UserID;
-GO
-
 CREATE OR ALTER PROCEDURE Soundfront.ListUser
 	@Page INT,
 	@PageSize INT
