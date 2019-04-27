@@ -17,7 +17,7 @@ def index():
     pagination_data['include_next_button'] = True
 
     album_repo = current_app.config['album']
-    albums = album_repo.recent_albums(page=page, page_size=15)
+    albums = album_repo.list_albums(page=page, page_size=15)
 
     return render_template('albums/index.html', albums=albums, pagination_data=pagination_data)
 
@@ -110,13 +110,17 @@ class AlbumRepo():
 
     def list_songs(self, album_id):
         cursor = self.conn.cursor()
-        cursor.execute('EXEC Soundfront.GetAlbumSongs @AlbumId=?', album_id)
+        cursor.execute('EXEC Soundfront.ListAlbumSongs @AlbumID=?', album_id)
         return cursor.fetchall()
 
     def list_ratings(self, album_id):
         cursor = self.conn.cursor()
         cursor.execute('EXEC Soundfront.ListAlbumRatings @AlbumId=?', album_id)
         return cursor.fetchall()
+
+    def delete_album(self, album_id):
+        cursor = self.conn.cursor()
+        cursor.execute('EXEC Soundfront.DeleteAlbum @AlbumID=?', album_id)
 
     def list_tags(self, album_id):
         cursor = self.conn.cursor()
@@ -125,18 +129,8 @@ class AlbumRepo():
 
     def get_album(self, album_id):
         cursor = self.conn.cursor()
-        cursor.execute('EXEC Soundfront.ReadAlbum @AlbumAlbumId=?', album_id)
+        cursor.execute('EXEC Soundfront.GetAlbum @AlbumID=?', album_id)
         return cursor.fetchone()
-
-    def list_albums(self, page, page_size):
-        cursor = self.conn.cursor()
-        cursor.execute("""
-            EXEC Soundfront.ListAlbums
-                @Page=?,
-                @pageSize=?
-            """, page, page_size)
-
-        return cursor.fetchall()
 
     def get_top_rated_albums(self, frame):
         cursor = self.conn.cursor()
@@ -144,10 +138,10 @@ class AlbumRepo():
             'EXEC Soundfront.GetTopRatedAlbums @TimeFrameInDays=?', frame)
         return cursor.fetchall()
 
-    def recent_albums(self, page, page_size):
+    def list_albums(self, page, page_size):
         cursor = self.conn.cursor()
         cursor.execute("""
-            EXEC Soundfront.RecentAlbums
+            EXEC Soundfront.ListAlbums
                 @Page=?,
                 @PageSize=?
             """, page, page_size)
@@ -163,14 +157,6 @@ class AlbumRepo():
                 @Rating=?,
                 @ReviewText=?
             """, user_id, album_id, rating, review_text)
-        return cursor.fetchone()
-
-    def delete_album(self, album_id):
-        cursor = self.conn.cursor()
-        cursor.execute("""
-            EXEC Soundfront.DeleteAlbum
-                @AlbumID=?
-            """, album_id)
         return cursor.fetchone()
 
     def searchfor_album(self, search):

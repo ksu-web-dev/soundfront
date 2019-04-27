@@ -11,37 +11,6 @@ DROP TABLE IF EXISTS Soundfront.[User];
 DROP TABLE IF EXISTS Soundfront.SongCart;
 DROP TABLE IF EXISTS Soundfront.AlbumCart;
 
-DROP PROCEDURE IF EXISTS Soundfront.[CreateUser];
-DROP PROCEDURE IF EXISTS Soundfront.[GetUser];
-DROP PROCEDURE IF EXISTS Soundfront.[UpdateUser];
-DROP PROCEDURE IF EXISTS Soundfront.[RemoveUser];
-DROP PROCEDURE IF EXISTS Soundfront.[ListUser];
-DROP PROCEDURE IF EXISTS Soundfront.[GetUserByEmail];
-DROP PROCEDURE IF EXISTS Soundfront.[CreateAlbum];
-DROP PROCEDURE IF EXISTS Soundfront.[ReadAlbum];
-DROP PROCEDURE IF EXISTS Soundfront.[ListAlbums];
-DROP PROCEDURE IF EXISTS Soundfront.[DeleteAlbum];
-DROP PROCEDURE IF EXISTS Soundfront.[UpdateAlbum];
-DROP PROCEDURE IF EXISTS Soundfront.[RecentAlbums];
-DROP PROCEDURE IF EXISTS Soundfront.[UserCount];
-DROP PROCEDURE IF EXISTS Soundfront.[GetAlbumSongs];
-DROP PROCEDURE IF EXISTS Soundfront.[CreateSong];
-DROP PROCEDURE IF EXISTS Soundfront.[DeleteSong];
-DROP PROCEDURE IF EXISTS Soundfront.[UpdateSong];
-DROP PROCEDURE IF EXISTS Soundfront.[ReadSong];
-DROP PROCEDURE IF EXISTS Soundfront.[InsertSong];
-DROP PROCEDURE IF EXISTS Soundfront.[ListSong];
-DROP PROCEDURE IF EXISTS Soundfront.[CreateTag]
-DROP PROCEDURE IF EXISTS Soundfront.[AddSongTag]
-DROP PROCEDURE IF EXISTS Soundfront.[RemoveSongTag]
-DROP PROCEDURE IF EXISTS Soundfront.[ListTags]
-DROP PROCEDURE IF EXISTS Soundfront.[GetTagsBySongID]
-DROP PROCEDURE IF EXISTS Soundfront.[ListSongsByUser];
-DROP PROCEDURE IF EXISTS Soundfront.[ListAlbumsByUser];
-DROP PROCEDURE IF EXISTS Soundfront.[GetTopRatedAlbums];
-DROP PROCEDURE IF EXISTS Soundfront.[GetMostCriticalUsers];
-
-
 DROP SCHEMA IF EXISTS Soundfront;
 GO
 
@@ -71,11 +40,6 @@ CREATE TABLE Soundfront.Cart
 
   UNIQUE(UserID)
 );
-
--- Add the Foreign Key from User to Cart
--- ALTER TABLE Soundfront.[User]
---   ADD CONSTRAINT [fk_cart_user]
---   FOREIGN KEY (CartID) REFERENCES Soundfront.Cart(CartID);
   
 CREATE TABLE Soundfront.Social
 (
@@ -135,15 +99,6 @@ CREATE TABLE Soundfront.AlbumCart
 
   UNIQUE(AlbumID, CartID)
 );
-
---CREATE TABLE Soundfront.MusicCart
---(
---  MusicCartID INT NOT NULL IDENTITY(1, 1) PRIMARY KEY,
--- AlbumID INT NOT NULL FOREIGN KEY 
---   REFERENCES Soundfront.Album(AlbumID),
---  SongID INT NOT NULL FOREIGN KEY 
---    REFERENCES Soundfront.Song(SongID)
---);
 
 CREATE TABLE Soundfront.AlbumRating
 (

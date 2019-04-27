@@ -117,10 +117,6 @@ class UserRepo():
         cursor.execute('EXEC Soundfront.GetUserByEmail @Email=?', email)
         return cursor.fetchone()
 
-    def remove_user(self, id):
-        cursor = self.conn.cursor()
-        cursor.execute('EXEC Soundfront.RemoveUser @UserID=?', id)
-
     def follow_user(self, follower_user_id, followee_user_id):
         cursor = self.conn.cursor()
         cursor.execute("""
