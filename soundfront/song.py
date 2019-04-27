@@ -48,7 +48,7 @@ def get(song_id):
 def rate(song_id):
     if 'user_id' not in session:
         return redirect(url_for('auth.login'))
-        
+
     repo = current_app.config['song']
     song = repo.read_song(song_id)
 
@@ -168,3 +168,11 @@ class SongRepo():
                 @ReviewText=?
         """, user_id, song_id, rating, review_text)
         return cursor.fetchone()
+
+    def search_for_song(self, search):
+        cursor = self.conn.cursor()
+        cursor.execute("""
+            EXEC Soundfront.SearchForSong
+                @Search=?
+        """, search)
+        return cursor.fetchall()
