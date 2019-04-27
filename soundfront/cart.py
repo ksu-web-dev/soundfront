@@ -129,7 +129,6 @@ class CartRepo():
         cursor = self.conn.cursor()
         cursor.execute(
             'EXEC Soundfront.InsertAlbumCart @AlbumID=?, @CartID=?', albumid, cartid)
-        return cursor.fetchone()
 
     def delete_albumcart(self, cartid=''):
         cursor = self.conn.cursor()
