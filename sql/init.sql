@@ -40,6 +40,7 @@ DROP PROCEDURE IF EXISTS Soundfront.[ListSongsByUser];
 DROP PROCEDURE IF EXISTS Soundfront.[ListAlbumsByUser];
 DROP PROCEDURE IF EXISTS Soundfront.[GetTopRatedAlbums];
 DROP PROCEDURE IF EXISTS Soundfront.[GetMostCriticalUsers];
+DROP PROCEDURE IF EXISTS Soundfront.[ReadTagByName];
 
 
 DROP SCHEMA IF EXISTS Soundfront;

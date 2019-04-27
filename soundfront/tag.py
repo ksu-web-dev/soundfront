@@ -87,6 +87,14 @@ class TagRepo():
             @PageSize=?
             """, tag_id, page, page_size)
         return cursor.fetchall()
+
+    def read_tag_by_name(self, tag_name):
+        cursor = self.conn.cursor()
+        cursor.execute("""
+            EXEC Soundfront.ReadTagByName
+            @TagName=?
+         """, tag_name)
+        return cursor.fetchone()
         
     def read_tag(self, tag_id):
         cursor = self.conn.cursor()

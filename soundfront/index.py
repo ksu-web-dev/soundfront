@@ -22,4 +22,3 @@ def index():
 	most_critical_users = user_repo.get_most_critical_users(count=6)
 
 	return render_template('index.html', top_rated_albums=top_rated_albums, most_critical_users=most_critical_users, recent_albums=recent_albums)
-
