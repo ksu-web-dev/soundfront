@@ -39,6 +39,11 @@ def checkout():
         return redirect(url_for('auth.login'))
 
     user_id = session['user_id']
+
+    print(repo.cart_total_price(user_id))
+    if repo.cart_total_price(user_id)[0] is None:
+        return redirect(url_for('cart.index'))
+
     cart_items = repo.list_cart(user_id)
 
     if request.method == 'POST':
@@ -59,6 +64,10 @@ def confirmation():
         return redirect(url_for('auth.login'))
 
     user_id = session['user_id']
+
+    if repo.cart_total_price(user_id)[0] is None:
+        return redirect(url_for('cart.index'))
+
     cart_items = repo.list_cart(user_id)
     cartID = repo.get_cart(user_id)
     ordertotal = repo.cart_total_price(user_id)
