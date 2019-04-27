@@ -73,7 +73,11 @@ def new():
 
     if request.method == 'POST':
         title = request.form['title']
-        album = request.form['album'] or None
+        album = None
+
+        if 'album' in request.form:
+            album = request.form['album']
+
         price = request.form['price']
         length = request.form['length']
         description = request.form['description']
