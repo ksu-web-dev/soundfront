@@ -1,4 +1,4 @@
--- Insert
+-- Creates an Album
 CREATE OR ALTER PROCEDURE Soundfront.CreateAlbum
 	@AlbumUserId INT,
 	@AlbumTitle NVARCHAR(50),
@@ -13,39 +13,30 @@ BEGIN
 	VALUES
 		(@AlbumUserId, @AlbumTitle, @AlbumAlbumArt, @AlbumPrice, @AlbumDescription)
 END
-
 GO
 
--- Update
-CREATE OR ALTER PROCEDURE Soundfront.UpdateAlbum
-	@AlbumAlbumId INT,
-	@AlbumTitle NVARCHAR(50),
-	@AlbumPrice INT,
-	@AlbumDescription NVARCHAR(1024)
-
-AS
-
-UPDATE Soundfront.Album
-	SET
-		Title = @AlbumTitle,
-		Price = @AlbumPrice,
-		[Description] = @AlbumDescription
-WHERE AlbumID = @AlbumAlbumId
-GO
-
--- Read
-CREATE OR ALTER PROCEDURE Soundfront.ReadAlbum
-	@AlbumAlbumId INT
+-- Get a single Album given its ID
+CREATE OR ALTER PROCEDURE Soundfront.GetAlbum
+	@AlbumID INT
 AS
 
 SELECT A.AlbumID, A.UserID, A.Title, A.AlbumArt, A.Price, A.UploadDate, A.[Description], U.DisplayName
 FROM Soundfront.Album A
 	INNER JOIN Soundfront.[User] U ON U.UserID = A.UserID
-WHERE A.AlbumID = @AlbumAlbumId
+WHERE A.AlbumID = @AlbumID
 GO
 
--- Get all the Songs from an Album
-CREATE OR ALTER PROCEDURE Soundfront.GetAlbumSongs
+-- Deletes an album
+CREATE OR ALTER PROCEDURE Soundfront.DeleteAlbum
+	@AlbumID INT
+AS
+
+DELETE FROM Soundfront.Album 
+WHERE AlbumID = @AlbumID
+GO
+
+-- Lists all Songs from an Album
+CREATE OR ALTER PROCEDURE Soundfront.ListAlbumSongs
 	@AlbumID INT
 AS
 
@@ -55,7 +46,6 @@ FROM Soundfront.Album A
     INNER JOIN Soundfront.[User] U ON U.UserID = A.UserID
 WHERE A.AlbumID = @AlbumID
 ORDER BY S.SongID
-
 GO
 
 -- Get Top by Average Rating
@@ -75,32 +65,8 @@ ORDER BY AVG(AR.Rating) DESC, A.Price DESC
 
 GO
 
-
--- Delete
-CREATE OR ALTER PROCEDURE Soundfront.DeleteAlbum
-	@AlbumID INT
-AS
-
-DELETE FROM Soundfront.Album
-OUTPUT Deleted.AlbumID, Deleted.Title
-WHERE AlbumID = @AlbumId
-
-GO
-
--- List
+-- Lists Albums ordered by most recent
 CREATE OR ALTER PROCEDURE Soundfront.ListAlbums
-	@Page INT,
-	@PageSize INT
-AS
-
-SELECT A.AlbumID, A.UserID, A.Title, A.AlbumArt, A.Price, A.UploadDate, A.[Description]
-FROM Soundfront.Album A
-ORDER BY A.UploadDate DESC
-OFFSET ((@Page * @PageSize) - @PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY;
-
-GO
-
-CREATE OR ALTER PROCEDURE Soundfront.RecentAlbums
 	@Page INT,
 	@PageSize INT
 AS
@@ -115,6 +81,7 @@ END
 
 GO
 
+-- Lists all Albums by a User
 CREATE OR ALTER PROCEDURE Soundfront.ListAlbumsByUser
 	@UserID INT
 AS
@@ -123,18 +90,14 @@ SELECT A.AlbumID, A.UserID, A.Title, A.AlbumArt, A.Price, A.UploadDate, A.[Descr
 FROM Soundfront.Album A
 WHERE A.UserID = @UserID
 ORDER BY A.UploadDate DESC;
-
 GO
 
 -- Search for album
 CREATE OR ALTER PROCEDURE Soundfront.SearchForAlbum
-	@Page INT,
-	@PageSize INT,
 	@Search NVARCHAR(100)
-AS 
+AS
 
-SELECT A.Title, A.UserID
+SELECT TOP(10) *
 FROM Soundfront.Album A
 WHERE A.Title LIKE @Search
 ORDER BY A.Title
-OFFSET ((@Page * @PageSize) - @PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY;

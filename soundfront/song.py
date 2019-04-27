@@ -48,7 +48,7 @@ def get(song_id):
 def rate(song_id):
     if 'user_id' not in session:
         return redirect(url_for('auth.login'))
-        
+
     repo = current_app.config['song']
     song = repo.read_song(song_id)
 
@@ -73,7 +73,11 @@ def new():
 
     if request.method == 'POST':
         title = request.form['title']
-        album = request.form['album'] or None
+        album = None
+
+        if 'album' in request.form:
+            album = request.form['album']
+
         price = request.form['price']
         length = request.form['length']
         description = request.form['description']
@@ -118,26 +122,10 @@ class SongRepo():
             """, userid, albumid, title, length, price, description)
         return cursor.fetchone()
 
-    def update_song(self, songid='', title='', length='', price='', description=''):
-        cursor = self.conn.cursor()
-        cursor.execute("""
-            EXEC Soundfront.UpdateSong
-                @SongID=?,
-	            @Title=?,
-	            @Length=?,
-	            @Price=?,
-	            @Description=?
-            """, songid, title, length, price, description)
-        return cursor.fetchone()
-
     def read_song(self, songid):
         cursor = self.conn.cursor()
         cursor.execute('EXEC Soundfront.ReadSong @SongID=?', songid)
         return cursor.fetchone()
-
-    def delete_song(self, songid):
-        cursor = self.conn.cursor()
-        cursor.execute('EXEC Soundfront.DeleteSong @SongID=?', songid)
 
     def list_song(self, page, pagesize):
         cursor = self.conn.cursor()
@@ -157,7 +145,6 @@ class SongRepo():
             'EXEC Soundfront.ListSongTags @SongID=?', song_id)
         return cursor.fetchall()
 
-
     def rate_song(self, user_id, song_id, rating=1, review_text=''):
         cursor = self.conn.cursor()
         cursor.execute("""
@@ -168,3 +155,11 @@ class SongRepo():
                 @ReviewText=?
         """, user_id, song_id, rating, review_text)
         return cursor.fetchone()
+
+    def search_for_song(self, search):
+        cursor = self.conn.cursor()
+        cursor.execute("""
+            EXEC Soundfront.SearchForSong
+                @Search=?
+        """, search)
+        return cursor.fetchall()

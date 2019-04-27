@@ -14,25 +14,6 @@ VALUES (@UserID, @AlbumID, @Title, @Length, @Price, @Description)
 
 GO
 
--- Update
-CREATE OR ALTER PROCEDURE Soundfront.UpdateSong
-	@SongID INT,
-	@Title NVARCHAR(50),
-	@Length INT,
-	@Price INT,
-	@Description NVARCHAR(1024)
-AS
-
-UPDATE Soundfront.Song
-	SET
-		Title = @Title,
-		[Length] = @Length,
-		Price = @Price,
-		[Description] = @Description
-WHERE SongID = @SongID
-
-GO
-
 -- Read
 CREATE OR ALTER PROCEDURE Soundfront.ReadSong
 	@SongID INT
@@ -45,16 +26,6 @@ FROM Soundfront.Song S
 	LEFT JOIN Soundfront.Album A ON A.AlbumID = S.AlbumID
 	INNER JOIN Soundfront.[User] U ON U.UserID = S.UserID
 WHERE S.SongID = @SongID
-
-GO
-
--- Delete
-CREATE OR ALTER PROCEDURE Soundfront.DeleteSong
-	@SongID INT
-AS
-
-DELETE FROM Soundfront.Song
-WHERE SongID = @SongID
 
 GO
 
@@ -92,13 +63,14 @@ GO
 
 -- Search for song
 CREATE OR ALTER PROCEDURE Soundfront.SearchForSong
-	@Page INT,
-	@PageSize INT,
 	@Search NVARCHAR(100)
-AS 
+AS
 
-SELECT S.Title, S.UserID
+SELECT S.SongID, S.UserID, S.AlbumID, S.Title, S.[Length],
+	S.UploadDate, S.Price, S.[Description], U.DisplayName as Artist,
+	A.Title as AlbumTitle
 FROM Soundfront.Song S
+	LEFT JOIN Soundfront.Album A ON A.AlbumID = S.AlbumID
+	INNER JOIN Soundfront.[User] U ON U.UserID = S.UserID
 WHERE S.Title LIKE @Search
 ORDER BY S.Title
-OFFSET ((@Page * @PageSize) - @PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY;

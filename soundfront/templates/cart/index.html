@@ -30,6 +30,10 @@
 <div class="ordertotal">Current Order Total: <br />$0</div>
 {% endif %}
 
+{% if ordertotal.OrderTotal %}
 <a class="checkout" href="/cart/checkout">Click Here to Checkout</a>
+{% else %}
+<p class="checkout">Empty Cart</p>
+{% endif %}
 
 {% endblock %}

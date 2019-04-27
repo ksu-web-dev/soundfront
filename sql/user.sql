@@ -41,34 +41,6 @@ FROM Soundfront.[User] U
 WHERE U.Email = @Email;
 GO
 
-/* Update a user. */
-CREATE OR ALTER PROCEDURE Soundfront.UpdateUser
-    @UserID INT,
-    @Privacy BIT,
-    @LastLoginDate DATETIMEOFFSET,
-    @DisplayName NVARCHAR(32),
-    @Email NVARCHAR(32)
-
-AS
-
-UPDATE Soundfront.[User]
-    SET
-       Privacy = @Privacy,
-       LastLoginDate =  @LastLoginDate,
-       DisplayName = @DisplayName,
-       Email = @Email
-WHERE UserID = @UserID;
-GO
-
-/* Delete a user. */
-CREATE OR ALTER PROCEDURE Soundfront.RemoveUser
-    @UserID INT
-AS
-    DELETE FROM Soundfront.[User]
-    WHERE UserID = @UserID;
-
-GO
-
 CREATE OR ALTER PROCEDURE Soundfront.ListUser
 	@Page INT,
 	@PageSize INT
@@ -77,12 +49,6 @@ SELECT U.UserID, U.Privacy, U.LastLoginDate, U.JoinDate, U.DisplayName, U.Email,
 FROM Soundfront.[User] U
 ORDER BY U.JoinDate DESC
 OFFSET ((@Page * @PageSize) - @PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY;
-GO
-
-CREATE OR ALTER PROCEDURE Soundfront.UserCount
-AS
-SELECT COUNT(*)
-FROM Soundfront.[User] U
 GO
 
 CREATE OR ALTER PROCEDURE Soundfront.FollowUser
