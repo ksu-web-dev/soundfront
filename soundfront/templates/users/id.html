@@ -60,7 +60,20 @@
       {% if albums == [] %}
         <div class="none">User has no albums</div>
       {% else %}
-        {{ album_table(albums) }}
+      <link rel="stylesheet" href="{{ url_for('static', filename='album.css') }}">
+
+      <div class="albumsidpage">
+      	{% for album in albums %}
+      		<a class="album-link" href="{{ '/albums/%s'%album.AlbumID }}">
+      			<div class="album">
+      				<img class="album-art" src="{{ album.AlbumArt }}">
+      				<div class="album-title">{{album.Title}}</div>
+      				<div class="album-artist">{{album.DisplayName}}</div>
+      			</div>
+      		</a>
+      	{% endfor %}
+      </div>
+
       {% endif %}
 
     </div>
@@ -74,7 +87,5 @@
     </div>
   </div>
 </div>
-
-<div class="albums-songs-id"></div>
 
 {% endblock %}

@@ -36,10 +36,13 @@
         <b>Name: </b> {{ album.Title }}
       </div>
       <div class="desc-item">
+        <b></b> <a href="/users/{{ album.UserID }}"> {{ album.DisplayName }}</a>
+      </div>
+      <div class="desc-item">
         <b>UploadDate:</b> {{ album.UploadDate.strftime("%m/%d/%Y") }}
       </div>
       <div class="desc-item">
-        <b>Price: </b> {{ album.Price }}
+        <b>Price: </b> ${{ album.Price }}
       </div>
     </div>
 	</div>
