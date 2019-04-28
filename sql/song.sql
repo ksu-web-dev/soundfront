@@ -19,7 +19,7 @@ CREATE OR ALTER PROCEDURE Soundfront.CreateSongWithDate
 	@AlbumID INT,
 	@Title NVARCHAR(50),
 	@Length INT,
-	@Price INT,
+	@Price DECIMAL,
 	@Description NVARCHAR(1024),
 	@UploadDate DATETIME
 AS 
