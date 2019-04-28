@@ -123,3 +123,24 @@ FROM Soundfront.SongRating S
 WHERE S.SongID = @SongID
 ORDER BY S.RatingID
 OFFSET ((@Page * @PageSize) - @PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY;
+GO
+
+CREATE OR ALTER PROCEDURE Soundfront.ListRatings
+	@UserID INT,
+	@Album nvarchar(50),
+	@Song nvarchar(50)
+AS
+
+SELECT AR.RatingID, AR.Rating, AR.ReviewText, U.DisplayName, A.Title as [Name], A.AlbumID AS ID, @Album AS Type
+FROM Soundfront.AlbumRating AR
+	INNER JOIN Soundfront.[User] U ON U.UserID = AR.UserID
+	INNER JOIN Soundfront.Album A ON A.AlbumID = AR.AlbumID
+WHERE U.UserID = @UserID
+
+UNION ALL
+
+SELECT SR.RatingID, SR.Rating, SR.ReviewText, U.DisplayName, S.Title as [Name], S.SongID AS ID, @Song AS Type
+FROM Soundfront.SongRating SR
+	INNER JOIN Soundfront.[User] U ON U.UserID = SR.UserID
+	INNER JOIN Soundfront.Song S ON S.SongID = SR.SongID
+WHERE U.UserID = @UserID

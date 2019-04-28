@@ -32,6 +32,7 @@ def profile(user_id):
     albums = repo.list_albums(user_id)
     followers = repo.list_followers(user_id)
     following = repo.list_following(user_id)
+    reviews = repo.list_ratings(user_id,"Album","Song")
     isfollowing = []
 
     cart = []
@@ -41,7 +42,7 @@ def profile(user_id):
         cart = cart_repo.list_cart(user_id)
         isfollowing = repo.is_following(session['user_id'], user.UserID)
 
-    return render_template('users/id.html', user=user, songs=songs, albums=albums, cart=cart, followers=followers, following=following, isfollowing=isfollowing)
+    return render_template('users/id.html', user=user, songs=songs, albums=albums, reviews=reviews, cart=cart, followers=followers, following=following, isfollowing=isfollowing)
 
 @bp.route('/<user_id>/follow', methods=['POST'])
 def follow(user_id):
@@ -133,7 +134,7 @@ class UserRepo():
                 @FollowerUserID=?,
                 @FolloweeUserID=?
             """, follower_user_id, followee_user_id)
-        return 
+        return
 
     # pass in the id of the user page being viewed
     def list_followers(self, followee_user_id):
@@ -161,3 +162,16 @@ class UserRepo():
         cursor.execute('EXEC Soundfront.GetMostCriticalUsers @Count=?', count)
         return cursor.fetchall()
 
+    def list_ratings(self, user_id, album, song):
+        cursor = self.conn.cursor()
+        cursor.execute("""EXEC Soundfront.ListRatings
+            @UserID=?,
+            @Album=?,
+            @Song=?
+        """, user_id, album, song)
+        return cursor.fetchall()
+
+    def search_user(self, search):
+        cursor = self.conn.cursor()
+        cursor.execute('EXEC Soundfront.SearchUser @Search=?', search)
+        return cursor.fetchall()

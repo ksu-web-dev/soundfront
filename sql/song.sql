@@ -66,7 +66,7 @@ CREATE OR ALTER PROCEDURE Soundfront.SearchForSong
 	@Search NVARCHAR(100)
 AS
 
-SELECT S.SongID, S.UserID, S.AlbumID, S.Title, S.[Length],
+SELECT TOP(20) S.SongID, S.UserID, S.AlbumID, S.Title, S.[Length],
 	S.UploadDate, S.Price, S.[Description], U.DisplayName as Artist,
 	A.Title as AlbumTitle
 FROM Soundfront.Song S
