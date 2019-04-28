@@ -144,7 +144,8 @@ if len(sys.argv) > 1 and sys.argv[1] == '--real':
                     userid=user.UserID,
                     albumid=album.AlbumID,
                     title=song_name,
-                    length=song_length
+                    length=song_length,
+                    price=0.99
                 )
 
                 # create a song_tag for every tag that was found for the album
