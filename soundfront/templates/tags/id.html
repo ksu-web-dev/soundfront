@@ -1,23 +1,26 @@
+{% from "pagination.html" import pagination_bar %}
+{% from "songs/table.html" import song_table %}
 {% extends "layout.html" %}
 {% block page %}
 
 <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
 
+    <div class="header">
+	<div class="breadcrumbs">
+	  <a href="/" class="crumb">SoundFront</a>
+	  <div class="crumb-separator">›</div>
+	  <a href="/tags" class="crumb">Tags</a>
+      <div class="crumb-separator">›</div>
+	  <div class="crumb">{{tag.Name}}</div>
+	</div>
+
+    </div>
+
 	<div class="tag_songs">
-		{% for song in tags_songs %}
-			<a class="songs-link" href="{{ '/songs/%s'%song.SongID }}">
-				<div class="song">
-					<div class="song-name">{{song.Title}}</div>
-				</div>
-			</a>
-		{% endfor %}
+		{{ song_table(tag_songs) }}
 	</div>
 
 
-	{% if page-1 > 0 %}
-	  <a href="/tags?page={{ page - 1 }}" class="button">Previous Page</a> | 
-	{% endif %} 
-
-	<a href="/tags?page={{ page + 1 }}" class="button">Next Page</a>
+    {{ pagination_bar(pagination_data.href, pagination_data.page) }}
 
 {% endblock %}

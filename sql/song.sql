@@ -4,7 +4,7 @@ CREATE OR ALTER PROCEDURE Soundfront.InsertSong
 	@AlbumID INT,
 	@Title NVARCHAR(50),
 	@Length INT,
-	@Price INT,
+	@Price DECIMAL,
 	@Description NVARCHAR(1024)
 AS
 

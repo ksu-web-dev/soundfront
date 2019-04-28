@@ -4,7 +4,7 @@ CREATE OR ALTER PROCEDURE Soundfront.CreateAlbum
 	@UserId INT,
 	@Title NVARCHAR(50),
 	@AlbumArt NVARCHAR(256),
-	@Price INT,
+	@Price DECIMAL,
 	@Description NVARCHAR(1024)
 AS
 BEGIN
@@ -29,7 +29,7 @@ CREATE OR ALTER PROCEDURE Soundfront.CreateAlbumWithDate
 AS
 BEGIN
 	SET NOCOUNT ON
-	INSERT Soundfront.Album(UserID, Title, AlbumArt, Price, [Description], UploadDate)	
+	INSERT Soundfront.Album(UserID, Title, AlbumArt, Price, [Description], UploadDate)
 	OUTPUT Inserted.AlbumID, Inserted.Title, Inserted.AlbumArt, Inserted.Price, Inserted.Description, Inserted.UploadDate, Inserted.UserID
 	VALUES
 		(@UserID, @Title, @AlbumArt, @Price, @Description, @UploadDate)
@@ -53,7 +53,7 @@ CREATE OR ALTER PROCEDURE Soundfront.DeleteAlbum
 	@AlbumID INT
 AS
 
-DELETE FROM Soundfront.Album 
+DELETE FROM Soundfront.Album
 WHERE AlbumID = @AlbumID
 GO
 
