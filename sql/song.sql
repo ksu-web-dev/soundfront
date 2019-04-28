@@ -74,3 +74,21 @@ FROM Soundfront.Song S
 	INNER JOIN Soundfront.[User] U ON U.UserID = S.UserID
 WHERE S.Title LIKE @Search
 ORDER BY S.Title
+GO
+
+CREATE OR ALTER PROCEDURE Soundfront.ListSimilarSongs
+	@SongID INT
+AS
+
+WITH TagCountCTE(SongID, SharedTagCount) AS (
+    SELECT TOP 5 SST.SongID, COUNT(*) as SharedTagCount
+    FROM Soundfront.SongTag IST
+        INNER JOIN Soundfront.SongTag SST  ON SST.TagID = IST.TagID
+    WHERE IST.SongID = @SongID
+    GROUP BY SST.SongID
+    ORDER BY COUNT(*) DESC
+)
+SELECT TC.SongID, T.Name
+FROM TagCountCTE TC
+    INNER JOIN Soundfront.SongTag ST ON TC.SongID = ST.SongID
+    INNER JOIN Soundfront.Tag T ON T.TagID = ST.TagID

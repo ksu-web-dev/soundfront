@@ -101,3 +101,25 @@ SELECT TOP(10) *
 FROM Soundfront.Album A
 WHERE A.Title LIKE @Search
 ORDER BY A.Title
+GO
+
+
+CREATE OR ALTER PROCEDURE Soundfront.ListSimilarAlbums
+	@AlbumID INT
+AS
+WITH TagCountCTE(AlbumID, SharedTagCount) AS (
+    SELECT TOP 5 SS.AlbumID, COUNT(*) as SharedTagCount
+    FROM Soundfront.SongTag IST
+        INNER JOIN Soundfront.SongTag SST ON SST.TagID = IST.TagID
+        INNER JOIN Soundfront.Song S ON S.SongID = IST.SongID
+        INNER JOIN Soundfront.Song SS ON SS.SongID = SST.SongID
+    WHERE S.AlbumID = @AlbumID AND SS.AlbumID != @AlbumID
+    GROUP BY SS.AlbumID
+    ORDER BY COUNT(*) DESC
+)
+SELECT DISTINCT S.AlbumID, T.Name, TC.SharedTagCount
+FROM TagCountCTE TC
+    INNER JOIN Soundfront.Song S ON S.AlbumID = TC.AlbumID
+    INNER JOIN Soundfront.SongTag ST ON ST.SongID = S.SongID
+    INNER JOIN Soundfront.Tag T on T.TagID = ST.TagID
+ORDER BY TC.SharedTagCount DESC
