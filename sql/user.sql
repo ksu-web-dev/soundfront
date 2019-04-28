@@ -122,7 +122,8 @@ AS
     GROUP BY U.UserID, U.DisplayName
 )
 SELECT TOP (@Count) 
-  S.UserID, S.DisplayName, S.AverageRating
+  S.UserID, S.DisplayName, AVG(S.AverageRating) AS AverageRating
 FROM SourceCTE S
+GROUP BY S.UserID, S.DisplayName
 ORDER BY AverageRating ASC
 
