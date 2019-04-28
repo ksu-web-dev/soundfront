@@ -1,5 +1,5 @@
-/* Create a general tag. */
-
+-- Soundfront.CreateTag
+-- Create a tag
 CREATE OR ALTER PROCEDURE Soundfront.CreateTag
     @Name NVARCHAR(50)
 AS
@@ -9,7 +9,8 @@ VALUES(@Name)
 
 GO
 
-/* read tag */
+-- Soundfront.ReadTag
+-- Gets information of Tag based on inputted TagID
 CREATE OR ALTER PROCEDURE Soundfront.ReadTag
     @TagID INT
 AS
@@ -19,7 +20,8 @@ FROM Soundfront.Tag T
 WHERE T.TagID = @TagID
 GO
 
-/* Read a tag by its name */
+-- Soundfront.ReadTagByName
+-- Read a tag by its name
 CREATE OR ALTER PROCEDURE Soundfront.ReadTagByName
     @TagName NVARCHAR
 AS
@@ -29,7 +31,8 @@ WHERE T.[Name] = @TagName
 
 GO
 
-/* Add a tag to a song. */
+-- Soundfront.AddSongTag
+-- Add a tag to a song.
 CREATE OR ALTER PROCEDURE Soundfront.AddSongTag
     @TagID INT,
 	@SongID INT
@@ -39,8 +42,8 @@ OUTPUT Inserted.SongTagID, Inserted.TagID, Inserted.SongID
 VALUES (@TagID, @SongID)
 GO
 
-/* Delete a tag. (Remove the tag for the song, but not the tag itself.) */
-
+-- Soundfront.RemoveSongTag
+-- Delete a tag. (Remove the tag for the song, but not the tag itself.)
 CREATE OR ALTER PROCEDURE Soundfront.RemoveSongTag
     @SongTagID INT
 AS
@@ -48,6 +51,8 @@ AS
     WHERE SongTagID = @SongTagID;
 GO
 
+-- Soundfront.ListTags
+-- Lists the Tags in the database (includes pagination parameters)
 CREATE OR ALTER PROCEDURE Soundfront.ListTags
 	@Page INT,
 	@PageSize INT
@@ -60,6 +65,8 @@ OFFSET ((@Page * @PageSize) - @PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY;
 
 GO
 
+-- Soundfront.GetTagsBySongID
+-- Gets the tags of the song based on the inputted SongID
 CREATE OR ALTER PROCEDURE Soundfront.GetTagsBySongID
 	@SongID INT
 AS
@@ -71,6 +78,8 @@ WHERE ST.SongID = @SongID
 
 GO
 
+-- Soundfront.ListSongsByTag
+-- Lists all songs with a certain tag based on the inputted TagID
 CREATE OR ALTER PROCEDURE Soundfront.ListSongsByTag
     @TagID INT,
     @Page INT,
@@ -90,6 +99,8 @@ ORDER BY S.SongID
 OFFSET ((@Page * @PageSize) - @PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY;
 GO
 
+-- Soundfront.ListSongTags
+-- Lists the SongTags in the database
 CREATE OR ALTER PROCEDURE Soundfront.ListSongTags
 	@SongID INT
 AS
@@ -100,6 +111,8 @@ FROM Soundfront.SongTag ST
 WHERE ST.SongID = @SongID
 GO
 
+-- Soundfront.ListAlbumTags
+-- Lists the tags of an album by looking at the tags of the songs in the album
 CREATE OR ALTER PROCEDURE Soundfront.ListAlbumTags
 	@AlbumID INT
 AS

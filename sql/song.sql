@@ -1,4 +1,5 @@
--- Insert
+-- Soundfront.InsertSong
+-- Insert Song into datbase
 CREATE OR ALTER PROCEDURE Soundfront.InsertSong
 	@UserID INT,
 	@AlbumID INT,
@@ -14,6 +15,8 @@ VALUES (@UserID, @AlbumID, @Title, @Length, @Price, @Description)
 
 GO
 
+-- Soundfront.CreateSongWithDate
+-- Creates a song with a date passed in
 CREATE OR ALTER PROCEDURE Soundfront.CreateSongWithDate
 	@UserID INT,
 	@AlbumID INT,
@@ -22,7 +25,7 @@ CREATE OR ALTER PROCEDURE Soundfront.CreateSongWithDate
 	@Price DECIMAL,
 	@Description NVARCHAR(1024),
 	@UploadDate DATETIME
-AS 
+AS
 
 INSERT Soundfront.Song(UserID, AlbumID, Title, [Length], Price, [Description], UploadDate)
 OUTPUT Inserted.SongID
@@ -45,7 +48,8 @@ WHERE S.SongID = @SongID
 
 GO
 
--- List
+-- Soundfront.ListSong
+-- List Songs in the database (includes pagination parameters)
 CREATE OR ALTER PROCEDURE Soundfront.ListSong
 	@Page INT,
 	@PageSize INT
@@ -61,7 +65,8 @@ ORDER BY S.UploadDate DESC
 OFFSET ((@Page * @PageSize) - @PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY;
 GO
 
--- List songs by user
+-- Soundfront.ListSongsByUser
+-- List songs by user with inputted UserID
 CREATE OR ALTER PROCEDURE Soundfront.ListSongsByUser
 	@UserID INT
 AS
@@ -83,8 +88,8 @@ CREATE OR ALTER PROCEDURE Soundfront.GetTopRatedSongs
 	@TimeFrameInDays INT
 AS
 SELECT TOP 5
-	S.SongID, S.UserID, S.Title, S.[Length], 
-	S.UploadDate, S.Price, S.[Description], U.DisplayName AS Artist,  
+	S.SongID, S.UserID, S.Title, S.[Length],
+	S.UploadDate, S.Price, S.[Description], U.DisplayName AS Artist,
 	A.Title AS AlbumTitle, AVG(SR.Rating) AS "Average Rating"
 FROM Soundfront.SongRating SR
     INNER JOIN Soundfront.Song S ON S.SongID = SR.SongID
@@ -96,7 +101,8 @@ ORDER BY AVG(SR.Rating) DESC, S.Price DESC
 
 GO
 
--- Search for song
+-- Soundfront.SearchForSong
+-- Search for song with inputted search string
 CREATE OR ALTER PROCEDURE Soundfront.SearchForSong
 	@Search NVARCHAR(100)
 AS
@@ -111,6 +117,8 @@ WHERE S.Title LIKE @Search
 ORDER BY S.Title
 GO
 
+-- Soundfront.ListSimilarSongs
+-- Lists similar songs to the inputted SongID based on similar tags
 CREATE OR ALTER PROCEDURE Soundfront.ListSimilarSongs
 	@SongID INT
 AS
