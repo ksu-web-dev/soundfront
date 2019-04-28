@@ -38,7 +38,16 @@ def get(album_id):
 
     ratings = album_repo.list_ratings(album.AlbumID)
     tags = album_repo.list_tags(album.AlbumID)
-    return render_template('albums/id.html', album_songs=album_songs, album=album, cart=cart, ratings=ratings, tags=tags)
+
+    similar_albums_result = album_repo.list_similar_albums(album.AlbumID)
+    similar_albums = {}
+
+    for a in similar_albums_result:
+        if a.AlbumID not in similar_albums:
+            similar_albums[a.AlbumID] = { 'AlbumID': a.AlbumID, 'tags': [], 'Title': a.Title }
+
+        similar_albums[a.AlbumID]['tags'].append({ 'TagID': a.TagID, 'Name': a.Name })
+    return render_template('albums/id.html', album_songs=album_songs, album=album, cart=cart, ratings=ratings, tags=tags, similar_albums=similar_albums)
 
 
 @bp.route('/new', methods=['GET', 'POST'])
@@ -99,20 +108,27 @@ class AlbumRepo():
         cursor = self.conn.cursor()
         cursor.execute("""
         EXEC Soundfront.CreateAlbum
-            @AlbumUserId=?,
-            @AlbumTitle=?,
-            @AlbumAlbumArt=?,
-            @AlbumPrice=?,
-            @AlbumDescription=?
+            @UserId=?,
+            @Title=?,
+            @AlbumArt=?,
+            @Price=?,
+            @Description=?
             """, user_id, album_title, album_art, album_price, album_description)
 
         return cursor.fetchone()
 
-    # def create_album_with_date(self, user_id='', album_title='', album_art='', album_price='', album_description='', upload_date=''):
-    #     cursor = self.conn.cursor()
-    #     cursor.execute("""
-    #         """, user_id, album_title, album_art, album_price, album_description, upload_date)
-    #     return cursor.fetchone()
+    def create_album_with_date(self, user_id='', album_title='', album_art='', album_price='', album_description='', upload_date=''):
+        cursor = self.conn.cursor()
+        cursor.execute("""
+        EXEC Soundfront.CreateAlbumWithDate
+            @UserID=?,
+            @Title=?,
+            @AlbumArt=?,
+            @Price=?,
+            @Description=?,
+            @UploadDate=?
+            """, user_id, album_title, album_art, album_price, album_description, upload_date)
+        return cursor.fetchone()
 
     def list_songs(self, album_id):
         cursor = self.conn.cursor()
@@ -171,4 +187,10 @@ class AlbumRepo():
             EXEC Soundfront.SearchForAlbum
             @Search=?
             """, search)
+        return cursor.fetchall()
+
+    def list_similar_albums(self, album_id):
+        cursor = self.conn.cursor()
+        cursor.execute(
+            'EXEC Soundfront.ListSimilarAlbums @AlbumID=?', album_id)
         return cursor.fetchall()

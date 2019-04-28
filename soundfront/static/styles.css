@@ -98,7 +98,8 @@ button:focus {
   justify-content: space-between;
 }
 
-.nav-left, .nav-right {
+.nav-left,
+.nav-right {
   display: flex;
   align-items: center;
 }
@@ -110,7 +111,6 @@ button:focus {
 .nav-cart {
   margin-right: 12px;
 }
-
 
 #logo {
   opacity: 1;
@@ -175,7 +175,7 @@ textarea {
 
 .row {
   width: 100%;
-  padding: 8px 0px;
+  padding: 12px 0px;
   color: #7d8998;
   display: flex;
   text-align: left;
@@ -183,7 +183,6 @@ textarea {
 }
 
 .col {
-  height: 40px;
   width: 10%;
   display: flex;
   align-items: center;
@@ -248,6 +247,10 @@ h2 {
   margin-left: 8px;
 }
 
+.table-similar-songs .col:nth-child(1) {
+  width: 100px;
+}
+
 h2 {
   font-size: 20px;
 }
@@ -267,9 +270,9 @@ h2 {
 }
 
 .albumidpage {
-    margin-top: 25px;
-    padding-bottom: 0px;
-    float:left;
+  margin-top: 25px;
+  padding-bottom: 0px;
+  float: left;
 }
 
 input.hidden {
@@ -305,12 +308,14 @@ input.hidden {
   display: flex;
 }
 
-.profile-left, .album-id-left {
+.profile-left,
+.album-id-left {
   margin-right: 32px;
   width: 250px;
 }
 
-.profile-right, .album-id-right {
+.profile-right,
+.album-id-right {
   flex: 1 1 auto;
 }
 
@@ -367,7 +372,6 @@ input.hidden {
   margin-left: 20%;
   font-weight: bold;
   font-size: 95%;
-
 }
 
 .album-title-bold {
@@ -413,11 +417,11 @@ input.hidden {
   margin-top: 2%;
 }
 
-.bought{
+.bought {
   margin-top: 3%;
   font-size: 92.5%;
   font-weight: bold;
-  margin-left: .8%;
+  margin-left: 0.8%;
 }
 .header-buttons {
   display: flex;
@@ -427,7 +431,7 @@ input.hidden {
   margin-left: 12px;
 }
 
-.searchbar{
+.searchbar {
   display: flex;
   justify-content: center;
 }
@@ -440,7 +444,13 @@ input.hidden {
 .resultsearch {
   margin-top: 1.5%;
 }
-.album-tags, .album-songs, .album-ratings, .ratings, .album-ratings {
+
+.album-tags,
+.album-songs,
+.album-ratings,
+.ratings,
+.similar-songs,
+.album-ratings {
   margin-top: 32px;
 }
 
