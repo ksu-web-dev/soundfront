@@ -13,7 +13,6 @@ def index():
     pagination_data = {}
     pagination_data['page'] = int(page)
     pagination_data['href'] = '/songs'
-    pagination_data['add_button_text'] = 'Add a Song'
 
     cart = []
 
@@ -130,6 +129,20 @@ class SongRepo():
 	            @Price=?,
 	            @Description=?
             """, userid, albumid, title, length, price, description)
+        return cursor.fetchone()
+
+    def create_song_with_date(self, user_id='', album_id='', title='', length='', price='', description='', upload_date=''):
+        cursor = self.conn.cursor()
+        cursor.execute(""" 
+            EXEC Soundfront.CreateSongWithDate
+                @UserID=?,
+                @AlbumID=?,
+                @Title=?,
+                @Length=?,
+                @Price=?,
+                @Description=?,
+                @UploadDate=?
+            """, user_id, album_id, title, length, price, description, upload_date)
         return cursor.fetchone()
 
     def read_song(self, songid):

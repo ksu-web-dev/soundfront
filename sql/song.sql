@@ -15,8 +15,25 @@ VALUES (@UserID, @AlbumID, @Title, @Length, @Price, @Description)
 
 GO
 
--- Soundfront.ReadSong
--- Get information of a specific Song with inputted SongID
+-- Soundfront.CreateSongWithDate
+-- Creates a song with a date passed in
+CREATE OR ALTER PROCEDURE Soundfront.CreateSongWithDate
+	@UserID INT,
+	@AlbumID INT,
+	@Title NVARCHAR(50),
+	@Length INT,
+	@Price INT,
+	@Description NVARCHAR(1024),
+	@UploadDate DATETIME
+AS
+
+INSERT Soundfront.Song(UserID, AlbumID, Title, [Length], Price, [Description], UploadDate)
+OUTPUT Inserted.SongID
+VALUES (@UserID, @AlbumID, @Title, @Length, @Price, @Description, @UploadDate)
+
+GO
+
+-- Read
 CREATE OR ALTER PROCEDURE Soundfront.ReadSong
 	@SongID INT
 AS
@@ -71,12 +88,15 @@ CREATE OR ALTER PROCEDURE Soundfront.GetTopRatedSongs
 	@TimeFrameInDays INT
 AS
 SELECT TOP 5
-	S.SongID, U.DisplayName, S.Title, S.Price, AVG(SR.Rating) AS "Average Rating", S.UploadDate
+	S.SongID, S.UserID, S.Title, S.[Length],
+	S.UploadDate, S.Price, S.[Description], U.DisplayName AS Artist,
+	A.Title AS AlbumTitle, AVG(SR.Rating) AS "Average Rating"
 FROM Soundfront.SongRating SR
     INNER JOIN Soundfront.Song S ON S.SongID = SR.SongID
+    LEFT JOIN Soundfront.Album A ON A.AlbumID = S.AlbumID
     INNER JOIN Soundfront.[User] U ON U.UserID = S.UserID
 WHERE DATEDIFF(DAY, S.UploadDate, SYSDATETIMEOFFSET()) < @TimeFrameInDays
-GROUP BY S.SongID, U.DisplayName, S.Title, S.Price, S.UploadDate
+GROUP BY S.SongID, S.UserID, S.Title, S.[Length], S.UploadDate, S.Price, S.[Description], U.DisplayName, A.Title
 ORDER BY AVG(SR.Rating) DESC, S.Price DESC
 
 GO
