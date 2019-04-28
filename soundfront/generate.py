@@ -35,7 +35,7 @@ if len(sys.argv) > 1 and sys.argv[1] == '--real':
 
         reviewers.append(user)
 
-    artists = ['Adult Mom', 'Kanye West', 'Death Cab For Cutie', 'Flume', 'Porter Robinson', 'Lomelda', 'Madlib', 'The Microphones', 'Tame Impala', 'Mount Eerie', 'Free Cake For Every Creature', 'Justice', 'Daft Punk', 'Massive Attack']
+    artists = ['Adult Mom', 'Kanye West', 'Death Cab For Cutie', 'Flume', 'Porter Robinson', 'Lomelda', 'Madlib', 'The Microphones', 'Tame Impala', 'Mount Eerie', 'Free Cake For Every Creature']
 
     for artist in artists:
 

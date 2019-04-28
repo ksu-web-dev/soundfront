@@ -88,7 +88,8 @@ WITH TagCountCTE(SongID, SharedTagCount) AS (
     GROUP BY SST.SongID
     ORDER BY COUNT(*) DESC
 )
-SELECT TC.SongID, T.Name
+SELECT TC.SongID, T.Name, S.Title, T.TagID
 FROM TagCountCTE TC
     INNER JOIN Soundfront.SongTag ST ON TC.SongID = ST.SongID
     INNER JOIN Soundfront.Tag T ON T.TagID = ST.TagID
+		INNER JOIN Soundfront.Song S ON S.SongID = TC.SongID

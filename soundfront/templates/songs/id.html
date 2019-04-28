@@ -1,5 +1,7 @@
 {% extends "layout.html" %} {% block page %}
 {% from "ratings.html" import ratings_table %}
+{% from "songs/table.html" import songs_table %}
+{% from "tags.html" import tag_list %}
 
 <div class="header">
   <div class="breadcrumbs">
@@ -51,6 +53,33 @@
 	{% endfor %}
 </div>
 
-{{ ratings_table(ratings) }}
+
+<div class="similar-songs">
+  <h2>Similar Songs</h2>
+<table class="table table-similar-songs">
+  <tr class="header-row row">
+    <th class="header-col col">Title</th>
+    <th class="header-col col">Similar Tags</th>
+  </tr>
+  {% for song_id in similar_songs %}
+  <tr class="row item-row">
+    <th class="col">
+      <a href="">{{ similar_songs[song_id].Title }}</a>
+    </th>
+    <th class="col">
+      {{ tag_list(similar_songs[song_id]['tags']) }}
+    </th>
+  </tr>
+  {% endfor %}
+</table>
+</div>
+
+
+<div class="similar-songs">
+  <h2>Ratings</h2>
+  {{ ratings_table(ratings) }}
+</div>
+
+
 
 {% endblock %}
