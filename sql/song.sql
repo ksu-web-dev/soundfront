@@ -1,4 +1,5 @@
--- Insert
+-- Soundfront.InsertSong
+-- Insert Song into datbase
 CREATE OR ALTER PROCEDURE Soundfront.InsertSong
 	@UserID INT,
 	@AlbumID INT,
@@ -14,7 +15,8 @@ VALUES (@UserID, @AlbumID, @Title, @Length, @Price, @Description)
 
 GO
 
--- Read
+-- Soundfront.ReadSong
+-- Get information of a specific Song with inputted SongID
 CREATE OR ALTER PROCEDURE Soundfront.ReadSong
 	@SongID INT
 AS
@@ -29,7 +31,8 @@ WHERE S.SongID = @SongID
 
 GO
 
--- List
+-- Soundfront.ListSong
+-- List Songs in the database (includes pagination parameters)
 CREATE OR ALTER PROCEDURE Soundfront.ListSong
 	@Page INT,
 	@PageSize INT
@@ -45,7 +48,8 @@ ORDER BY S.UploadDate DESC
 OFFSET ((@Page * @PageSize) - @PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY;
 GO
 
--- List songs by user
+-- Soundfront.ListSongsByUser
+-- List songs by user with inputted UserID
 CREATE OR ALTER PROCEDURE Soundfront.ListSongsByUser
 	@UserID INT
 AS
@@ -77,7 +81,8 @@ ORDER BY AVG(SR.Rating) DESC, S.Price DESC
 
 GO
 
--- Search for song
+-- Soundfront.SearchForSong
+-- Search for song with inputted search string
 CREATE OR ALTER PROCEDURE Soundfront.SearchForSong
 	@Search NVARCHAR(100)
 AS
@@ -92,6 +97,8 @@ WHERE S.Title LIKE @Search
 ORDER BY S.Title
 GO
 
+-- Soundfront.ListSimilarSongs
+-- Lists similar songs to the inputted SongID based on similar tags
 CREATE OR ALTER PROCEDURE Soundfront.ListSimilarSongs
 	@SongID INT
 AS

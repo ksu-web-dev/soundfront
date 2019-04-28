@@ -1,4 +1,5 @@
--- Create (Insert) Cart
+-- Soundfront.CreateCart
+-- Create (Insert) Cart into database
 CREATE OR ALTER PROCEDURE Soundfront.CreateCart
 	@UserID INT
 AS
@@ -8,6 +9,8 @@ VALUES (@UserID)
 
 GO
 
+-- Soundfront.GetCart
+-- Gets the CartID of the inputted UserID
 CREATE OR ALTER PROCEDURE Soundfront.GetCart
 	@UserID INT
 AS
@@ -17,7 +20,8 @@ FROM Soundfront.Cart C
 WHERE C.UserID = @UserID
 GO
 
--- Read/Select Cart
+-- Soundfront.ListCart
+-- Lists the SongCarts and AlbumCarts of the inputted UserID
 CREATE OR ALTER PROCEDURE Soundfront.ListCart
 	@UserID INT
 AS
@@ -37,7 +41,8 @@ FROM Soundfront.AlbumCart AC
 WHERE C.UserID = @UserID
 GO
 
--- Insert (Create) SongCart
+-- Soundfront.InsertSongCart
+-- Insert (Create) SongCart into database
 CREATE OR ALTER PROCEDURE Soundfront.InsertSongCart
 	@SongID INT,
 	@CartID INT
@@ -47,7 +52,8 @@ INSERT Soundfront.SongCart(SongID, CartID)
 VALUES (@SongID, @CartID)
 GO
 
--- Delete SongCart
+-- Soundfront.DeleteSongCart
+-- Delete SongCart from database
 CREATE OR ALTER PROCEDURE Soundfront.DeleteSongCart
 	@CartID INT
 AS
@@ -57,7 +63,8 @@ WHERE CartID = CartID
 
 GO
 
--- Read SongCart
+-- Soundfront.ReadSongCart
+-- Get information of SongCart from inputted SongCartID
 CREATE OR ALTER PROCEDURE Soundfront.ReadSongCart
 	@SongCartID INT
 AS
@@ -68,7 +75,8 @@ WHERE S.SongCartID = @SongCartID
 
 GO
 
--- List SongCarts
+-- Soundfront.ListSongCart
+-- List SongCarts in database (includes pagination parameters)
 CREATE OR ALTER PROCEDURE Soundfront.ListSongCart
 	@Page INT,
 	@PageSize INT
@@ -81,7 +89,8 @@ OFFSET ((@Page * @PageSize) - @PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY;
 
 GO
 
--- Insert (Create) AlbumCart
+-- Soundfront.InsertAlbumCart
+-- Insert (Create) AlbumCart into database
 CREATE OR ALTER PROCEDURE Soundfront.InsertAlbumCart
 	@AlbumID INT,
 	@CartID INT
@@ -92,7 +101,8 @@ VALUES (@AlbumID, @CartID)
 
 GO
 
--- Delete AlbumCart
+-- Soundfront.DeleteAlbumCart
+-- Delete AlbumCart from database
 CREATE OR ALTER PROCEDURE Soundfront.DeleteAlbumCart
 	@CartID INT
 AS
@@ -102,7 +112,8 @@ WHERE CartID = @CartID
 
 GO
 
--- Read SongCart
+-- Soundfront.ReadAlbumCart
+-- Get AlbumCart information from database with inputted AlbumCartID
 CREATE OR ALTER PROCEDURE Soundfront.ReadAlbumCart
 	@AlbumCartID INT
 AS
@@ -113,7 +124,8 @@ WHERE A.AlbumCartID = @AlbumCartID
 
 GO
 
--- List SongCarts
+-- Soundfront.ListAlbumCart
+-- List SongCarts in database (includes pagination parameters)
 CREATE OR ALTER PROCEDURE Soundfront.ListAlbumCart
 	@Page INT,
 	@PageSize INT
@@ -126,6 +138,8 @@ OFFSET ((@Page * @PageSize) - @PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY;
 
 GO
 
+-- Soundfront.CartTotalPrice
+-- Gets the total price of all the items in both the SongCart and AlbumCart
 CREATE OR ALTER PROCEDURE Soundfront.CartTotalPrice
 	@UserID INT
 AS

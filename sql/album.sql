@@ -37,6 +37,7 @@ END
 
 GO
 
+-- Soundfront.GetAlbum
 -- Get a single Album given its ID
 CREATE OR ALTER PROCEDURE Soundfront.GetAlbum
 	@AlbumID INT
@@ -48,6 +49,7 @@ FROM Soundfront.Album A
 WHERE A.AlbumID = @AlbumID
 GO
 
+-- Soundfront.DeleteAlbum
 -- Deletes an album
 CREATE OR ALTER PROCEDURE Soundfront.DeleteAlbum
 	@AlbumID INT
@@ -57,6 +59,7 @@ DELETE FROM Soundfront.Album
 WHERE AlbumID = @AlbumID
 GO
 
+-- Soundfront.ListAlbumSongs
 -- Lists all Songs from an Album
 CREATE OR ALTER PROCEDURE Soundfront.ListAlbumSongs
 	@AlbumID INT
@@ -87,6 +90,7 @@ ORDER BY AVG(AR.Rating) DESC, A.Price DESC
 
 GO
 
+-- Soundfront.ListAlbums
 -- Lists Albums ordered by most recent
 CREATE OR ALTER PROCEDURE Soundfront.ListAlbums
 	@Page INT,
@@ -103,6 +107,7 @@ END
 
 GO
 
+-- Soundfront.ListAlbumsByUser
 -- Lists all Albums by a User
 CREATE OR ALTER PROCEDURE Soundfront.ListAlbumsByUser
 	@UserID INT
@@ -114,6 +119,7 @@ WHERE A.UserID = @UserID
 ORDER BY A.UploadDate DESC;
 GO
 
+-- Soundfront.SearchForAlbum
 -- Search for album
 CREATE OR ALTER PROCEDURE Soundfront.SearchForAlbum
 	@Search NVARCHAR(100)
@@ -125,7 +131,8 @@ WHERE A.Title LIKE @Search
 ORDER BY A.Title
 GO
 
-
+-- Soundfront.ListSimilarAlbums
+-- Lists albums with similar Tags
 CREATE OR ALTER PROCEDURE Soundfront.ListSimilarAlbums
 	@AlbumID INT
 AS
