@@ -1,18 +1,40 @@
--- Creates an Album
+-- Soundfront.CreateAlbum
+--	Creates an Album
 CREATE OR ALTER PROCEDURE Soundfront.CreateAlbum
-	@AlbumUserId INT,
-	@AlbumTitle NVARCHAR(50),
-	@AlbumAlbumArt NVARCHAR(256),
-	@AlbumPrice INT,
-	@AlbumDescription NVARCHAR(1024)
+	@UserId INT,
+	@Title NVARCHAR(50),
+	@AlbumArt NVARCHAR(256),
+	@Price INT,
+	@Description NVARCHAR(1024)
 AS
 BEGIN
 	SET NOCOUNT ON
 	INSERT Soundfront.Album(UserID, Title, AlbumArt, Price, [Description])
 	OUTPUT Inserted.AlbumID, Inserted.Title, Inserted.AlbumArt, Inserted.Price, Inserted.Description, Inserted.UserID
 	VALUES
-		(@AlbumUserId, @AlbumTitle, @AlbumAlbumArt, @AlbumPrice, @AlbumDescription)
+		(@UserId, @Title, @AlbumArt, @Price, @Description)
 END
+
+GO
+
+-- Soundfront.CreateAlbumWithDate
+-- 	Creates an Album with a specified UploadDate
+CREATE OR ALTER PROCEDURE Soundfront.CreateAlbumWithDate
+	@UserID INT,
+	@Title NVARCHAR(50),
+	@AlbumArt NVARCHAR(256),
+	@Price INT,
+	@Description NVARCHAR(1024),
+	@UploadDate DATETIME
+AS
+BEGIN
+	SET NOCOUNT ON
+	INSERT Soundfront.Album(UserID, Title, AlbumArt, Price, [Description], UploadDate)	
+	OUTPUT Inserted.AlbumID, Inserted.Title, Inserted.AlbumArt, Inserted.Price, Inserted.Description, Inserted.UploadDate, Inserted.UserID
+	VALUES
+		(@UserID, @Title, @AlbumArt, @Price, @Description, @UploadDate)
+END
+
 GO
 
 -- Get a single Album given its ID
@@ -48,8 +70,8 @@ WHERE A.AlbumID = @AlbumID
 ORDER BY S.SongID
 GO
 
--- Get Top by Average Rating
---	-> "select the top 5 albums ordered by hightest average rating"
+-- Soundfront.GetTopRatedAlbums
+--	Gets the top 5 highest rated album in the past @TimeFrameInDays days.
 CREATE OR ALTER PROCEDURE Soundfront.GetTopRatedAlbums
 	@TimeFrameInDays INT
 AS
@@ -59,7 +81,7 @@ SELECT TOP 5
 FROM Soundfront.AlbumRating AR
     INNER JOIN Soundfront.Album A ON A.AlbumID = AR.AlbumID
     INNER JOIN Soundfront.[User] U ON U.UserID = A.UserID
-WHERE A.UploadDate < DATEADD(DAY, @TimeFrameInDays, SYSDATETIMEOFFSET())
+WHERE DATEDIFF(DAY, A.UploadDate, SYSDATETIMEOFFSET()) < @TimeFrameInDays
 GROUP BY A.AlbumID, U.DisplayName, A.Title, A.AlbumArt, A.Price
 ORDER BY AVG(AR.Rating) DESC, A.Price DESC
 

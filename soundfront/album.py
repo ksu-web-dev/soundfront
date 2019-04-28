@@ -99,20 +99,27 @@ class AlbumRepo():
         cursor = self.conn.cursor()
         cursor.execute("""
         EXEC Soundfront.CreateAlbum
-            @AlbumUserId=?,
-            @AlbumTitle=?,
-            @AlbumAlbumArt=?,
-            @AlbumPrice=?,
-            @AlbumDescription=?
+            @UserId=?,
+            @Title=?,
+            @AlbumArt=?,
+            @Price=?,
+            @Description=?
             """, user_id, album_title, album_art, album_price, album_description)
 
         return cursor.fetchone()
 
-    # def create_album_with_date(self, user_id='', album_title='', album_art='', album_price='', album_description='', upload_date=''):
-    #     cursor = self.conn.cursor()
-    #     cursor.execute("""
-    #         """, user_id, album_title, album_art, album_price, album_description, upload_date)
-    #     return cursor.fetchone()
+    def create_album_with_date(self, user_id='', album_title='', album_art='', album_price='', album_description='', upload_date=''):
+        cursor = self.conn.cursor()
+        cursor.execute("""
+        EXEC Soundfront.CreateAlbumWithDate
+            @UserID=?,
+            @Title=?,
+            @AlbumArt=?,
+            @Price=?,
+            @Description=?,
+            @UploadDate=?
+            """, user_id, album_title, album_art, album_price, album_description, upload_date)
+        return cursor.fetchone()
 
     def list_songs(self, album_id):
         cursor = self.conn.cursor()

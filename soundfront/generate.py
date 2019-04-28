@@ -64,11 +64,14 @@ if len(sys.argv) > 1 and sys.argv[1] == '--real':
             if album_name == '(null)':
                 continue
 
-            album = album_repo.create_album(
+            time_frames = ["-1y", "-30d", "-7d", "-1d"]
+            album = album_repo.create_album_with_date(
                 user_id=user.UserID,
                 album_title=album_name,
                 album_art=album_art,
-                album_price=random.uniform(0.00, 9.99)
+                album_price=random.uniform(0.00, 9.99),
+                upload_date=fake.date_time_between(start_date=random.choice(time_frames), end_date="now", tzinfo=None)
+
             )
 
             created_albums.append(album)
