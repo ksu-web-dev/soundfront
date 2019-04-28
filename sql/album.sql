@@ -4,7 +4,7 @@ CREATE OR ALTER PROCEDURE Soundfront.CreateAlbum
 	@UserId INT,
 	@Title NVARCHAR(50),
 	@AlbumArt NVARCHAR(256),
-	@Price INT,
+	@Price DECIMAL,
 	@Description NVARCHAR(1024)
 AS
 BEGIN
@@ -23,13 +23,13 @@ CREATE OR ALTER PROCEDURE Soundfront.CreateAlbumWithDate
 	@UserID INT,
 	@Title NVARCHAR(50),
 	@AlbumArt NVARCHAR(256),
-	@Price INT,
+	@Price DECIMAL,
 	@Description NVARCHAR(1024),
 	@UploadDate DATETIME
 AS
 BEGIN
 	SET NOCOUNT ON
-	INSERT Soundfront.Album(UserID, Title, AlbumArt, Price, [Description], UploadDate)	
+	INSERT Soundfront.Album(UserID, Title, AlbumArt, Price, [Description], UploadDate)
 	OUTPUT Inserted.AlbumID, Inserted.Title, Inserted.AlbumArt, Inserted.Price, Inserted.Description, Inserted.UploadDate, Inserted.UserID
 	VALUES
 		(@UserID, @Title, @AlbumArt, @Price, @Description, @UploadDate)
@@ -53,7 +53,7 @@ CREATE OR ALTER PROCEDURE Soundfront.DeleteAlbum
 	@AlbumID INT
 AS
 
-DELETE FROM Soundfront.Album 
+DELETE FROM Soundfront.Album
 WHERE AlbumID = @AlbumID
 GO
 
@@ -139,9 +139,10 @@ WITH TagCountCTE(AlbumID, SharedTagCount) AS (
     GROUP BY SS.AlbumID
     ORDER BY COUNT(*) DESC
 )
-SELECT DISTINCT S.AlbumID, T.Name, TC.SharedTagCount
+SELECT DISTINCT S.AlbumID, T.Name, TC.SharedTagCount, A.Title, A.AlbumID, T.TagID
 FROM TagCountCTE TC
     INNER JOIN Soundfront.Song S ON S.AlbumID = TC.AlbumID
     INNER JOIN Soundfront.SongTag ST ON ST.SongID = S.SongID
     INNER JOIN Soundfront.Tag T on T.TagID = ST.TagID
+		INNER JOIN Soundfront.Album A ON S.AlbumID = A.AlbumID
 ORDER BY TC.SharedTagCount DESC

@@ -4,7 +4,7 @@ CREATE OR ALTER PROCEDURE Soundfront.InsertSong
 	@AlbumID INT,
 	@Title NVARCHAR(50),
 	@Length INT,
-	@Price INT,
+	@Price DECIMAL,
 	@Description NVARCHAR(1024)
 AS
 
@@ -101,7 +101,7 @@ CREATE OR ALTER PROCEDURE Soundfront.SearchForSong
 	@Search NVARCHAR(100)
 AS
 
-SELECT S.SongID, S.UserID, S.AlbumID, S.Title, S.[Length],
+SELECT TOP(20) S.SongID, S.UserID, S.AlbumID, S.Title, S.[Length],
 	S.UploadDate, S.Price, S.[Description], U.DisplayName as Artist,
 	A.Title as AlbumTitle
 FROM Soundfront.Song S
@@ -123,7 +123,8 @@ WITH TagCountCTE(SongID, SharedTagCount) AS (
     GROUP BY SST.SongID
     ORDER BY COUNT(*) DESC
 )
-SELECT TC.SongID, T.Name
+SELECT TC.SongID, T.Name, S.Title, T.TagID
 FROM TagCountCTE TC
     INNER JOIN Soundfront.SongTag ST ON TC.SongID = ST.SongID
     INNER JOIN Soundfront.Tag T ON T.TagID = ST.TagID
+		INNER JOIN Soundfront.Song S ON S.SongID = TC.SongID

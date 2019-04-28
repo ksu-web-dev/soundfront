@@ -60,13 +60,33 @@
 			{{ song_table(album_songs, cart) }}
 		</div>
 
+		<div class="similar-songs">
+			<h2>Similar Albums</h2>
+			<table class="table table-similar-songs">
+			<tr class="header-row row">
+				<th class="header-col col">Title</th>
+				<th class="header-col col">Similar Tags</th>
+			</tr>
+			{% for album_id in similar_albums %}
+			<tr class="row item-row">
+				<th class="col">
+					<a href="">{{ similar_albums[album_id].Title }}</a>
+				</th>
+				<th class="col">
+					{{ tag_list(similar_albums[album_id]['tags']) }}
+				</th>
+			</tr>
+			{% endfor %}
+		</table>
+
 		<div class="album-ratings">
 			<h2>Ratings</h2>
 			{{ ratings_table(ratings) }}
 		</div>
-
-
 	</div>
+
+
+</div>
 </div>
 
 

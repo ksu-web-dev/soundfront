@@ -40,7 +40,17 @@ def get(song_id):
 
     ratings = repo.list_reviews(song.SongID, page, 10)
     tags = repo.list_tags(song.SongID)
-    return render_template('songs/id.html', song=song, ratings=ratings, page=int(page), tags=tags)
+    similar_songs_result = repo.list_similar_songs(song.SongID)
+    similar_songs = {}
+
+    for s in similar_songs_result:
+        if s.SongID not in similar_songs:
+            similar_songs[s.SongID] = { 'SongID': s.SongID, 'tags': [], 'Title': s.Title }
+
+        similar_songs[s.SongID]['tags'].append({ 'TagID': s.TagID, 'Name': s.Name })
+
+    return render_template('songs/id.html', song=song, ratings=ratings,
+                           page=int(page), tags=tags, similar_songs=similar_songs)
 
 
 @bp.route('/<song_id>/rate', methods=['GET', 'POST'])
@@ -183,4 +193,9 @@ class SongRepo():
             EXEC Soundfront.SearchForSong
                 @Search=?
         """, search)
+        return cursor.fetchall()
+
+    def list_similar_songs(self, song_id):
+        cursor = self.conn.cursor()
+        cursor.execute('EXEC Soundfront.ListSimilarSongs @SongID=?', song_id)
         return cursor.fetchall()

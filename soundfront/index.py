@@ -56,11 +56,14 @@ def index():
 def search():
 	album_repo = current_app.config['album']
 	song_repo = current_app.config['song']
+	user_repo = current_app.config['user']
 
-	search = request.form['searchform'] + '%'
+	searchinput = request.form['searchform'] + '%'
+	search =  '%' + searchinput
 
 	albums = album_repo.searchfor_album(search)
 	songs = song_repo.search_for_song(search)
+	users = user_repo.search_user(search)
 
-	searchtext = search[:-1]
-	return render_template('search.html', albums=albums, songs=songs, searchtext=searchtext)
+	searchtext = searchinput[:-1]
+	return render_template('search.html', albums=albums, songs=songs, searchtext=searchtext, users=users)

@@ -43,7 +43,7 @@ GO
 
 CREATE OR ALTER PROCEDURE Soundfront.RemoveSongTag
     @SongTagID INT
-AS 
+AS
     DELETE FROM Soundfront.SongTag
     WHERE SongTagID = @SongTagID;
 GO
@@ -92,7 +92,7 @@ GO
 
 CREATE OR ALTER PROCEDURE Soundfront.ListSongTags
 	@SongID INT
-AS 
+AS
 
 SELECT T.Name
 FROM Soundfront.SongTag ST
@@ -102,9 +102,9 @@ GO
 
 CREATE OR ALTER PROCEDURE Soundfront.ListAlbumTags
 	@AlbumID INT
-AS 
+AS
 
-SELECT DISTINCT T.Name
+SELECT DISTINCT T.Name, T.TagID
 FROM Soundfront.SongTag ST
     INNER JOIN Soundfront.Tag T ON T.TagID = ST.TagID
     INNER JOIN Soundfront.Song S ON S.SongID = ST.SongID

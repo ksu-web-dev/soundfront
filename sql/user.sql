@@ -106,18 +106,18 @@ WITH SourceCTE(UserID, DisplayName, AverageRating)
 AS
 (
     SELECT TOP (@Count)
-        U.UserID, U.DisplayName, 
+        U.UserID, U.DisplayName,
         AVG(AR.Rating) AS AverageRating
-    FROM Soundfront.[User] U 
+    FROM Soundfront.[User] U
     INNER JOIN Soundfront.AlbumRating AR ON AR.UserID = U.UserID
     GROUP BY U.UserID, U.DisplayName
 
     UNION
 
     SELECT TOP (@Count)
-        U.UserID, U.DisplayName, 
+        U.UserID, U.DisplayName,
         AVG(SR.Rating) AS AverageRating
-    FROM Soundfront.[User] U 
+    FROM Soundfront.[User] U
         INNER JOIN Soundfront.SongRating SR ON SR.UserID = U.UserID
     GROUP BY U.UserID, U.DisplayName
 )
@@ -126,4 +126,12 @@ SELECT TOP (@Count)
 FROM SourceCTE S
 GROUP BY S.UserID, S.DisplayName
 ORDER BY AverageRating ASC
+GO
 
+CREATE OR ALTER PROCEDURE Soundfront.SearchUser
+  @Search NVARCHAR(100)
+AS
+
+SELECT U.UserID, U.DisplayName
+FROM Soundfront.[User] U
+WHERE U.DisplayName LIKE @Search

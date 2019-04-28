@@ -35,7 +35,8 @@ if len(sys.argv) > 1 and sys.argv[1] == '--real':
 
         reviewers.append(user)
 
-    artists = ['Adult Mom', 'Kanye West', 'Death Cab For Cutie', 'Flume', 'Porter Robinson', 'Lomelda', 'Madlib', 'The Microphones', 'Tame Impala', 'Mount Eerie', 'Free Cake For Every Creature', 'Justice', 'Daft Punk', 'Massive Attack']
+    artists = ['Adult Mom', 'Kanye West', 'Death Cab For Cutie', 'Flume', 'Porter Robinson', 'Lomelda', 'Madlib', 'The Microphones', 'Tame Impala', 'Mount Eerie', 'Free Cake For Every Creature', 'Justice', 'Daft Punk', 'Massive Attack', 'Pinegrove', 'Lucy Dacus', 'Weyes Blood', 'American Football', 'LCD Soundsystem', 'The Postal Service', 'Mitski', 'Ben Gibbard', 'Radiohead', 'Father John Misty', 'Yo La Tengo', 'The War on Drugs',
+    'Panucci\'s Pizza', 'Daniel Caesar', 'Sufjan Stevens', 'Stars', 'Frankie Cosmos', 'Hop Along']
 
     for artist in artists:
 
@@ -50,7 +51,7 @@ if len(sys.argv) > 1 and sys.argv[1] == '--real':
         api_album_data = requests.get(album_url).content
         parsed_albums = json.loads(api_album_data)
         albums = parsed_albums['topalbums']['album']
-        
+
         created_albums = []
 
         num_albums = len(albums)
@@ -88,7 +89,7 @@ if len(sys.argv) > 1 and sys.argv[1] == '--real':
 
             songs = parsed_songs['album']['tracks']['track']
             song_tags = parsed_songs['album']['tags']['tag']
-            
+
             if len(songs) == 0:
                 # remove the album since it had no songs
                 album_repo.delete_album(album_id=album.AlbumID)
@@ -122,13 +123,13 @@ if len(sys.argv) > 1 and sys.argv[1] == '--real':
                 except:
                     try:
                         tag = tag_repo.read_tag_by_name(song_tag['name'])
-                        if tag is None: 
+                        if tag is None:
                             continue
                         created_tags.append(tag)
                     except:
                         pass
 
-            # TODO: Currently this makes it so songs get aribrarily tagged with the last 15 
+            # TODO: Currently this makes it so songs get aribrarily tagged with the last 15
             #       tags that were entered whenever we would otherwise be entering 0 tags. We should
             #       change this so that it is adding actually relevant tags to songs in the album
             if len(created_tags) == 0:
@@ -170,7 +171,7 @@ if len(sys.argv) > 1 and sys.argv[1] == '--real':
                 # create some "bad" ratings for this song (between 1 and 5 ratings)
                 for n in range(last_reviewer+1, random.randint(last_reviewer+2, last_reviewer+6)):
                     song_rating = song_repo.rate_song(
-                        user_id=reviewers[n].UserID, 
+                        user_id=reviewers[n].UserID,
                         song_id=created_song.SongID,
                         rating=random.randint(0, 5),
                         review_text=fake.sentence(nb_words=random.randint(5, 15))

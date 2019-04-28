@@ -43,5 +43,23 @@
   {{ song_table(songs, cart) }}
 </div>
 
+<table class="table">
+  <tr class="header-row row" colspan="2">
+    <th class="header-col col">Users</th>
+    <th class="header-col col"></th>
+  </tr>
+
+  {% for user in users %}
+  <tr class="row">
+    <td class="col">
+      <a href="/users/{{ user.UserID }}">
+        {{ user.DisplayName }}
+      </a>
+    </td>
+    <td class="col"></td>
+  </tr>
+  {% endfor %}
+
+</table>
 
 {% endblock %}
