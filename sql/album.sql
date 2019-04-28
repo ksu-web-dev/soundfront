@@ -23,7 +23,7 @@ CREATE OR ALTER PROCEDURE Soundfront.CreateAlbumWithDate
 	@UserID INT,
 	@Title NVARCHAR(50),
 	@AlbumArt NVARCHAR(256),
-	@Price INT,
+	@Price DECIMAL,
 	@Description NVARCHAR(1024),
 	@UploadDate DATETIME
 AS
