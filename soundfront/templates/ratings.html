@@ -12,7 +12,7 @@
 
         {% for rating in ratings %}
           <tr class="row">
-            <td class="col">{{ rating.User }}</td>
+            <td class="col"><a href="/users/{{ rating.UserID }}">{{ rating.User }}</a></td>
             <td class="col">{{ rating.Rating }}</td>
             <td class="col">{{ rating.ReviewText }}</td>
           </tr>
