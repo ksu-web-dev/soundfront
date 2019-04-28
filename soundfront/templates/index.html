@@ -1,3 +1,4 @@
+{% from "songs/table.html" import song_table %}
 {% extends "layout.html" %}
 {% block page %}
 
@@ -18,28 +19,29 @@
   </form>
   </div>
 
+  	<!-- Top Rated Albums -->
  	<div id="top-rated">
  		<div class="top">
  			<div class="top-name">Top Rated Albums</div>
  			<div class="top-select">
- 				<input type="checkbox" name="time-frame" id="year" class="top-select-item"/>
- 				<label class="top-select-item" for="year">
- 					<a href="/?frame=year">1 year</a>
+ 				<input type="checkbox" name="album-time-frame" id="album-year" class="top-select-item"/>
+ 				<label class="top-select-item" for="album-year">
+ 					<a id="album-year-link" href="/?album_frame=year&song_frame={{song_frame}}">1 year</a>
  				</label>
 
- 				<input type="checkbox" name="time-frame" id="month" class="top-select-item"/>
- 				<label class="top-select-item" for="month">
- 					<a href="/?frame=month">30 days</a>
+ 				<input type="checkbox" name="album-time-frame" id="album-month" class="top-select-item"/>
+ 				<label class="top-select-item" for="album-month">
+ 					<a id="album-month-link" href="/?album_frame=month&song_frame={{song_frame}}">30 days</a>
  				</label>
 
- 				<input type="checkbox" name="time-frame" id="week" class="top-select-item"/>
- 				<label class="top-select-item" for="week">
- 					<a href="/?frame=week">7 days</a>
+ 				<input type="checkbox" name="album-time-frame" id="album-week" class="top-select-item"/>
+ 				<label class="top-select-item" for="album-week">
+ 					<a id="album-week-link" href="/?album_frame=week&song_frame={{song_frame}}">7 days</a>
  				</label>
 
- 				<input type="checkbox" name="time-frame" id="day" class="top-select-item"/>
- 				<label class="top-select-item" for="day">
- 					<a href="/?frame=day">24 hours</a>
+ 				<input type="checkbox" name="album-time-frame" id="album-day" class="top-select-item"/>
+ 				<label class="top-select-item" for="album-day">
+ 					<a id="album-day-link" href="/?album_frame=day&song_frame={{song_frame}}">24 hours</a>
  				</label>
  			</div>
  		</div>
@@ -57,35 +59,85 @@
 		</div>
  	</div>
 
+ 	<!-- Top Rated Songs -->
+ 	<div id="top-rated">
+ 		<div class="top">
+ 			<div class="top-name">Top Rated Songs</div>
+ 			<div class="top-select">
+ 				<input type="checkbox" name="song-time-frame" id="song-year" class="top-select-item"/>
+ 				<label class="top-select-item" for="song-year">
+ 					<a id="song-year-link" href="/?album_frame={{album_frame}}&song_frame=year">1 year</a>
+ 				</label>
+
+ 				<input type="checkbox" name="song-time-frame" id="song-month" class="top-select-item"/>
+ 				<label class="top-select-item" for="song-month">
+ 					<a id="song-month-link" href="/?album_frame={{album_frame}}&song_frame=month">30 days</a>
+ 				</label>
+
+ 				<input type="checkbox" name="song-time-frame" id="song-week" class="top-select-item"/>
+ 				<label class="top-select-item" for="song-week">
+ 					<a id="song-week-link" href="/?album_frame={{album_frame}}&song_frame=week">7 days</a>
+ 				</label>
+
+ 				<input type="checkbox" name="song-time-frame" id="song-day" class="top-select-item"/>
+ 				<label class="top-select-item" for="song-day">
+ 					<a id="song-day-link" href="/?album_frame={{album_frame}}&song_frame=day">24 hours</a>
+ 				</label>
+ 			</div>
+ 		</div>
+ 		{{ song_table(top_rated_songs, cart) }}
+ 	</div>
+
  	<!-- Import JQuery -->
  	<script src="https://code.jquery.com/jquery-3.4.0.slim.min.js"
  			integrity="sha256-ZaXnYkHGqIhqTbJ6MB4l9Frs/r7U4jlx7ir8PJYBqbI="
  			crossorigin="anonymous"></script>
  	<script type="text/javascript">
- 		var url = window.location.href;
- 		var urlpieces = url.split("?");
- 		var lastparam = urlpieces[urlpieces.length - 1].split("=")[1];
- 		switch (lastparam) {
+ 		var url_string = window.location.href;
+ 		var url = new URL(url_string);
+ 		
+ 		var album_frame = url.searchParams.get("album_frame") || "year";
+ 		var song_frame = url.searchParams.get("song_frame");
+
+ 		switch (album_frame) {
  			case "year":
- 				$('#year').prop('checked', true);
+ 				$('#album-year').prop('checked', true);
  				break;
  			case "month":
- 				$('#month').prop('checked', true);
+ 				$('#album-month').prop('checked', true);
  				break;
  			case "week":
- 				$('#week').prop('checked', true);
+ 				$('#album-week').prop('checked', true);
  				break;
  			case "day":
- 				$('#day').prop('checked', true);
+ 				$('#album-day').prop('checked', true);
  				break;
  			default:
- 				$('#year').prop('checked', true);
+ 				$('#album-year').prop('checked', true);
  				break;
  		}
 
- 		$(".top-select-item").change(function() {
+ 		switch (song_frame) {
+ 			case "year":
+ 				$('#song-year').prop('checked', true);
+ 				break;
+ 			case "month":
+ 				$('#song-month').prop('checked', true);
+ 				break;
+ 			case "week":
+ 				$('#song-week').prop('checked', true);
+ 				break;
+ 			case "day":
+ 				$('#song-day').prop('checked', true);
+ 				break;
+ 			default:
+ 				$('#song-year').prop('checked', true);
+ 				break;
+ 		}
 
-			$(".top-select-item").prop('checked',false);
+
+ 		$("input.top-select-item").change(function() {
+			$("input.top-select-item").prop('checked',false);
 			$(this).prop('checked',true);
 		});
  	</script>

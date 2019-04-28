@@ -140,11 +140,13 @@ if len(sys.argv) > 1 and sys.argv[1] == '--real':
                 song_length = song['duration']
 
                 # create the song
-                created_song = song_repo.insert_song(
-                    userid=user.UserID,
-                    albumid=album.AlbumID,
+                created_song = song_repo.create_song_with_date(
+                    user_id=user.UserID,
+                    album_id=album.AlbumID,
                     title=song_name,
-                    length=song_length
+                    length=song_length,
+                    price=0.99,
+                    upload_date=fake.date_time_between(start_date=random.choice(time_frames), end_date="now", tzinfo=None)
                 )
 
                 # create a song_tag for every tag that was found for the album
