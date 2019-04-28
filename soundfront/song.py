@@ -166,6 +166,14 @@ class SongRepo():
         """, user_id, song_id, rating, review_text)
         return cursor.fetchone()
 
+    def get_top_rated_songs(self, frame):
+        cursor = self.conn.cursor()
+        cursor.execute("""
+            EXEC Soundfront.GetTopratedSongs
+                @TimeFrameInDays=?
+            """, frame)
+        return cursor.fetchall()
+
     def search_for_song(self, search):
         cursor = self.conn.cursor()
         cursor.execute("""

@@ -61,6 +61,22 @@ ORDER BY S.UploadDate DESC;
 
 GO
 
+-- Soundfront.GetTopRatedSongs
+-- 	Gets the 5 best reviewed songs within the past number of specified days.
+CREATE OR ALTER PROCEDURE Soundfront.GetTopRatedSongs
+	@TimeFrameInDays INT
+AS
+SELECT TOP 5
+	S.SongID, U.DisplayName, S.Title, S.Price, AVG(SR.Rating) AS "Average Rating", S.UploadDate
+FROM Soundfront.SongRating SR
+    INNER JOIN Soundfront.Song S ON S.SongID = SR.SongID
+    INNER JOIN Soundfront.[User] U ON U.UserID = S.UserID
+WHERE DATEDIFF(DAY, S.UploadDate, SYSDATETIMEOFFSET()) < @TimeFrameInDays
+GROUP BY S.SongID, U.DisplayName, S.Title, S.Price, S.UploadDate
+ORDER BY AVG(SR.Rating) DESC, S.Price DESC
+
+GO
+
 -- Search for song
 CREATE OR ALTER PROCEDURE Soundfront.SearchForSong
 	@Search NVARCHAR(100)

@@ -64,11 +64,14 @@ if len(sys.argv) > 1 and sys.argv[1] == '--real':
             if album_name == '(null)':
                 continue
 
-            album = album_repo.create_album(
+            time_frames = ["-1y", "-30d", "-7d", "-1d"]
+            album = album_repo.create_album_with_date(
                 user_id=user.UserID,
                 album_title=album_name,
                 album_art=album_art,
-                album_price=random.uniform(0.00, 9.99)
+                album_price=random.uniform(0.00, 9.99),
+                upload_date=fake.date_time_between(start_date=random.choice(time_frames), end_date="now", tzinfo=None)
+
             )
 
             created_albums.append(album)
@@ -151,12 +154,23 @@ if len(sys.argv) > 1 and sys.argv[1] == '--real':
                         song_id=created_song.SongID
                     )
 
-                # create some ratings for this song (between 1 and 4 ratings)
-                for n in range(0, random.randint(1, 4)):
+                # create some ratings for this song (between 1 and 5 ratings)
+                last_reviewer = 0
+                for n in range(0, random.randint(1, 5)):
                     song_rating = song_repo.rate_song(
                         user_id=reviewers[n].UserID,
                         song_id=created_song.SongID,
                         rating=random.randint(0, 10),
+                        review_text=fake.sentence(nb_words=random.randint(5, 15))
+                    )
+                    last_reviewer = n
+
+                # create some "bad" ratings for this song (between 1 and 5 ratings)
+                for n in range(last_reviewer+1, random.randint(last_reviewer+2, last_reviewer+6)):
+                    song_rating = song_repo.rate_song(
+                        user_id=reviewers[n].UserID, 
+                        song_id=created_song.SongID,
+                        rating=random.randint(0, 5),
                         review_text=fake.sentence(nb_words=random.randint(5, 15))
                     )
 
