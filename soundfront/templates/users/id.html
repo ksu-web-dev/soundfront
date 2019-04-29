@@ -85,36 +85,37 @@
         {{ song_table(songs, cart) }}
       {% endif %}
     </div>
-  </div>
+
+  <p class="usersearch" style="font-size:135%; margin-top:32px;"><strong>Ratings</strong></p>
+  {% if reviews == [] %}
+    <p style="margin-top:1%;">No ratings yet.</p>
+  {% else %}
+    <table class="table">
+      <tr class="header-row row">
+        <td class="header-col col">Album/Song Name</td>
+        <td class="header-col col">Rating</td>
+        <td class="header-col col">Review</td>
+      </tr>
+
+      {% for rating in reviews %}
+        <tr class="row">
+          {% if rating.Type == "Song" %}
+          <td class="col">
+            <a class="useridrating" href="/songs/{{ rating.ID }}">{{ rating.Name }}</a>
+          </td>
+          {% else %}
+          <td class="col">
+            <a class="useridrating" href="/albums/{{ rating.ID }}">{{ rating.Name }}</a>
+          </td>
+          {% endif %}
+          <td class="col">{{ rating.Rating }}</td>
+          <td class="col">{{ rating.ReviewText }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  {% endif %}
+    </div>
 </div>
 
-<p class="usersearch" style="font-size:135%;"><strong>Ratings</strong></p>
-{% if reviews == [] %}
-  <p style="margin-top:1%;">No ratings yet.</p>
-{% else %}
-  <table class="table">
-    <tr class="header-row row">
-      <td class="header-col col">Album/Song Name</td>
-      <td class="header-col col">Rating</td>
-      <td class="header-col col">Review</td>
-    </tr>
-
-    {% for rating in reviews %}
-      <tr class="row">
-        {% if rating.Type == "Song" %}
-        <td class="col">
-          <a class="useridrating" href="/songs/{{ rating.ID }}">{{ rating.Name }}</a>
-        </td>
-        {% else %}
-        <td class="col">
-          <a class="useridrating" href="/albums/{{ rating.ID }}">{{ rating.Name }}</a>
-        </td>
-        {% endif %}
-        <td class="col">{{ rating.Rating }}</td>
-        <td class="col">{{ rating.ReviewText }}</td>
-      </tr>
-    {% endfor %}
-  </table>
-{% endif %}
 
 {% endblock %}
