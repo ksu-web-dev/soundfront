@@ -177,6 +177,14 @@ if len(sys.argv) > 1 and sys.argv[1] == '--real':
                         review_text=fake.sentence(nb_words=random.randint(5, 15))
                     )
 
+    # create some random follower/following relationships for at most 250 users
+    users = user_repo.list_users(1, 250)
+    for base_user in users:
+        for user in users:
+            if user.UserID == base_user.UserID:
+                continue
+                
+            user_repo.follow_user(follower_user_id=base_user.UserID, followee_user_id=user.UserID)
 
     sys.exit()
 
