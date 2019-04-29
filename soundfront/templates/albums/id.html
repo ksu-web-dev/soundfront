@@ -70,7 +70,7 @@
 			{% for album_id in similar_albums %}
 			<tr class="row item-row">
 				<th class="col">
-					<a href="">{{ similar_albums[album_id].Title }}</a>
+					<a href="{{similar_albums[album_id].AlbumID}}">{{ similar_albums[album_id].Title }}</a>
 				</th>
 				<th class="col">
 					{{ tag_list(similar_albums[album_id]['tags']) }}
