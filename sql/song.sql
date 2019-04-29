@@ -91,13 +91,13 @@ AS
 SELECT TOP 5
 	S.SongID, S.UserID, S.Title, S.[Length],
 	S.UploadDate, S.Price, S.[Description], U.DisplayName AS Artist,
-	A.Title AS AlbumTitle, AVG(SR.Rating) AS "Average Rating"
+	A.Title AS AlbumTitle, A.AlbumID, AVG(SR.Rating) AS "Average Rating"
 FROM Soundfront.SongRating SR
     INNER JOIN Soundfront.Song S ON S.SongID = SR.SongID
     LEFT JOIN Soundfront.Album A ON A.AlbumID = S.AlbumID
     INNER JOIN Soundfront.[User] U ON U.UserID = S.UserID
 WHERE DATEDIFF(DAY, S.UploadDate, SYSDATETIMEOFFSET()) < @TimeFrameInDays
-GROUP BY S.SongID, S.UserID, S.Title, S.[Length], S.UploadDate, S.Price, S.[Description], U.DisplayName, A.Title
+GROUP BY S.SongID, S.UserID, S.Title, S.[Length], S.UploadDate, S.Price, S.[Description], U.DisplayName, A.Title, A.AlbumID
 ORDER BY AVG(SR.Rating) DESC, S.Price DESC
 
 GO

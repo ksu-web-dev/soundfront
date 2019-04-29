@@ -75,7 +75,7 @@ CREATE TABLE Soundfront.Song
   Length INT NOT NULL,
   UploadDate DATETIME NOT NULL DEFAULT(SYSDATETIMEOFFSET()),
   Price DECIMAL NOT NULL,
-  Description NVARCHAR(1024)
+  Description NVARCHAR(1024) NOT NULL
 );
 
 CREATE TABLE Soundfront.SongCart
