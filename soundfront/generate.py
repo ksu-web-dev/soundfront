@@ -122,7 +122,7 @@ if len(sys.argv) > 1 and sys.argv[1] == '--real':
                     created_tags.append(tag)
                 except:
                     try:
-                        tag = tag_repo.read_tag_by_name(song_tag['name'])
+                        tag = tag_repo.get_tag_by_name(song_tag['name'])
                         if tag is None:
                             continue
                         created_tags.append(tag)
