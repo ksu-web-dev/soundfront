@@ -171,7 +171,7 @@ class SongRepo():
     def rate_song(self, user_id, song_id, rating=1, review_text=''):
         cursor = self.conn.cursor()
         cursor.execute("""
-            EXEC Soundfront.InsertSongRating
+            EXEC Soundfront.RateSong
                 @UserID=?,
                 @SongID=?,
                 @Rating=?,

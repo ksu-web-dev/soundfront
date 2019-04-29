@@ -9,7 +9,7 @@ VALUES(@Name)
 
 GO
 
--- Soundfront.GeTag
+-- Soundfront.GetTag
 -- Gets information of Tag based on entered TagID
 CREATE OR ALTER PROCEDURE Soundfront.GetTag
     @TagID INT

@@ -61,7 +61,7 @@ def search():
 	searchinput = request.form['searchform'] + '%'
 	search =  '%' + searchinput
 
-	albums = album_repo.searchfor_album(search)
+	albums = album_repo.search_for_album(search)
 	songs = song_repo.search_for_song(search)
 	users = user_repo.search_user(search)
 
