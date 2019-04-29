@@ -92,7 +92,7 @@ CREATE OR ALTER PROCEDURE Soundfront.ListSongTags
 	@SongID INT
 AS
 
-SELECT T.Name
+SELECT T.Name, T.TagID
 FROM Soundfront.SongTag ST
     INNER JOIN Soundfront.Tag T ON T.TagID = ST.TagID
 WHERE ST.SongID = @SongID
