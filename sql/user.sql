@@ -116,7 +116,7 @@ WHERE @FollowerUserID = FollowerID
 GO
 
 -- Soundfront.GetMostCriticalUsers
--- GetMostCriticalUsers: Gets the 3 users with the lowest average review for albums and songs
+-- Gets the @Count most critical users based on lowest average rating for albums and songs
 CREATE OR ALTER PROCEDURE Soundfront.GetMostCriticalUsers
   @Count INT
 AS

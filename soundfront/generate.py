@@ -96,7 +96,7 @@ if len(sys.argv) > 1 and sys.argv[1] == '--real':
                 print('Removing (because no songs were found):\n\tAlbum: ' + album.Title + '\n\t' + 'Artist: ' + artist)
                 continue
 
-            # create some ratings for this album (between 2 and 6)
+            # create some ratings for this album
             for n in range(2, len(reviewers)):
                 album_rating = album_repo.rate_album(
                     user_id=reviewers[n].UserID,
