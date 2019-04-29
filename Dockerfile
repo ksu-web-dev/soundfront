@@ -4,4 +4,4 @@ ADD . /app
 WORKDIR /app
 RUN pip install -r soundfront/requirements.txt
 
-CMD ["flask", "run"]
+CMD ["flask", "run", "--host=0.0.0.0"]
