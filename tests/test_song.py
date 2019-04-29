@@ -15,14 +15,14 @@ class TestSong(unittest.TestCase):
         cls.album_repo = AlbumRepo(db.conn)
         cls.repo = SongRepo(db.conn)
 
-    def test_insert_song(self):
+    def test_create_song(self):
         user = TestSong.user_repo.create_user(
             email='email', display_name='user', password='test')
 
         album = TestSong.album_repo.create_album(
             user_id=user.UserID, album_title='some album', album_price=9.99, album_description='')
 
-        song = TestSong.repo.insert_song(
+        song = TestSong.repo.create_song(
             userid=user.UserID,
             albumid=album.AlbumID,
             title='some song',

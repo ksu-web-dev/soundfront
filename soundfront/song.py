@@ -29,7 +29,7 @@ def index():
 @bp.route('/<song_id>', methods=['GET'])
 def get(song_id):
     repo = current_app.config['song']
-    song = repo.read_song(song_id)
+    song = repo.get_song(song_id)
 
     if song is None:
         return render_template('error.html', message='Song does not exist.')
@@ -38,7 +38,7 @@ def get(song_id):
     if page is None:
         page = 1
 
-    ratings = repo.list_reviews(song.SongID, page, 10)
+    ratings = repo.list_ratings(song.SongID, page, 10)
     tags = repo.list_tags(song.SongID)
     similar_songs_result = repo.list_similar_songs(song.SongID)
     similar_songs = {}
@@ -59,7 +59,7 @@ def rate(song_id):
         return redirect(url_for('auth.login'))
 
     repo = current_app.config['song']
-    song = repo.read_song(song_id)
+    song = repo.get_song(song_id)
 
     if request.method == 'POST':
         rating = request.form['rating']
@@ -103,7 +103,7 @@ def new():
         if error is None:
             repo = current_app.config['song']
             user_id = session['user_id']
-            repo.insert_song(user_id, album, title, length, price, description)
+            repo.create_song(user_id, album, title, length, price, description)
             return redirect(url_for('songs.index'))
 
         flash(error)
@@ -118,17 +118,17 @@ class SongRepo():
     def __init__(self, conn):
         self.conn = conn
 
-    def insert_song(self, userid='', albumid=None, title='', length=0, price=0, description=''):
+    def create_song(self, user_id=None, album_id=None, title='', length=0, price=0, description=''):
         cursor = self.conn.cursor()
         cursor.execute("""
-            EXEC Soundfront.InsertSong
+            EXEC Soundfront.CreateSong
                 @UserID=?,
 	            @AlbumID=?,
 	            @Title=?,
 	            @Length=?,
 	            @Price=?,
 	            @Description=?
-            """, userid, albumid, title, length, price, description)
+            """, user_id, album_id, title, length, price, description)
         return cursor.fetchone()
 
     def create_song_with_date(self, user_id='', album_id='', title='', length='', price='', description='', upload_date=''):
@@ -145,18 +145,18 @@ class SongRepo():
             """, user_id, album_id, title, length, price, description, upload_date)
         return cursor.fetchone()
 
-    def read_song(self, songid):
+    def get_song(self, song_id):
         cursor = self.conn.cursor()
-        cursor.execute('EXEC Soundfront.ReadSong @SongID=?', songid)
+        cursor.execute('EXEC Soundfront.GetSong @SongID=?', song_id)
         return cursor.fetchone()
 
-    def list_song(self, page, pagesize):
+    def list_song(self, page, page_size):
         cursor = self.conn.cursor()
         cursor.execute(
-            'EXEC Soundfront.ListSong @Page=?, @PageSize=?', page, pagesize)
+            'EXEC Soundfront.ListSong @Page=?, @PageSize=?', page, page_size)
         return cursor.fetchall()
 
-    def list_reviews(self, song_id, page, page_size):
+    def list_ratings(self, song_id, page, page_size):
         cursor = self.conn.cursor()
         cursor.execute(
             'EXEC Soundfront.ListSongRating @SongID=?, @Page=?, @PageSize=?', song_id, page, page_size)
@@ -182,7 +182,7 @@ class SongRepo():
     def get_top_rated_songs(self, frame):
         cursor = self.conn.cursor()
         cursor.execute("""
-            EXEC Soundfront.GetTopratedSongs
+            EXEC Soundfront.GetTopRatedSongs
                 @TimeFrameInDays=?
             """, frame)
         return cursor.fetchall()
