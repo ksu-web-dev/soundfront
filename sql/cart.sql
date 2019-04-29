@@ -1,3 +1,4 @@
+-- Soundfront.CreateCart
 -- Creates a User's one and only cart
 CREATE OR ALTER PROCEDURE Soundfront.CreateCart
 	@UserID INT
@@ -8,7 +9,8 @@ VALUES (@UserID)
 
 GO
 
--- Gets a CartID given a User ID
+-- Soundfront.GetCart
+-- Gets the CartID of the inputted UserID
 CREATE OR ALTER PROCEDURE Soundfront.GetCart
 	@UserID INT
 AS
@@ -18,6 +20,7 @@ FROM Soundfront.Cart C
 WHERE C.UserID = @UserID
 GO
 
+-- Soundfront.ListCart
 -- Lists all items in a cart by the specified user
 CREATE OR ALTER PROCEDURE Soundfront.ListCart
 	@UserID INT
@@ -38,6 +41,7 @@ FROM Soundfront.AlbumCart AC
 WHERE C.UserID = @UserID
 GO
 
+-- Soundfront.AddSongToCart
 -- Creates a SongCart which adds a Song to a User's Cart
 CREATE OR ALTER PROCEDURE Soundfront.AddSongToCart
 	@SongID INT,
@@ -48,6 +52,7 @@ INSERT Soundfront.SongCart(SongID, CartID)
 VALUES (@SongID, @CartID)
 GO
 
+-- Soundfront.ClearSongCart
 -- Removes all Songs from a User's Cart
 CREATE OR ALTER PROCEDURE Soundfront.ClearSongCart
 	@CartID INT
@@ -58,6 +63,7 @@ WHERE CartID = CartID
 
 GO
 
+-- Soundfront.AddAlbumToCart
 -- Adds an album to the cart which creates an AlbumCart row
 CREATE OR ALTER PROCEDURE Soundfront.AddAlbumToCart
 	@AlbumID INT,
@@ -69,6 +75,7 @@ VALUES (@AlbumID, @CartID)
 
 GO
 
+-- Soundfront.ClearAlbumCart
 -- Removes all albums from a User's Cart
 CREATE OR ALTER PROCEDURE Soundfront.ClearAlbumCart
 	@CartID INT
@@ -79,6 +86,7 @@ WHERE CartID = @CartID
 
 GO
 
+-- Soundfront.CartTotalPrice
 -- Computes the sum of the prices in a Cart
 CREATE OR ALTER PROCEDURE Soundfront.CartTotalPrice
 	@UserID INT

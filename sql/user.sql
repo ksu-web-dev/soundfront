@@ -1,4 +1,5 @@
-/* Create a new user.*/
+-- Soundfront.CreateUser
+-- Create a new user
 CREATE OR ALTER PROCEDURE Soundfront.CreateUser
     @Privacy BIT,
     @DisplayName NVARCHAR(32),
@@ -14,6 +15,8 @@ BEGIN
 END
 GO
 
+-- Soundfront.CheckLogin
+-- Checks if the credentials entered match the ones in the database
 CREATE OR ALTER PROCEDURE Soundfront.CheckLogin
     @Email NVARCHAR(32),
     @EnteredPassword NVARCHAR(50)
@@ -24,7 +27,8 @@ FROM Soundfront.[User] U
 WHERE U.PasswordHash = HASHBYTES('SHA2_256', @EnteredPassword)
 GO
 
-/* Get a single user. */
+-- Soundfront.GetUser
+-- Get a single user
 CREATE OR ALTER PROCEDURE Soundfront.GetUser
     @UserID INT
 AS
@@ -33,6 +37,8 @@ FROM Soundfront.[User] U
 WHERE U.UserID = @UserID;
 GO
 
+-- Soundfront.GetUserByEmail
+-- Gets the user by the inputted email address
 CREATE OR ALTER PROCEDURE Soundfront.GetUserByEmail
     @Email NVARCHAR(50)
 AS
@@ -41,6 +47,8 @@ FROM Soundfront.[User] U
 WHERE U.Email = @Email;
 GO
 
+-- Soundfront.ListUser
+-- Lists the users in the batabase (includes pagination parameters)
 CREATE OR ALTER PROCEDURE Soundfront.ListUser
 	@Page INT,
 	@PageSize INT
@@ -51,6 +59,8 @@ ORDER BY U.JoinDate DESC
 OFFSET ((@Page * @PageSize) - @PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY;
 GO
 
+-- Soundfront.FollowUser
+-- Followers the User
 CREATE OR ALTER PROCEDURE Soundfront.FollowUser
   @FollowerUserID INT,
   @FolloweeUserID INT
@@ -60,6 +70,8 @@ OUTPUT Inserted.FollowerID, Inserted.FollowingID
 VALUES(@FollowerUserID, @FolloweeUserID)
 GO
 
+-- Soundfront.ListFollowers
+-- Lists the followers of a specific user
 CREATE OR ALTER PROCEDURE Soundfront.ListFollowers
   @FolloweeUserID INT
 AS
@@ -69,6 +81,8 @@ FROM Soundfront.Social S
 WHERE S.FollowingID = @FolloweeUserID
 GO
 
+-- Soundfront.ListFollowing
+-- Lists the users the inputted user follows
 CREATE OR ALTER PROCEDURE Soundfront.ListFollowing
   @FollowerUserID INT
 AS
@@ -78,6 +92,8 @@ FROM Soundfront.Social S
 WHERE S.FollowerID = @FollowerUserID
 GO
 
+-- Soundfront.IsFollowing
+-- Checks if the user is following the other
 CREATE OR ALTER PROCEDURE Soundfront.IsFollowing
   @FollowerUserID INT,
   @FolloweeUserID INT
@@ -87,6 +103,8 @@ FROM Soundfront.Social S
 WHERE S.FollowerID = @FollowerUserID AND S.FollowingID = @FolloweeUserID
 GO
 
+-- Soundfront.Unfollow
+-- Unfollows User
 CREATE OR ALTER PROCEDURE Soundfront.Unfollow
   @FollowerUserID INT,
   @FolloweeUserID INT
@@ -97,7 +115,8 @@ WHERE @FollowerUserID = FollowerID
 
 GO
 
--- GetMostCriticalUsers: Gets the 3 users with the lowest average review for albums and songs
+-- Soundfront.GetMostCriticalUsers
+-- Gets the @Count most critical users based on lowest average rating for albums and songs
 CREATE OR ALTER PROCEDURE Soundfront.GetMostCriticalUsers
   @Count INT
 AS
@@ -121,7 +140,7 @@ AS
         INNER JOIN Soundfront.SongRating SR ON SR.UserID = U.UserID
     GROUP BY U.UserID, U.DisplayName
 )
-SELECT TOP (@Count) 
+SELECT TOP (@Count)
   S.UserID, S.DisplayName, AVG(S.AverageRating) AS AverageRating
 FROM SourceCTE S
 GROUP BY S.UserID, S.DisplayName

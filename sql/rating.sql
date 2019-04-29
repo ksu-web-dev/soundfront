@@ -1,4 +1,5 @@
--- INSERT AlbumRating
+-- Soundfront.InsertAlbumRating
+-- Insert AlbumRating into database
 CREATE OR ALTER PROCEDURE Soundfront.InsertAlbumRating
 	@UserID INT,
 	@AlbumID INT,
@@ -12,22 +13,8 @@ VALUES (@UserID, @AlbumID, @Rating, @ReviewText)
 
 GO
 
--- UPDATE AlbumRating
-CREATE OR ALTER PROCEDURE Soundfront.UpdateAlbumRating
-	@RatingID INT,
-	@Rating FLOAT,
-	@ReviewText NVARCHAR(1024)
-AS
-
-UPDATE Soundfront.AlbumRating
-	SET
-		Rating = @Rating,
-		ReviewText = @ReviewText
-WHERE RatingID = @RatingID
-
-GO
-
--- DELETE AlbumRating
+-- Soundfront.DeleteAlbumRating
+-- DELETE AlbumRating from batabase
 CREATE OR ALTER PROCEDURE Soundfront.DeleteAlbumRating
 	@RatingID INT
 AS
@@ -37,7 +24,8 @@ WHERE RatingID = @RatingID
 
 GO
 
--- READ AlbumRating
+-- Soundfront.ReadAlbumRating
+-- Get information of AlbumRating with inputted RatingID
 CREATE OR ALTER PROCEDURE Soundfront.ReadAlbumRating
 	@RatingID INT
 AS
@@ -48,7 +36,8 @@ WHERE A.RatingID = @RatingID
 
 GO
 
--- LIST AlbumRating
+-- Soundfront.ListAlbumRatings
+-- List AlbumRatings in the database for a specific inputted AlbumID
 CREATE OR ALTER PROCEDURE Soundfront.ListAlbumRatings
 	@AlbumID INT
 AS
@@ -60,7 +49,8 @@ WHERE A.AlbumID = @AlbumID
 ORDER BY A.RatingID
 GO
 
--- INSERT SongRating
+-- Soundfront.InsertSongRating
+-- Insert SongRating into database
 CREATE OR ALTER PROCEDURE Soundfront.InsertSongRating
 	@UserID INT,
 	@SongID INT,
@@ -74,22 +64,8 @@ VALUES (@UserID, @SongID, @Rating, @ReviewText)
 
 GO
 
--- UPDATE SongRating
-CREATE OR ALTER PROCEDURE Soundfront.UpdateSongRating
-	@RatingID INT,
-	@Rating FLOAT,
-	@ReviewText NVARCHAR(1024)
-AS
-
-UPDATE Soundfront.SongRating
-	SET
-		Rating = @Rating,
-		ReviewText = @ReviewText
-WHERE RatingID = @RatingID
-
-GO
-
--- DELETE SongRating
+-- Soundfront.DeleteSongRating
+-- Delete SongRating from database
 CREATE OR ALTER PROCEDURE Soundfront.DeleteSongRating
 	@RatingID INT
 AS
@@ -99,7 +75,8 @@ WHERE RatingID = @RatingID
 
 GO
 
--- READ SongRating
+-- Soundfront.ReadSongRating
+-- Get information of SongRating with inputted RatingID
 CREATE OR ALTER PROCEDURE Soundfront.ReadSongRating
 	@RatingID INT
 AS
@@ -110,7 +87,8 @@ WHERE S.RatingID = @RatingID
 
 GO
 
--- LIST SongRating
+-- Soundfront.ListSongRating
+-- List SongRatings of a specific inputted SongID (includes pagination parameters)
 CREATE OR ALTER PROCEDURE Soundfront.ListSongRating
 	@Page INT,
 	@PageSize INT,
@@ -125,6 +103,9 @@ ORDER BY S.RatingID
 OFFSET ((@Page * @PageSize) - @PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY;
 GO
 
+-- Soundfront.ListRatings
+-- Lists all the ratings left by a specific inputted UserID
+-- (the album and song paramters are passed in in the python and for labelling/linking purposes in the html)
 CREATE OR ALTER PROCEDURE Soundfront.ListRatings
 	@UserID INT,
 	@Album nvarchar(50),
