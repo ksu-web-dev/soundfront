@@ -1,4 +1,4 @@
--- Soundfront.InsertSong
+-- Soundfront.CreateSong
 -- Insert Song into datbase
 CREATE OR ALTER PROCEDURE Soundfront.InsertSong
 	@UserID INT,
@@ -33,8 +33,9 @@ VALUES (@UserID, @AlbumID, @Title, @Length, @Price, @Description, @UploadDate)
 
 GO
 
--- Read
-CREATE OR ALTER PROCEDURE Soundfront.ReadSong
+-- Soundfront.GetSong
+-- Returns song details given the SongID
+CREATE OR ALTER PROCEDURE Soundfront.GetSong
 	@SongID INT
 AS
 

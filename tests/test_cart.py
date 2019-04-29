@@ -23,8 +23,8 @@ class TestCart(unittest.TestCase):
 
         self.assertEqual(cart.CartID, 1)
 
-    def test_insert_songcart(self):
-        song = TestCart.song_repo.insert_song(
+    def test_add_song_to_cart(self):
+        song = TestCart.song_repo.create_song(
             userid=1,
             title='some song',
             length=230,
@@ -34,9 +34,4 @@ class TestCart(unittest.TestCase):
 
         cart = TestCart.cart_repo.get_cart(1)
 
-        songcart = TestCart.cart_repo.insert_songcart(1, 1)
-
-    def test_list_songcart(self):
-        cart = TestCart.cart_repo.list_cart(1)
-
-        self.assertEqual(cart.ID, 1)
+        songcart = TestCart.cart_repo.add_song_to_cart(1, 1)

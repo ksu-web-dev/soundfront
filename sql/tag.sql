@@ -9,9 +9,9 @@ VALUES(@Name)
 
 GO
 
--- Soundfront.ReadTag
--- Gets information of Tag based on inputted TagID
-CREATE OR ALTER PROCEDURE Soundfront.ReadTag
+-- Soundfront.GetTag
+-- Gets information of Tag based on entered TagID
+CREATE OR ALTER PROCEDURE Soundfront.GetTag
     @TagID INT
 AS
 
@@ -20,9 +20,9 @@ FROM Soundfront.Tag T
 WHERE T.TagID = @TagID
 GO
 
--- Soundfront.ReadTagByName
--- Read a tag by its name
-CREATE OR ALTER PROCEDURE Soundfront.ReadTagByName
+-- Soundfront.GetTagByName
+-- Gets tag details by its name
+CREATE OR ALTER PROCEDURE Soundfront.GetTagByName
     @TagName NVARCHAR
 AS
 SELECT T.TagID, T.[Name]
@@ -62,19 +62,6 @@ SELECT T.TagID, T.[Name]
 FROM Soundfront.Tag T
 ORDER BY T.TagID DESC
 OFFSET ((@Page * @PageSize) - @PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY;
-
-GO
-
--- Soundfront.GetTagsBySongID
--- Gets the tags of the song based on the inputted SongID
-CREATE OR ALTER PROCEDURE Soundfront.GetTagsBySongID
-	@SongID INT
-AS
-
-SELECT T.TagID, T.[Name]
-FROM Soundfront.SongTag ST
-	INNER JOIN Soundfront.Tag T ON T.TagID = ST.TagID
-WHERE ST.SongID = @SongID
 
 GO
 

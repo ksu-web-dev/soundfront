@@ -122,7 +122,7 @@ if len(sys.argv) > 1 and sys.argv[1] == '--real':
                     created_tags.append(tag)
                 except:
                     try:
-                        tag = tag_repo.read_tag_by_name(song_tag['name'])
+                        tag = tag_repo.get_tag_by_name(song_tag['name'])
                         if tag is None:
                             continue
                         created_tags.append(tag)
@@ -255,7 +255,7 @@ for x in range(0,5):
 
 for album in albums:
     for x in range(1, random.randint(5, 12)):
-        song = song_repo.insert_song(
+        song = song_repo.create_song(
             title=fake.sentence(nb_words=4)[:-1],
             userid=album.UserID,
             albumid=album.AlbumID,

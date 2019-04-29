@@ -141,4 +141,6 @@ CREATE TABLE Soundfront.SongTag
     REFERENCES Soundfront.Tag(TagID),
   SongID INT NOT NULL FOREIGN KEY
     REFERENCES Soundfront.Song(SongID)
+
+  UNIQUE(TagID, SongID)
 );

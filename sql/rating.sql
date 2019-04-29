@@ -1,6 +1,6 @@
--- Soundfront.InsertAlbumRating
+-- Soundfront.RateAlbum
 -- Insert AlbumRating into database
-CREATE OR ALTER PROCEDURE Soundfront.InsertAlbumRating
+CREATE OR ALTER PROCEDURE Soundfront.RateAlbum
 	@UserID INT,
 	@AlbumID INT,
 	@Rating FLOAT,
@@ -10,29 +10,6 @@ AS
 INSERT Soundfront.AlbumRating(UserID, AlbumID, Rating, ReviewText)
 OUTPUT Inserted.UserID, Inserted.AlbumID, Inserted.Rating, Inserted.ReviewText
 VALUES (@UserID, @AlbumID, @Rating, @ReviewText)
-
-GO
-
--- Soundfront.DeleteAlbumRating
--- DELETE AlbumRating from batabase
-CREATE OR ALTER PROCEDURE Soundfront.DeleteAlbumRating
-	@RatingID INT
-AS
-
-DELETE FROM Soundfront.AlbumRating
-WHERE RatingID = @RatingID
-
-GO
-
--- Soundfront.ReadAlbumRating
--- Get information of AlbumRating with inputted RatingID
-CREATE OR ALTER PROCEDURE Soundfront.ReadAlbumRating
-	@RatingID INT
-AS
-
-SELECT A.RatingID, A.UserID, A.AlbumID, A.Rating, A.ReviewText
-FROM Soundfront.AlbumRating A
-WHERE A.RatingID = @RatingID
 
 GO
 
@@ -49,9 +26,9 @@ WHERE A.AlbumID = @AlbumID
 ORDER BY A.RatingID
 GO
 
--- Soundfront.InsertSongRating
+-- Soundfront.RateSong
 -- Insert SongRating into database
-CREATE OR ALTER PROCEDURE Soundfront.InsertSongRating
+CREATE OR ALTER PROCEDURE Soundfront.RateSong
 	@UserID INT,
 	@SongID INT,
 	@Rating FLOAT,
@@ -61,29 +38,6 @@ AS
 INSERT Soundfront.SongRating(UserID, SongID, Rating, ReviewText)
 OUTPUT Inserted.SongID
 VALUES (@UserID, @SongID, @Rating, @ReviewText)
-
-GO
-
--- Soundfront.DeleteSongRating
--- Delete SongRating from database
-CREATE OR ALTER PROCEDURE Soundfront.DeleteSongRating
-	@RatingID INT
-AS
-
-DELETE FROM Soundfront.SongRating
-WHERE RatingID = @RatingID
-
-GO
-
--- Soundfront.ReadSongRating
--- Get information of SongRating with inputted RatingID
-CREATE OR ALTER PROCEDURE Soundfront.ReadSongRating
-	@RatingID INT
-AS
-
-SELECT S.RatingID, S.UserID, S.SongID, S.Rating, S.ReviewText
-FROM Soundfront.SongRating S
-WHERE S.RatingID = @RatingID
 
 GO
 

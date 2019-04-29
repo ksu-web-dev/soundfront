@@ -173,7 +173,7 @@ class AlbumRepo():
     def rate_album(self, user_id, album_id, rating, review_text):
         cursor = self.conn.cursor()
         cursor.execute("""
-            EXEC Soundfront.InsertAlbumRating
+            EXEC Soundfront.RateAlbum
                 @UserID=?,
                 @AlbumID=?,
                 @Rating=?,
@@ -181,7 +181,7 @@ class AlbumRepo():
             """, user_id, album_id, rating, review_text)
         return cursor.fetchone()
 
-    def searchfor_album(self, search):
+    def search_for_album(self, search):
         cursor = self.conn.cursor()
         cursor.execute("""
             EXEC Soundfront.SearchForAlbum

@@ -1,5 +1,5 @@
 -- Soundfront.CreateCart
--- Create (Insert) Cart into database
+-- Creates a User's one and only cart
 CREATE OR ALTER PROCEDURE Soundfront.CreateCart
 	@UserID INT
 AS
@@ -21,7 +21,7 @@ WHERE C.UserID = @UserID
 GO
 
 -- Soundfront.ListCart
--- Lists the SongCarts and AlbumCarts of the inputted UserID
+-- Lists all items in a cart by the specified user
 CREATE OR ALTER PROCEDURE Soundfront.ListCart
 	@UserID INT
 AS
@@ -41,9 +41,9 @@ FROM Soundfront.AlbumCart AC
 WHERE C.UserID = @UserID
 GO
 
--- Soundfront.InsertSongCart
--- Insert (Create) SongCart into database
-CREATE OR ALTER PROCEDURE Soundfront.InsertSongCart
+-- Soundfront.AddSongToCart
+-- Creates a SongCart which adds a Song to a User's Cart
+CREATE OR ALTER PROCEDURE Soundfront.AddSongToCart
 	@SongID INT,
 	@CartID INT
 AS
@@ -52,9 +52,9 @@ INSERT Soundfront.SongCart(SongID, CartID)
 VALUES (@SongID, @CartID)
 GO
 
--- Soundfront.DeleteSongCart
--- Delete SongCart from database
-CREATE OR ALTER PROCEDURE Soundfront.DeleteSongCart
+-- Soundfront.ClearSongCart
+-- Removes all Songs from a User's Cart
+CREATE OR ALTER PROCEDURE Soundfront.ClearSongCart
 	@CartID INT
 AS
 
@@ -63,35 +63,9 @@ WHERE CartID = CartID
 
 GO
 
--- Soundfront.ReadSongCart
--- Get information of SongCart from inputted SongCartID
-CREATE OR ALTER PROCEDURE Soundfront.ReadSongCart
-	@SongCartID INT
-AS
-
-SELECT S.SongCartID, S.SongID, S.CartID
-FROM Soundfront.SongCart S
-WHERE S.SongCartID = @SongCartID
-
-GO
-
--- Soundfront.ListSongCart
--- List SongCarts in database (includes pagination parameters)
-CREATE OR ALTER PROCEDURE Soundfront.ListSongCart
-	@Page INT,
-	@PageSize INT
-AS
-
-SELECT S.SongCartID, S.SongID, S.CartID
-FROM Soundfront.SongCart S
-ORDER BY S.SongCartID
-OFFSET ((@Page * @PageSize) - @PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY;
-
-GO
-
--- Soundfront.InsertAlbumCart
--- Insert (Create) AlbumCart into database
-CREATE OR ALTER PROCEDURE Soundfront.InsertAlbumCart
+-- Soundfront.AddAlbumToCart
+-- Adds an album to the cart which creates an AlbumCart row
+CREATE OR ALTER PROCEDURE Soundfront.AddAlbumToCart
 	@AlbumID INT,
 	@CartID INT
 AS
@@ -101,9 +75,9 @@ VALUES (@AlbumID, @CartID)
 
 GO
 
--- Soundfront.DeleteAlbumCart
--- Delete AlbumCart from database
-CREATE OR ALTER PROCEDURE Soundfront.DeleteAlbumCart
+-- Soundfront.ClearAlbumCart
+-- Removes all albums from a User's Cart
+CREATE OR ALTER PROCEDURE Soundfront.ClearAlbumCart
 	@CartID INT
 AS
 
@@ -112,34 +86,8 @@ WHERE CartID = @CartID
 
 GO
 
--- Soundfront.ReadAlbumCart
--- Get AlbumCart information from database with inputted AlbumCartID
-CREATE OR ALTER PROCEDURE Soundfront.ReadAlbumCart
-	@AlbumCartID INT
-AS
-
-SELECT A.AlbumCartID, A.AlbumID, A.CartID
-FROM Soundfront.AlbumCart A
-WHERE A.AlbumCartID = @AlbumCartID
-
-GO
-
--- Soundfront.ListAlbumCart
--- List SongCarts in database (includes pagination parameters)
-CREATE OR ALTER PROCEDURE Soundfront.ListAlbumCart
-	@Page INT,
-	@PageSize INT
-AS
-
-SELECT A.AlbumCartID, A.AlbumID, A.CartID
-FROM Soundfront.AlbumCart A
-ORDER BY A.AlbumCartID
-OFFSET ((@Page * @PageSize) - @PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY;
-
-GO
-
 -- Soundfront.CartTotalPrice
--- Gets the total price of all the items in both the SongCart and AlbumCart
+-- Computes the sum of the prices in a Cart
 CREATE OR ALTER PROCEDURE Soundfront.CartTotalPrice
 	@UserID INT
 AS

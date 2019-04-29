@@ -21,15 +21,16 @@ def index():
 
         if item_type == 'Song':
             song_id = request.form['songid']
-            repo.insert_songcart(song_id, cart.CartID)
+            repo.add_song_to_cart(song_id, cart.CartID)
         elif item_type == 'Album':
             album_id = request.form['albumid']
-            repo.insert_albumcart(album_id, cart.CartID)
+            repo.add_album_to_cart(album_id, cart.CartID)
 
         return redirect(request.url)
 
     ordertotal = repo.cart_total_price(user_id)
     return render_template('cart/index.html', cart=cart_items, ordertotal=ordertotal)
+
 
 @bp.route('/checkout')
 def checkout():
@@ -49,12 +50,13 @@ def checkout():
     if request.method == 'POST':
         cart = repo.get_cart(user_id)
         song_id = request.form['songid']
-        repo.insert_songcart(song_id, cart.CartID)
+        repo.add_song_to_cart(song_id, cart.CartID)
 
         return redirect(request.url)
 
     ordertotal = repo.cart_total_price(user_id)
     return render_template('cart/checkout.html', cart=cart_items, ordertotal=ordertotal)
+
 
 @bp.route('/confirmation')
 def confirmation():
@@ -71,17 +73,18 @@ def confirmation():
     cart_items = repo.list_cart(user_id)
     cartID = repo.get_cart(user_id)
     ordertotal = repo.cart_total_price(user_id)
-    repo.delete_songcart(cartID.CartID)
-    repo.delete_albumcart(cartID.CartID)
+    repo.clear_song_cart(cartID.CartID)
+    repo.clear_album_cart(cartID.CartID)
 
     if request.method == 'POST':
         cart = repo.get_cart(user_id)
         song_id = request.form['songid']
-        repo.insert_songcart(song_id, cart.CartID)
+        repo.add_song_to_cart(song_id, cart.CartID)
 
         return redirect(request.url)
 
     return render_template('cart/confirmation.html', cart=cart_items, ordertotal=ordertotal)
+
 
 class CartRepo():
     def __init__(self, conn):
@@ -102,50 +105,26 @@ class CartRepo():
         cursor.execute('EXEC Soundfront.ListCart @UserID=?', user_id)
         return cursor.fetchall()
 
-    def insert_songcart(self, songid='', cartid=''):
+    def add_song_to_cart(self, song_id, cart_id):
         cursor = self.conn.cursor()
         cursor.execute(
-            'EXEC SoundFront.InsertSongCart @SongID=?, @CartID=?', songid, cartid)
+            'EXEC SoundFront.AddSongToCart @SongID=?, @CartID=?', song_id, cart_id)
         return True
 
-    def delete_songcart(self, cartid=''):
+    def clear_song_cart(self, cart_id):
         cursor = self.conn.cursor()
         cursor.execute(
-            'EXEC Soundfront.DeleteSongCart @CartID=?', cartid)
+            'EXEC Soundfront.ClearSongCart @CartID=?', cart_id)
 
-    def read_songcart(self, songcartid=''):
+    def add_album_to_cart(self, album_id, cart_id):
         cursor = self.conn.cursor()
         cursor.execute(
-            'EXEC Soundfront.ReadSongCart @SongCartID=?', songcartid)
-        return cursor.fetchone()
+            'EXEC Soundfront.AddAlbumToCart @AlbumID=?, @CartID=?', album_id, cart_id)
 
-    def list_songcart(self, page='', pagesize=''):
+    def clear_album_cart(self, cart_id):
         cursor = self.conn.cursor()
         cursor.execute(
-            'EXEC Soundfront.ListSongCart @Page=? @PageSize=?', page, pagesize)
-        return cursor.fetchone()
-
-    def insert_albumcart(self, albumid='', cartid=''):
-        cursor = self.conn.cursor()
-        cursor.execute(
-            'EXEC Soundfront.InsertAlbumCart @AlbumID=?, @CartID=?', albumid, cartid)
-
-    def delete_albumcart(self, cartid=''):
-        cursor = self.conn.cursor()
-        cursor.execute(
-            'EXEC Soundfront.DeleteAlbumCart @CartID=?', cartid)
-
-    def read_albumcart(self, albumcartid=''):
-        cursor = self.conn.cursor()
-        cursor.execute(
-            'EXEC Soundfront.ReadAlbumCart @AlbumCartID=?', albumcartid)
-        return cursor.fetchone()
-
-    def list_albumcart(self, page='', pagesize=''):
-        cursor = self.conn.cursor()
-        cursor.execute(
-            'EXEC Soundfront.ListAlbumCart @Page=? @PageSize=?', page, pagesize)
-        return cursor.fetchone()
+            'EXEC Soundfront.ClearAlbumCart @CartID=?', cart_id)
 
     def cart_total_price(self, user_id):
         cursor = self.conn.cursor()
