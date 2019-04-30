@@ -70,7 +70,7 @@ def new():
 
         if error is None:
             album_repo = current_app.config['album']
-            album_repo.create_album(user_id, title, price, description)
+            album_repo.create_album(user_id=user_id, title=title, price=price, description=description)
             return redirect(url_for('albums.index'))
 
         flash(error)
@@ -104,7 +104,7 @@ class AlbumRepo():
     def __init__(self, conn):
         self.conn = conn
 
-    def create_album(self, user_id='', album_title='', album_art='', album_price=0, album_description=''):
+    def create_album(self, user_id='', title='', art='', price=0, description=''):
         cursor = self.conn.cursor()
         cursor.execute("""
         EXEC Soundfront.CreateAlbum
@@ -113,7 +113,7 @@ class AlbumRepo():
             @AlbumArt=?,
             @Price=?,
             @Description=?
-            """, user_id, album_title, album_art, float(album_price), album_description)
+            """, user_id, title, art, float(price), description)
 
         return cursor.fetchone()
 
