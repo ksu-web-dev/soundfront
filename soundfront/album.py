@@ -104,7 +104,7 @@ class AlbumRepo():
     def __init__(self, conn):
         self.conn = conn
 
-    def create_album(self, user_id='', album_title='', album_art='', album_price='', album_description=''):
+    def create_album(self, user_id='', album_title='', album_art='', album_price=0, album_description=''):
         cursor = self.conn.cursor()
         cursor.execute("""
         EXEC Soundfront.CreateAlbum
@@ -113,11 +113,11 @@ class AlbumRepo():
             @AlbumArt=?,
             @Price=?,
             @Description=?
-            """, user_id, album_title, album_art, album_price, album_description)
+            """, user_id, album_title, album_art, float(album_price), album_description)
 
         return cursor.fetchone()
 
-    def create_album_with_date(self, user_id='', album_title='', album_art='', album_price='', album_description='', upload_date=''):
+    def create_album_with_date(self, user_id='', album_title='', album_art='', album_price=0, album_description='', upload_date=''):
         cursor = self.conn.cursor()
         cursor.execute("""
         EXEC Soundfront.CreateAlbumWithDate
@@ -127,7 +127,7 @@ class AlbumRepo():
             @Price=?,
             @Description=?,
             @UploadDate=?
-            """, user_id, album_title, album_art, album_price, album_description, upload_date)
+            """, user_id, album_title, album_art, float(album_price), album_description, upload_date)
         return cursor.fetchone()
 
     def list_songs(self, album_id):

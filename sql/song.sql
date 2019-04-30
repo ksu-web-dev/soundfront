@@ -1,6 +1,6 @@
 -- Soundfront.CreateSong
 -- Insert Song into datbase
-CREATE OR ALTER PROCEDURE Soundfront.InsertSong
+CREATE OR ALTER PROCEDURE Soundfront.CreateSong
 	@UserID INT,
 	@AlbumID INT,
 	@Title NVARCHAR(50),

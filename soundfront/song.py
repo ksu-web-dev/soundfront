@@ -128,7 +128,7 @@ class SongRepo():
 	            @Length=?,
 	            @Price=?,
 	            @Description=?
-            """, user_id, album_id, title, length, price, description)
+            """, user_id, album_id, title, length, float(price), description)
         return cursor.fetchone()
 
     def create_song_with_date(self, user_id='', album_id='', title='', length='', price='', description='', upload_date=''):
